@@ -1,4 +1,4 @@
-# Getting started with Routine & Fit server
+# Getting started with Routine & Fit server mobile app
 
 ## Domains
 
@@ -7,68 +7,101 @@
 - https://tst.routine-fit.com Test (test)
 - https://dev.routine-fit.com Develop (develop)
 
-## Features
+## Libraries
 
-**TODO**: Add libraries when they are fully integrated
-
-- 🏗 Built with [React Native](https://reactnative.dev/)
+- 🏗 Built with [React native Nx](https://nx.dev/l/r/react-native/application)
+- 🧩 Navigation with [React navigation v6](https://reactnavigation.org/docs/getting-started/)
 - 🚨 Testing powered by [jest](https://jestjs.io/docs/getting-started)
+- 🔒 Env variables using [React native config](https://github.com/luggit/react-native-config)
+- 🧬 State managment by [Redux Toolkit](https://reactnavigation.org/docs)
 
-## Set up environment
+## Quick start
 
-## Step 1: Start the Metro Server
+### Set up environment
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+Before install the dependencies and run start with the project, the first step to do is set up the environment. Follow this [react native docs](https://reactnative.dev/docs/environment-setup)
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### Install dependencies
 
-```bash
-# using Yarn
-yarn start
-```
+After setting up the environment run the following commands:
 
-## Step 2: Start your Application
+- Install dependencies: `yarn`
+- Install pod dependencies (for iOS): `yarn npx pod-install mobile-funnel`
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+### Env files templates
 
-### For Android
+Ask for the env files for every environment to a member of the team and put them in the root of the mobile project. React Native Config will pick one of those files depending on the flavor or scheme to run/build, the commands to run the applications are in the scripts section of the package.json file, see Commands section below.
 
-```bash
-# using Yarn
-yarn android
-```
+## Commands
 
-### For iOS
+To run the project there are several `options` available, here is a list:
 
-```bash
-# using Yarn
-yarn ios
-```
+`platform` = 'android' | 'ios' `action` = 'start | build' (build is only available for android) `environment` = 'dev' | 'stage' | 'prod'
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+- Run `yarn npx start mobile-funnel` to start metro server.
+- Run `yarn npx pod-install mobile-funnel` to install pods in ios folder.
+- Run `yarn npx platform-action.environment mobile-funnel` to build the app and start the metro server.
+- Run `yarn npx test mobile-funnel` to run all tests.
+- Run `yarn npx lint mobile-funnel` to check the lint.
+- Run `yarn npx link mobile-funnel` to link the react native packages (In some cases).
 
 ## Basic structure and configurations
 
 ```
-src/                       // container to other folders with the source code of the app
-  api/                     // axios instances
-  assets/                  // global assets
-  interfaces/              // global interfaces
-  components/              // component folders
-  hooks/                   // custom hooks
-  navigator/               // navigator stack
-  screens/                 // app screens
-  store                    // redux toolkit store and slices
-  theme                    // global app theme
-package.json               // deps and workspace scripts
-tsconfig.json              // typescript configuration
-ios/                       // ios native code
-android/                   // android native code
-README.md                  // docs are important
+android/              // Android app
+ios/                  // iOS app
+src/                  // Container to other folders with the source code of the app
+  app/                // Screens and their components
+    navigation/       // App Navigators
+    screens/          // Screens to be consumed by the Navigators
+  config/             // Configuration files
+  constants/          // Global constants
+  interfaces/         // Global interfaces
+  theme/              // Global theme
+  store/              // Redux toolkit store and slices
+  hooks/              // Custom hooks
+  assets/             // Global assets
+  api/                // Axios instances
+  utils/              // Global utils
+.env                  // environment variables
+package.json          // deps and workspace scripts
+README.md             // docs are important
 ```
 
-# Troubleshooting
+## Screen/Component structure
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Each Screen/Component must follow the next structure:
+
+```
+(screen/component)/
+  components/
+    componentA/
+      components/
+        componentC
+      index.tsx
+      styles.ts
+    componentB/
+      index.tsx
+      styles.ts
+  component.test.tsx
+  index.tsx
+  styles.ts
+```
+
+### Google Services files setup
+
+You will have to download the files from our Google Drive folder, Firebase project or ask someone to give them to you and once you have them copy those files in the following paths.
+
+#### Android
+
+`android/app/google-services.json`
+
+For Android there is no need to create a folder because the file is the same for all the environments
+
+#### IOS
+
+`ios/mobile/GoogleServices`
+
+This folders are ignored by default.
+
+The `google-services-script.sh` will get the build environment and setup the needed google service file for it.

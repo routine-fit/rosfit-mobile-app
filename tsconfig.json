@@ -3,9 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "*": ["src/*"],
-      "tests": ["tests/*"],
-      "@components/*": ["src/components/*"]
+      "src/*": ["src/*"],
+      "@api/*": ["src/api/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/app/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@screens/*": ["src/app/screens/*"],
+      "@store/*": ["src/store/*"],
+      "@theme/*": ["src/theme/*"],
+      "@utils/*": ["src/utils/*"],
+      "tests": ["tests/*"]
     }
   }
 }
