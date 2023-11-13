@@ -1,2 +1,1 @@
-export * from './AppNavigation';
-export * from './BottomTab';
+export * from './app-navigation';

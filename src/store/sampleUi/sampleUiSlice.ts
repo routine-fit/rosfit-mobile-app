@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface sampleUIState {
   isDateModalOpen: boolean;
@@ -21,4 +21,4 @@ export const sampleUiSlice = createSlice({
 });
 
 // Actions creators
-export const {onOpenDateModal, onCloseDateModal} = sampleUiSlice.actions;
+export const { onOpenDateModal, onCloseDateModal } = sampleUiSlice.actions;
