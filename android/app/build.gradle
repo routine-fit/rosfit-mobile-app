@@ -1,5 +1,14 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply plugin: "com.google.gms.google-services"
+
+apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"
+
+project.ext.envConfigFiles = [
+    dev: ".env.dev",
+    stage: ".env.stage",
+    prod: ".env.prod"
+]
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -73,13 +82,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.mobile"
+    namespace "com.routinefit"
     defaultConfig {
-        applicationId "com.mobile"
+        applicationId "com.routinefit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue 'string', 'build_config_package','com.routinefit'
     }
     signingConfigs {
         debug {
@@ -99,6 +109,22 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions 'env'
+    productFlavors {
+        dev {
+            dimension 'env'
+            applicationIdSuffix ".dev"
+        }
+        stage {
+            dimension 'env'
+            applicationIdSuffix ".stage"
+        }
+        prod {
+            dimension 'env'
+            applicationIdSuffix ""
         }
     }
 }

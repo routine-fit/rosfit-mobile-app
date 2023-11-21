@@ -1,6 +1,6 @@
 import android.os.Bundle;
 
-package com.mobile;
+package com.routinefit;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
