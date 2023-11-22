@@ -1,15 +1,20 @@
 {
-  "name": "RoutineFit",
+  "name": "routinefit",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "yarn ios:start.dev",
+    "ios:start.dev": "react-native run-ios --scheme RoutineFit-Dev --simulator=\"iPhone SE (3rd generation)\"",
+    "ios:start.prod": "react-native run-ios --scheme routinefit-prod --simulator=\"iPhone SE (3rd generation)\"",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "start": "react-native start",
+    "start": "react-native start --clear-cache",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pod:install": "cd ios && pod install && cd ..",
+    "clear:modules": "rm -rf node_modules && yarn",
+    "set:core": "yarn clear:modules && yarn pod:install && yarn start"
   },
   "dependencies": {
     "@gluestack-style/react": "^1.0.15",
