@@ -12,6 +12,7 @@
     "ios:start.prod": "react-native run-ios --scheme routinefit-prod --simulator=\"iPhone SE (3rd generation)\"",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
     "start": "react-native start --clear-cache",
     "test": "jest",
     "prepare": "husky install",
