@@ -1,4 +1,4 @@
-# Getting started with Routine & Fit server mobile app
+# Getting started with Routine & Fit mobile app
 
 ## Domains
 
@@ -13,7 +13,7 @@
 - 🧩 Navigation with [React navigation v6](https://reactnavigation.org/docs/getting-started/)
 - 🚨 Testing powered by [jest](https://jestjs.io/docs/getting-started)
 - 🔒 Env variables using [React native config](https://github.com/luggit/react-native-config)
-- 🧬 State managment by [Redux Toolkit](https://reactnavigation.org/docs)
+- 🧬 State management by [Redux Toolkit](https://reactnavigation.org/docs)
 
 ## Quick start
 
@@ -36,14 +36,22 @@ Ask for the env files for every environment to a member of the team and put them
 
 To run the project there are several `options` available, here is a list:
 
-`platform` = 'android' | 'ios' `action` = 'start | build' (build is only available for android) `environment` = 'dev' | 'stage' | 'prod'
+```js
+platform = 'android' | 'ios';
+action = 'start' | 'build'; // (build is only available for android)
+environment = 'dev' | 'prod';
+```
 
-- Run `yarn npx start mobile-funnel` to start metro server.
-- Run `yarn npx pod-install mobile-funnel` to install pods in ios folder.
-- Run `yarn npx platform-action.environment mobile-funnel` to build the app and start the metro server.
-- Run `yarn npx test mobile-funnel` to run all tests.
-- Run `yarn npx lint mobile-funnel` to check the lint.
-- Run `yarn npx link mobile-funnel` to link the react native packages (In some cases).
+- Run `yarn start` to start metro server and clear the cache.
+- Run `yarn android` to build the android dev app and start the metro server.
+- Run `yarn ios` to build the ios dev app and start the metro server.
+- Run `yarn platform-action.environment` to build the app and start the metro server.
+- Run `yarn test` to run all tests.
+- Run `yarn lint` to check the lint.
+- Run `yarn type-check` to check the type of the code.
+- Run `yarn link` to link the react native packages (In some cases).
+- Run `yarn pod:install` to install pods in ios folder.
+- Run `yarn set:core` to delete the node_modules, reinstall all the pods and start the metro.
 
 ## Basic structure and configurations
 
