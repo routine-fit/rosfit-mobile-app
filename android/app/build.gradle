@@ -2,13 +2,18 @@ apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "com.google.gms.google-services"
 
-apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"
+project.ext.defaultEnvFile = ".env.dev"
 
 project.ext.envConfigFiles = [
-    dev: ".env.dev",
-    stage: ".env.stage",
-    prod: ".env.prod"
+    debug: ".env.dev",
+    release: ".env.dev",
+    devdebug: ".env.dev",
+    devrelease: ".env.dev",
+    proddebug: ".env.prod",
+    prodrelease: ".env.prod"
 ]
+
+apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -82,14 +87,15 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.routinefit"
+    namespace "com.mobile"
     defaultConfig {
         applicationId "com.routinefit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        resValue 'string', 'build_config_package','com.routinefit'
+        resValue "string", "app_name", project.hasProperty('appName') ? project.property('appName') : "@string/default_app_name"
+        resValue 'string', 'build_config_package','com.mobile'
     }
     signingConfigs {
         debug {
@@ -112,19 +118,16 @@ android {
         }
     }
 
-    flavorDimensions 'env'
+    flavorDimensions "buildtype"
     productFlavors {
         dev {
-            dimension 'env'
+            dimension "buildtype"
+            resValue "string", "app_name", project.env.get("APP_DISPLAY_NAME")
             applicationIdSuffix ".dev"
         }
-        stage {
-            dimension 'env'
-            applicationIdSuffix ".stage"
-        }
         prod {
-            dimension 'env'
-            applicationIdSuffix ""
+            dimension "buildtype"
+            resValue "string", "app_name", project.env.get("APP_DISPLAY_NAME")
         }
     }
 }

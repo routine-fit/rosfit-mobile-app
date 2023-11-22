@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "yarn android:start.dev",
+    "android:start.dev": "react-native run-android --mode=devDebug",
+    "android:start.prod": "react-native run-android --mode=prodDebug",
+    "android:build.prod": "cd android/ && ./gradlew clean bundleProductionRelease",
     "ios": "yarn ios:start.dev",
     "ios:start.dev": "react-native run-ios --scheme RoutineFit-Dev --simulator=\"iPhone SE (3rd generation)\"",
     "ios:start.prod": "react-native run-ios --scheme routinefit-prod --simulator=\"iPhone SE (3rd generation)\"",

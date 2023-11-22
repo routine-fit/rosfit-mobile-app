@@ -1,7 +1,6 @@
+package com.mobile;
+
 import android.os.Bundle;
-
-package com.routinefit;
-
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
