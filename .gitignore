@@ -21,6 +21,9 @@ DerivedData
 *.ipa
 *.xcuserstate
 ios/.xcode.env.local
+ios/mobile/GoogleServices/*
+ios/GoogleService-Info.plist
+ios/tmp.xcconfig
 
 # Android/IntelliJ
 #
@@ -33,6 +36,8 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
+google-services.json
+google-services*.json
 
 # node.js
 #
@@ -54,6 +59,8 @@ yarn-error.log
 
 # Bundle artifact
 *.jsbundle
+
+.env*
 
 # Ruby / CocoaPods
 /ios/Pods/

@@ -28,6 +28,10 @@ Before creating the PR, I made sure that:
 > - It must write what was changed, why it was changed and for what purpose.
 > - It is recommended to describe it in points to facilitate understanding.
 
+## Attachments
+
+> Images or videos showing the behavior of what is introduced in the UI, necessary to facilitate the understanding and correction of the PR. In the event that what has been done cannot be visually detected (for example, work on the Backend), this section will remain empty.
+
 ## Change Procedure
 
 > Elements to take into account when merging or reviewing the PR. For example:

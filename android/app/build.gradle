@@ -1,5 +1,19 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
+apply plugin: "com.google.gms.google-services"
+
+project.ext.defaultEnvFile = ".env.dev"
+
+project.ext.envConfigFiles = [
+    debug: ".env.dev",
+    release: ".env.dev",
+    devdebug: ".env.dev",
+    devrelease: ".env.dev",
+    proddebug: ".env.prod",
+    prodrelease: ".env.prod"
+]
+
+apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -75,11 +89,13 @@ android {
 
     namespace "com.mobile"
     defaultConfig {
-        applicationId "com.mobile"
+        applicationId "com.routinefit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue "string", "app_name", project.hasProperty('appName') ? project.property('appName') : "@string/default_app_name"
+        resValue 'string', 'build_config_package','com.mobile'
     }
     signingConfigs {
         debug {
@@ -99,6 +115,19 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    flavorDimensions "buildtype"
+    productFlavors {
+        dev {
+            dimension "buildtype"
+            resValue "string", "app_name", project.env.get("APP_DISPLAY_NAME")
+            applicationIdSuffix ".dev"
+        }
+        prod {
+            dimension "buildtype"
+            resValue "string", "app_name", project.env.get("APP_DISPLAY_NAME")
         }
     }
 }

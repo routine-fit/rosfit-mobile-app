@@ -3,16 +3,16 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
-      "@api/*": ["src/api/*"],
-      "@assets/*": ["src/assets/*"],
-      "@components/*": ["src/app/components/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@interfaces/*": ["src/interfaces/*"],
-      "@screens/*": ["src/app/screens/*"],
-      "@store/*": ["src/store/*"],
-      "@theme/*": ["src/theme/*"],
-      "@utils/*": ["src/utils/*"],
+      "@/src/*": ["src/*"],
+      "@/api/*": ["src/api/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/components/*": ["src/app/components/*"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/interfaces/*": ["src/interfaces/*"],
+      "@/screens/*": ["src/app/screens/*"],
+      "@/store/*": ["src/store/*"],
+      "@/theme/*": ["src/theme/*"],
+      "@/utils/*": ["src/utils/*"],
       "tests": ["tests/*"]
     }
   }
