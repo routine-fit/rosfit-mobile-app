@@ -16,20 +16,25 @@ import { ControlledInputProps } from './types';
 const ControlledInput = <Form extends FieldValues>({
   controller,
   label,
-  placeholder,
+  inputProps = {},
+  inputFieldProps = {},
+  formControlProps = {},
 }: ControlledInputProps<Form>) => {
   const { field, fieldState } = useController(controller);
 
   return (
     <FormControl
+      {...formControlProps}
       isInvalid={fieldState.invalid}
-      isRequired={!!controller.rules?.required}>
+      isRequired={formControlProps.isRequired || !!controller.rules?.required}>
       <FormControlLabel>
         <FormControlLabelText>{label}</FormControlLabelText>
       </FormControlLabel>
-      <Input>
+      <Input {...inputProps}>
         <InputField
-          placeholder={placeholder}
+          autoCapitalize="none"
+          autoComplete="off"
+          {...inputFieldProps}
           onChangeText={field.onChange}
           value={field.value}
           onBlur={field.onBlur}

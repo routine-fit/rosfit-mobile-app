@@ -21,7 +21,9 @@ export const LoginScreen = () => {
           name: 'email',
         }}
         label="Email"
-        placeholder="john.doe@example.com"
+        inputFieldProps={{
+          placeholder: 'john.doe@example.com',
+        }}
       />
     </SafeAreaView>
   );
