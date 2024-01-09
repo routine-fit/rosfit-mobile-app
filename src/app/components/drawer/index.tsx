@@ -36,7 +36,7 @@ const MenuItem: FC<MenuItemProps> = ({ icon, label, onPress }) => (
   </TouchableOpacity>
 );
 
-const DrawerContent = ({ navigation }: DrawerContentComponentProps) => {
+const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   const handleLogout = () => {
     // TODO: dispatch logout
   };
