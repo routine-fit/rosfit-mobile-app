@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  extends: '@react-native',
+  extends: [
+    '@react-native',
+    'plugin:react-hooks/recommended',
+    'plugin:prettier/recommended',
+  ],
   plugins: ['simple-import-sort'],
   rules: {
     'object-curly-spacing': ['error', 'always'],
@@ -19,5 +23,6 @@ module.exports = {
       },
     ],
     'simple-import-sort/exports': 'error',
+    'prettier/prettier': ['error', { bracketSameLine: false }],
   },
 };
