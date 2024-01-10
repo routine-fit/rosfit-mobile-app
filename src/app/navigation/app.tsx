@@ -1,7 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import { ProfileScreen } from '@/screens/index';
+import { ProfileScreen } from '@screens/index';
 
 import { BottomTab } from './bottom-tab';
 
