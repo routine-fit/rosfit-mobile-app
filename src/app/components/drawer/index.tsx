@@ -1,14 +1,15 @@
 import React, { FC } from 'react';
 import { Box, Text } from '@gluestack-ui/themed';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import { UserAvatar } from '@src/assets/svg/avatar/user-avatar';
+
+import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
   HomeIcon,
   LogoutIcon,
   ProfileIcon,
   SettingsIcon,
-} from '@src/assets/svg/navigation-icons/';
-import ROUTES from '@src/constants/routes';
+} from 'src/assets/svg/navigation-icons/';
+import ROUTES from 'src/constants/routes';
 
 import { MenuItem } from './components/menu-item';
 
@@ -32,7 +33,8 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
         paddingBottom={15}
         gap={10}
         borderBottomColor="$secondary300"
-        borderBottomWidth={2}>
+        borderBottomWidth={2}
+      >
         <UserAvatar width={70} height={70} />
         <Text size="xl">username</Text>
       </Box>

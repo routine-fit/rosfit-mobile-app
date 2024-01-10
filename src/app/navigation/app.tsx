@@ -1,10 +1,11 @@
 import React from 'react';
-import DrawerContent from '@components/drawer';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
 } from '@react-navigation/drawer';
-import { ProfileScreen } from '@screens/index';
+
+import DrawerContent from 'src/app/components/drawer';
+import { ProfileScreen } from 'src/app/screens';
 
 import { BottomTab } from './bottom-tab';
 
@@ -18,7 +19,8 @@ export const AppNavigation = () => {
   return (
     <Drawer.Navigator
       screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
-      drawerContent={renderContent}>
+      drawerContent={renderContent}
+    >
       <Drawer.Screen name="Home" component={BottomTab} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
     </Drawer.Navigator>
