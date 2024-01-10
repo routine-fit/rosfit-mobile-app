@@ -9,13 +9,18 @@ import { ProfileScreen } from 'src/app/screens';
 
 import { BottomTab } from './bottom-tab';
 
-const Drawer = createDrawerNavigator();
+export type MainDrawerParamList = {
+  Home: undefined;
+  Profile: undefined;
+};
 
 const renderContent = (props: DrawerContentComponentProps) => (
   <DrawerContent {...props} />
 );
 
-export const AppNavigation = () => {
+const Drawer = createDrawerNavigator<MainDrawerParamList>();
+
+export const MainAppNavigation = () => {
   return (
     <Drawer.Navigator
       screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
