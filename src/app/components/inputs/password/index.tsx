@@ -1,4 +1,5 @@
-import React from 'react';
+import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
+import React, { useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import {
   FormControl,
@@ -8,18 +9,26 @@ import {
   FormControlLabelText,
   Input,
   InputField,
+  InputIcon,
+  InputSlot,
 } from '@gluestack-ui/themed';
 
-import { ControlledInputProps } from './types';
+import { PasswordInputProps } from './types';
 
-const ControlledInput = <Form extends FieldValues>({
+const PasswordInput = <Form extends FieldValues>({
   controller,
   label,
   inputProps = {},
   inputFieldProps = {},
   formControlProps = {},
-}: ControlledInputProps<Form>) => {
+}: PasswordInputProps<Form>) => {
   const { field, fieldState } = useController(controller);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const handleState = () => {
+    setShowPassword(showState => {
+      return !showState;
+    });
+  };
 
   return (
     <FormControl
@@ -35,10 +44,17 @@ const ControlledInput = <Form extends FieldValues>({
           autoCapitalize="none"
           autoComplete="off"
           {...inputFieldProps}
+          type={showPassword ? 'text' : 'password'}
           onChangeText={field.onChange}
           value={field.value}
           onBlur={field.onBlur}
         />
+        <InputSlot marginRight={16} onPress={handleState}>
+          <InputIcon
+            as={showPassword ? EyeIcon : EyeOffIcon}
+            color={fieldState.invalid ? '$error500' : '$darkBlue500'}
+          />
+        </InputSlot>
       </Input>
       <FormControlError>
         <FormControlErrorText>{fieldState.error?.message}</FormControlErrorText>
@@ -47,4 +63,4 @@ const ControlledInput = <Form extends FieldValues>({
   );
 };
 
-export default ControlledInput;
+export default PasswordInput;
