@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Box, Text } from '@gluestack-ui/themed';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { UserAvatar } from '@src/assets/svg/avatar/user-avatar';
@@ -9,32 +8,15 @@ import {
   ProfileIcon,
   SettingsIcon,
 } from '@src/assets/svg/navigation-icons/';
+import ROUTES from '@src/constants/routes';
 
-const ROUTES = {
-  HOME: 'HomeScreen',
-  PROFILE: 'Profile',
-  SETTINGS: 'SettingsScreen',
-};
+import { MenuItem } from './components/menu-item';
 
-interface MenuItemProps {
-  icon: JSX.Element;
-  label: string;
-  onPress: () => void;
-}
-
-const MenuItem: FC<MenuItemProps> = ({ icon, label, onPress }) => (
-  <TouchableOpacity onPress={onPress}>
-    <Box
-      flexDirection="row"
-      gap={10}
-      alignItems="center"
-      paddingVertical={17}
-      paddingHorizontal={5}>
-      {icon}
-      <Text size="md">{label}</Text>
-    </Box>
-  </TouchableOpacity>
-);
+const navigationRoutes = [
+  { route: ROUTES.HOME, icon: <HomeIcon />, label: 'Home' },
+  { route: ROUTES.PROFILE, icon: <ProfileIcon />, label: 'Profile' },
+  { route: ROUTES.SETTINGS, icon: <SettingsIcon />, label: 'Settings' },
+];
 
 const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   const handleLogout = () => {
@@ -56,11 +38,7 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
       </Box>
 
       <Box padding={15}>
-        {[
-          { route: ROUTES.HOME, icon: <HomeIcon />, label: 'Home' },
-          { route: ROUTES.PROFILE, icon: <ProfileIcon />, label: 'Profile' },
-          { route: ROUTES.SETTINGS, icon: <SettingsIcon />, label: 'Settings' },
-        ].map(({ route, icon, label }) => (
+        {navigationRoutes.map(({ route, icon, label }) => (
           <MenuItem
             key={route}
             icon={icon}
