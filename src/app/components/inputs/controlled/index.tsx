@@ -30,7 +30,14 @@ const ControlledInput = <Form extends FieldValues>({
       <FormControlLabel>
         <FormControlLabelText>{label}</FormControlLabelText>
       </FormControlLabel>
-      <Input {...inputProps}>
+      <Input
+        {...inputProps}
+        sx={{
+          ':focus': {
+            borderColor: '$lime700',
+          },
+        }}
+      >
         <InputField
           autoCapitalize="none"
           autoComplete="off"

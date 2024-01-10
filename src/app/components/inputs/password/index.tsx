@@ -39,7 +39,14 @@ const PasswordInput = <Form extends FieldValues>({
       <FormControlLabel>
         <FormControlLabelText>{label}</FormControlLabelText>
       </FormControlLabel>
-      <Input {...inputProps}>
+      <Input
+        {...inputProps}
+        sx={{
+          ':focus': {
+            borderColor: '$lime700',
+          },
+        }}
+      >
         <InputField
           autoCapitalize="none"
           autoComplete="off"
@@ -52,7 +59,7 @@ const PasswordInput = <Form extends FieldValues>({
         <InputSlot marginRight={16} onPress={handleState}>
           <InputIcon
             as={showPassword ? EyeIcon : EyeOffIcon}
-            color={fieldState.invalid ? '$error500' : '$darkBlue500'}
+            color={fieldState.invalid ? '$error500' : '$lime700'}
           />
         </InputSlot>
       </Input>
