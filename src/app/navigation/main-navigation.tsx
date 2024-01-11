@@ -5,14 +5,10 @@ import {
 } from '@react-navigation/drawer';
 
 import DrawerContent from 'src/app/components/drawer';
-import { ProfileScreen } from 'src/app/screens';
+import { ProfileScreen } from 'src/app/screens/index';
+import { MainDrawerParamList } from 'src/types/navigation';
 
 import { BottomTab } from './bottom-tab';
-
-export type MainDrawerParamList = {
-  Home: undefined;
-  Profile: undefined;
-};
 
 const renderContent = (props: DrawerContentComponentProps) => (
   <DrawerContent {...props} />

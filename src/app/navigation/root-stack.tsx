@@ -1,13 +1,8 @@
+import { RootStackParamList } from 'src/types/navigation';
 import React, { useEffect, useState } from 'react';
-import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { MainAppNavigation, MainDrawerParamList } from './main-navigation';
-
-export type RootStackParamList = {
-  // TODO : onboarding , auth, etc
-  Main: NavigatorScreenParams<MainDrawerParamList>;
-};
+import { MainAppNavigation } from './main-navigation';
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
