@@ -14,9 +14,17 @@ import ROUTES from 'src/constants/routes';
 import { MenuItem } from './components/menu-item';
 
 const navigationRoutes = [
-  { route: ROUTES.HOME, icon: <HomeIcon />, label: 'Home' },
-  { route: ROUTES.PROFILE, icon: <ProfileIcon />, label: 'Profile' },
-  { route: ROUTES.SETTINGS, icon: <SettingsIcon />, label: 'Settings' },
+  { route: ROUTES.HOME, icon: <HomeIcon color="#4D7C0F" />, label: 'Home' },
+  {
+    route: ROUTES.PROFILE,
+    icon: <ProfileIcon color="#4D7C0F" />,
+    label: 'Profile',
+  },
+  {
+    route: ROUTES.SETTINGS,
+    icon: <SettingsIcon color="#4D7C0F" />,
+    label: 'Settings',
+  },
 ];
 
 const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
