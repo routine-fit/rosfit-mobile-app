@@ -15,7 +15,8 @@ export const BottomTab = () => {
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="HomeScreen">
+      initialRouteName="HomeScreen"
+    >
       <Tab.Screen name="RoutinesScreen" component={RoutinesScreen} />
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
       <Tab.Screen name="ExerciseScreen" component={ExerciseScreen} />
