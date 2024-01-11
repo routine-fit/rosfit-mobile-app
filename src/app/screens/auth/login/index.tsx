@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
 import { Box, Button, ButtonText, Divider, Text } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +12,7 @@ import { commonStyles } from 'src/utils/styles';
 export const LoginScreen = () => {
   // TODO: Type the navigation screens
   const { navigate } = useNavigation<any>();
+  const { t } = useTranslation();
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -27,19 +29,17 @@ export const LoginScreen = () => {
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>
       <Box padding={20} flex={1} justifyContent="center">
         <Text size="3xl" textAlign="center">
-          Login
+          {t('screens:login.heading1')}
         </Text>
         <ControlledInput
           controller={{
             control,
             name: 'email',
             rules: {
-              required: 'El email es requerido',
+              required: t('inputs:error.required', {
+                field: t('inputs:label.email').toLowerCase(),
+              }),
             },
-          }}
-          label="Email"
-          inputFieldProps={{
-            placeholder: 'john.doe@example.com',
           }}
           formControlProps={{
             marginBottom: '$4',
@@ -50,10 +50,11 @@ export const LoginScreen = () => {
             control,
             name: 'password',
             rules: {
-              required: 'La contraseña es requerida',
+              required: t('inputs:error.required', {
+                field: t('inputs:label.password').toLowerCase(),
+              }),
             },
           }}
-          label="Contraseña"
           formControlProps={{
             marginBottom: '$4',
           }}
@@ -63,7 +64,7 @@ export const LoginScreen = () => {
           marginBottom="$4"
           bgColor="$lime600"
         >
-          <ButtonText>Iniciar sesión</ButtonText>
+          <ButtonText>{t('common:button.login')}</ButtonText>
         </Button>
         <GoogleSignInButton
           onPress={() => {
@@ -73,12 +74,12 @@ export const LoginScreen = () => {
         <Divider bg="$backgroundLight300" h={1} my="$4" />
         <Button variant="link">
           <ButtonText fontSize="$sm" color="$lime700">
-            Se olvido la contraseña?
+            {t('screens:login.forgotPassword')}
           </ButtonText>
         </Button>
         <Button variant="link">
           <ButtonText fontSize="$sm" color="$lime700">
-            Crea tu cuenta
+            {t('screens:login.createYourAccount')}
           </ButtonText>
         </Button>
       </Box>

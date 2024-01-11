@@ -1,6 +1,7 @@
 import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   FormControl,
   FormControlError,
@@ -17,13 +18,19 @@ import { PasswordInputProps } from './types';
 
 const PasswordInput = <Form extends FieldValues>({
   controller,
-  label,
   inputProps = {},
   inputFieldProps = {},
   formControlProps = {},
 }: PasswordInputProps<Form>) => {
   const { field, fieldState } = useController(controller);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { t } = useTranslation();
+
+  const label = t(`inputs:label.${controller.name}`);
+  const placeholder = t(`inputs:placeholder.${controller.name}`);
+
+  console.log('placeholder', placeholder);
+
   const handleState = () => {
     setShowPassword(showState => {
       return !showState;
@@ -50,6 +57,7 @@ const PasswordInput = <Form extends FieldValues>({
         <InputField
           autoCapitalize="none"
           autoComplete="off"
+          placeholder={placeholder}
           {...inputFieldProps}
           type={showPassword ? 'text' : 'password'}
           onChangeText={field.onChange}

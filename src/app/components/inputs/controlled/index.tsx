@@ -1,5 +1,6 @@
 import React from 'react';
 import { FieldValues, useController } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   FormControl,
   FormControlError,
@@ -14,12 +15,15 @@ import { ControlledInputProps } from './types';
 
 const ControlledInput = <Form extends FieldValues>({
   controller,
-  label,
   inputProps = {},
   inputFieldProps = {},
   formControlProps = {},
 }: ControlledInputProps<Form>) => {
   const { field, fieldState } = useController(controller);
+  const { t } = useTranslation();
+
+  const label = t(`inputs:label.${controller.name}`);
+  const placeholder = t(`inputs:placeholder.${controller.name}`);
 
   return (
     <FormControl
@@ -41,6 +45,7 @@ const ControlledInput = <Form extends FieldValues>({
         <InputField
           autoCapitalize="none"
           autoComplete="off"
+          placeholder={placeholder}
           {...inputFieldProps}
           onChangeText={field.onChange}
           value={field.value}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, ButtonIcon, ButtonText } from '@gluestack-ui/themed';
 
 import { GoogleIcon } from 'src/assets/svg/social-media/google';
@@ -6,6 +7,8 @@ import { GoogleIcon } from 'src/assets/svg/social-media/google';
 import { GoogleSignInProps } from './types';
 
 const GoogleSignInButton = ({ onPress }: GoogleSignInProps) => {
+  const { t } = useTranslation();
+
   return (
     <Button
       marginBottom="$4"
@@ -17,7 +20,7 @@ const GoogleSignInButton = ({ onPress }: GoogleSignInProps) => {
     >
       <ButtonIcon as={GoogleIcon} />
       <ButtonText ml="$6" color="#3C4043">
-        Sign in with Google
+        {t('common:button.googleSignIn')}
       </ButtonText>
     </Button>
   );
