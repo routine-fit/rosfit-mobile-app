@@ -1,28 +1,41 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
 import { Box, Button, ButtonText, Divider, Text } from '@gluestack-ui/themed';
+import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
 import { GoogleSignInButton } from 'src/app/components/buttons';
 import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
 import { commonStyles } from 'src/utils/styles';
 
+type FormData = {
+  email: string;
+  password: string;
+};
+
 export const LoginScreen = () => {
   // TODO: Type the navigation screens
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation();
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onValidSubmit = () => {
-    navigate('MainApp');
+  const onValidSubmit: SubmitHandler<FormData> = async data => {
+    try {
+      const { email, password } = data;
+      await auth().signInWithEmailAndPassword(email, password);
+
+      navigate('Main');
+    } catch (error) {
+      Alert.alert('Authentication Failed', error.message);
+    }
   };
 
   return (

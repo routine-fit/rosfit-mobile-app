@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from 'src/types/navigation';
@@ -9,20 +10,28 @@ import { MainAppNavigation } from './main-navigation';
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootStackNavigator = () => {
-  const [loading, setLoading] = useState(true);
-  const [initialRouteName, setInitialRouteName] =
-    useState<keyof RootStackParamList>('Main');
+  const [initializing, setInitializing] = useState(true);
+  const [initialRouteName, setInitialRouteName] = useState<
+    keyof RootStackParamList | undefined
+  >('Auth');
+
+  const onAuthStateChanged = useCallback(
+    (firebaseUser: FirebaseAuthTypes.User | null) => {
+      console.log('Authentication State:', firebaseUser);
+      if (initializing) setInitializing(false);
+
+      setInitialRouteName(firebaseUser ? 'Main' : 'Auth');
+    },
+    [initializing],
+  );
 
   useEffect(() => {
-    // TODO: fetch onboarding status to set initial route name
-    setInitialRouteName('Main');
-    // after fetching data:
-    setLoading(false);
-  }, []);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
 
-  if (loading) {
-    return <></>;
-  }
+    return subscriber;
+  }, [onAuthStateChanged]);
+
+  if (initializing) return null;
 
   return (
     <RootStack.Navigator initialRouteName={initialRouteName}>
