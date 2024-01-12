@@ -1,7 +1,9 @@
-import { RootStackParamList } from 'src/types/navigation';
 import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { RootStackParamList } from 'src/types/navigation';
+
+import { AuthNavigation } from './auth';
 import { MainAppNavigation } from './main-navigation';
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -29,6 +31,11 @@ export const RootStackNavigator = () => {
         name="Main"
         options={{ headerShown: false }}
         component={MainAppNavigation}
+      />
+      <RootStack.Screen
+        name="Auth"
+        options={{ headerShown: false }}
+        component={AuthNavigation}
       />
     </RootStack.Navigator>
   );

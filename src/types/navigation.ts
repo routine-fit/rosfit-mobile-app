@@ -14,4 +14,9 @@ export type MainDrawerParamList = {
 export type RootStackParamList = {
   // TODO : onboarding , auth, etc
   Main: NavigatorScreenParams<MainDrawerParamList>;
+  Auth: NavigatorScreenParams<AuthStackParamList>;
+};
+
+export type AuthStackParamList = {
+  Login: undefined;
 };
