@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ExerciseScreen, HomeScreen, RoutinesScreen } from '@screens/index';
+
+import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
 
 const Tab = createBottomTabNavigator();
 

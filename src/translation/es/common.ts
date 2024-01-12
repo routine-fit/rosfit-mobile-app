@@ -1,6 +1,8 @@
 export default {
   username: 'Nombre de usuario',
-  password: 'Password',
-  login: 'Login',
   welcome: 'Bienvenido',
+  button: {
+    login: 'Iniciar sesión',
+    googleSignIn: 'Sign in with Google',
+  },
 };

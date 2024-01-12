@@ -7,7 +7,8 @@ import es from '../../translation/es';
 const resources = {
   es,
 };
-i18n.use(initReactI18next).init({
+
+i18n.use({ ...initReactI18next, transEmptyNodeValue: '' }).init({
   compatibilityJSON: 'v3',
   resources,
   lng: RNLocalize.getLocales()[0].languageCode,
@@ -16,4 +17,5 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
+
 export default i18n;

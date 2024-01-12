@@ -15,7 +15,8 @@ export const MenuItem: FC<MenuItemProps> = ({ icon, label, onPress }) => (
       gap={10}
       alignItems="center"
       paddingVertical={17}
-      paddingHorizontal={5}>
+      paddingHorizontal={5}
+    >
       {icon}
       <Text size="md">{label}</Text>
     </Box>
