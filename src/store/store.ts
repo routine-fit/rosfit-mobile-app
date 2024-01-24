@@ -8,7 +8,7 @@ import {
 } from '@reduxjs/toolkit';
 
 import reactotron from '../../ReactotronConfig';
-import { authSlice } from './auth/authSlice';
+import { authSlice } from './auth/auth.slice';
 
 export const store = configureStore({
   reducer: {
