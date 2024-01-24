@@ -3,9 +3,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { config as gluestackConfig } from '@gluestack-ui/config';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
-import { NavigationContainer } from '@react-navigation/native';
 
-import { AuthNavigation } from 'src/app/navigation';
+import NavigationWrapper from 'src/app/navigation';
 import LocalizationProvider from 'src/config/localization/provider';
 import { store } from 'src/store';
 
@@ -14,9 +13,7 @@ const App = (): JSX.Element => {
     <Provider store={store}>
       <GluestackUIProvider config={gluestackConfig}>
         <LocalizationProvider>
-          <NavigationContainer>
-            <AuthNavigation />
-          </NavigationContainer>
+          <NavigationWrapper />
         </LocalizationProvider>
       </GluestackUIProvider>
     </Provider>
