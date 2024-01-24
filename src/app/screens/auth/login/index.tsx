@@ -2,12 +2,14 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Box, Button, ButtonText, Divider, Text } from '@gluestack-ui/themed';
-import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
 import { GoogleSignInButton } from 'src/app/components/buttons';
 import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
+import { AppDispatch, RootState, useAppDispatch } from 'src/store';
+import { startLoginWithEmailPassword } from 'src/store/auth/thunks';
 import { commonStyles } from 'src/utils/styles';
 
 type FormData = {
@@ -19,6 +21,8 @@ export const LoginScreen = () => {
   // TODO: Type the navigation screens
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation();
+  const dispatch: AppDispatch = useAppDispatch();
+  const { status } = useSelector((state: RootState) => state.auth);
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
@@ -30,10 +34,11 @@ export const LoginScreen = () => {
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
       const { email, password } = data;
-      await auth().signInWithEmailAndPassword(email, password);
-
-      navigate('Main');
-    } catch (error) {
+      await dispatch(startLoginWithEmailPassword({ email, password }));
+      if (status === 'succeeded') {
+        navigate('Main');
+      }
+    } catch (error: any) {
       Alert.alert('Authentication Failed', error.message);
     }
   };

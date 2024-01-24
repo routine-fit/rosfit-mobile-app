@@ -17,7 +17,6 @@ export const RootStackNavigator = () => {
 
   const onAuthStateChanged = useCallback(
     (firebaseUser: FirebaseAuthTypes.User | null) => {
-      console.log('Authentication State:', firebaseUser);
       if (initializing) setInitializing(false);
 
       setInitialRouteName(firebaseUser ? 'Main' : 'Auth');

@@ -1,2 +1,2 @@
-export * from './sampleUi/sampleUiSlice';
+export * from './auth/authSlice';
 export * from './store';

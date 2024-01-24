@@ -29,8 +29,6 @@ const PasswordInput = <Form extends FieldValues>({
   const label = t(`inputs:label.${controller.name}`);
   const placeholder = t(`inputs:placeholder.${controller.name}`);
 
-  console.log('placeholder', placeholder);
-
   const handleState = () => {
     setShowPassword(showState => {
       return !showState;
