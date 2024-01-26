@@ -24,3 +24,17 @@ export const startLoginWithEmailPassword = createAsyncThunk(
     }
   },
 );
+
+export const startLogoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await auth().signOut();
+      return null;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || 'An error occurred during logout',
+      );
+    }
+  },
+);

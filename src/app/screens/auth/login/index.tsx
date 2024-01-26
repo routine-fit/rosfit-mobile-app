@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
@@ -35,13 +35,16 @@ export const LoginScreen = () => {
     try {
       const { email, password } = data;
       await dispatch(startLoginWithEmailPassword({ email, password }));
-      if (status === 'succeeded') {
-        navigate('Main');
-      }
     } catch (error: any) {
       Alert.alert('Authentication Failed', error.message);
     }
   };
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      navigate('Main');
+    }
+  }, [navigate, status]);
 
   return (
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>

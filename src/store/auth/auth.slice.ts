@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { startLoginWithEmailPassword } from './thunks';
+import { startLoginWithEmailPassword, startLogoutUser } from './thunks';
 
 interface AuthState {
   uid: string | null;
@@ -43,6 +43,15 @@ export const authSlice = createSlice({
         state.errorMessage =
           action.error.message || 'An error occurred during login';
         state.status = 'failed';
+      })
+      .addCase(startLogoutUser.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(startLogoutUser.fulfilled, state => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.status = 'idle';
       });
   },
 });
