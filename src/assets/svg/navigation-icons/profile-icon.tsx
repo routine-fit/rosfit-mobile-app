@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-interface Props {
-  width?: number;
-  height?: number;
-  color: string;
-}
+import { IconProps } from './types';
 
-export const ProfileIcon: FC<Props> = ({ width = 18, height = 18, color }) => {
+export const ProfileIcon: FC<IconProps> = ({
+  width = 18,
+  height = 18,
+  color,
+}) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 18 18" fill="none">
       <Path

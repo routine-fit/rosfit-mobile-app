@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-interface Props {
-  width?: number;
-  height?: number;
-}
+import { IconProps } from './types';
 
-export const LogoutIcon: FC<Props> = ({ width = 24, height = 24 }) => {
+export const LogoutIcon: FC<IconProps> = ({ width = 24, height = 24 }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
       <Path
