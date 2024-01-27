@@ -1,42 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from 'src/types/navigation';
 
-import { AuthNavigation } from './auth';
+import { getAuthenticatedGroup } from './auth';
 import { MainAppNavigation } from './main-navigation';
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootStackNavigator = () => {
-  const [loading, setLoading] = useState(true);
-  const [initialRouteName, setInitialRouteName] =
-    useState<keyof RootStackParamList>('Main');
+  const [initializing, setInitializing] = useState(true);
+  const [isAuthenticated, setisAuthenticated] = useState<boolean>(false);
+
+  const onAuthStateChanged = useCallback(
+    (firebaseUser: FirebaseAuthTypes.User | null) => {
+      if (initializing) setInitializing(false);
+      setisAuthenticated(!!firebaseUser?.uid);
+    },
+    [initializing],
+  );
 
   useEffect(() => {
-    // TODO: fetch onboarding status to set initial route name
-    setInitialRouteName('Main');
-    // after fetching data:
-    setLoading(false);
-  }, []);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, [onAuthStateChanged]);
 
-  if (loading) {
-    return <></>;
-  }
+  if (initializing) return null;
 
   return (
-    <RootStack.Navigator initialRouteName={initialRouteName}>
+    <RootStack.Navigator>
       {/* TODO : add onboarding stack */}
-      <RootStack.Screen
-        name="Main"
-        options={{ headerShown: false }}
-        component={MainAppNavigation}
-      />
-      <RootStack.Screen
-        name="Auth"
-        options={{ headerShown: false }}
-        component={AuthNavigation}
-      />
+      {isAuthenticated ? (
+        <RootStack.Screen
+          name="Main"
+          options={{ headerShown: false }}
+          component={MainAppNavigation}
+        />
+      ) : (
+        getAuthenticatedGroup()
+      )}
     </RootStack.Navigator>
   );
 };
