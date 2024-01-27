@@ -1,5 +1,6 @@
-import auth from '@react-native-firebase/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
+import firebaseAuth from 'src/config/firebase';
 
 interface LoginCredentials {
   email: string;
@@ -11,7 +12,10 @@ export const startLoginWithEmailPassword = createAsyncThunk(
   async (credentials: LoginCredentials, { rejectWithValue }) => {
     try {
       const { email, password } = credentials;
-      const resp = await auth().signInWithEmailAndPassword(email, password);
+      const resp = await firebaseAuth.signInWithEmailAndPassword(
+        email,
+        password,
+      );
       const { uid, displayName } = resp.user;
 
       return {
@@ -29,7 +33,7 @@ export const startLogoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      await auth().signOut();
+      await firebaseAuth.signOut();
       return null;
     } catch (error: any) {
       return rejectWithValue(

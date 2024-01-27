@@ -10,6 +10,8 @@ import {
   SettingsIcon,
 } from 'src/assets/svg/navigation-icons/';
 import ROUTES from 'src/constants/routes';
+import { useAppDispatch } from 'src/store';
+import { startLogoutUser } from 'src/store/auth/thunks';
 
 import { MenuItem } from './components/menu-item';
 
@@ -28,8 +30,10 @@ const navigationRoutes = [
 ];
 
 const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
-  const handleLogout = () => {
-    // TODO: dispatch logout
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    await dispatch(startLogoutUser());
   };
 
   return (
