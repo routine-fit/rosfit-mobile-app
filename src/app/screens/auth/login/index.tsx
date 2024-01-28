@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { GoogleSignInButton } from 'src/app/components/buttons';
 import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
-import { AppDispatch, RootState, useAppDispatch } from 'src/store';
+import { RootState, useAppDispatch } from 'src/store';
 import { startLoginWithEmailPassword } from 'src/store/auth/thunks';
 import { commonStyles } from 'src/utils/styles';
 
@@ -21,7 +21,7 @@ export const LoginScreen = () => {
   // TODO: Type the navigation screens
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation();
-  const dispatch: AppDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const { status } = useSelector((state: RootState) => state.auth);
 
   const { control, handleSubmit } = useForm<FormData>({
