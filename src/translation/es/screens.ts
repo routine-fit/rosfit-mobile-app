@@ -9,4 +9,7 @@ export default {
     heading1: 'Crea tu cuenta',
     error: 'Error al crear cuenta',
   },
+  completeData: {
+    heading1: 'Ya falta poco\n Completa con tus datos',
+  },
 };

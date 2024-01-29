@@ -24,7 +24,7 @@ export const CreateAccountScreen = () => {
   // const dispatch = useAppDispatch();
   // const { status } = useSelector((state: RootState) => state.auth);
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, watch } = useForm<FormData>({
     defaultValues: {
       email: '',
       password: '',
@@ -36,7 +36,6 @@ export const CreateAccountScreen = () => {
     try {
       const { email, password } = data;
       console.log(email, password);
-
       // await dispatch(startCreateFirebase({ email, password }));
       navigate('CompleteData');
     } catch (error: any) {
@@ -58,6 +57,10 @@ export const CreateAccountScreen = () => {
               required: t('inputs:error.required', {
                 field: t('inputs:label.email').toLowerCase(),
               }),
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: t('inputs:error.emailFormat'),
+              },
             },
           }}
           formControlProps={{
@@ -72,6 +75,13 @@ export const CreateAccountScreen = () => {
               required: t('inputs:error.required', {
                 field: t('inputs:label.password').toLowerCase(),
               }),
+              minLength: {
+                value: 6,
+                message: t('inputs:error.passwordMinLength', {
+                  field: t('inputs:label.password').toLowerCase(),
+                  min: 6,
+                }),
+              },
             },
           }}
           formControlProps={{
@@ -86,6 +96,11 @@ export const CreateAccountScreen = () => {
               required: t('inputs:error.required', {
                 field: t('inputs:label.repeatPassword').toLowerCase(),
               }),
+              validate: value => {
+                if (watch('password') !== value) {
+                  return t('inputs:error.passwordMatch');
+                }
+              },
             },
           }}
           formControlProps={{

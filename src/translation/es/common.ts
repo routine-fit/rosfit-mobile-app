@@ -5,5 +5,6 @@ export default {
     login: 'Iniciar sesión',
     continue: 'Continuar',
     googleSignIn: 'Sign in with Google',
+    confirm: 'Confirmar',
   },
 };

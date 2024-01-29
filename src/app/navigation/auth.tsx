@@ -4,6 +4,7 @@ import { LoginScreen } from 'src/app/screens/auth/login';
 import { BackArrowIcon } from 'src/assets/svg/navigation-icons';
 
 import { Header } from '../components/header';
+import { CompleteDataScreen } from '../screens/auth/signup/completeData';
 import { CreateAccountScreen } from '../screens/auth/signup/createAccount';
 import { RootStack } from './root-stack';
 
@@ -25,7 +26,19 @@ export const getAuthenticatedGroup = () => {
             ),
           })}
         />
-        {/* <RootStack.Screen name="CompleteData" component={} /> */}
+        <RootStack.Screen
+          name="CompleteData"
+          component={CompleteDataScreen}
+          options={({ navigation }) => ({
+            header: () => (
+              <Header
+                leftIcon={<BackArrowIcon />}
+                navigation={navigation}
+                headerTitle="Informacion Personal"
+              />
+            ),
+          })}
+        />
       </RootStack.Group>
     </RootStack.Group>
   );

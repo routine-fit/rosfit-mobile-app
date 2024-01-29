@@ -45,7 +45,7 @@ export const Header: FC<Props> = ({
         </TouchableOpacity>
       )}
 
-      <Box position="absolute" left="50%" alignItems="center" top="$8">
+      <Box flex={1} alignItems="center">
         {headerTitle && (
           <ButtonText fontWeight="$bold">{headerTitle}</ButtonText>
         )}
