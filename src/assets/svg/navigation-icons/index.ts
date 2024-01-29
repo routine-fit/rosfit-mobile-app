@@ -1,3 +1,4 @@
+export * from './back-arrow-icon';
 export * from './dumbbell-icon';
 export * from './home-icon';
 export * from './logout-icon';

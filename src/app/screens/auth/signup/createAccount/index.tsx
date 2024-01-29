@@ -1,56 +1,54 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
-import { useSelector } from 'react-redux';
-import { Box, Button, ButtonText, Divider, Text } from '@gluestack-ui/themed';
+// import { useSelector } from 'react-redux';
+import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 
-import { GoogleSignInButton } from 'src/app/components/buttons';
 import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
-import { RootState, useAppDispatch } from 'src/store';
-import { startLoginWithEmailPassword } from 'src/store/auth/thunks';
+// import { useAppDispatch } from 'src/store';
+// import { startCreateFirebase } from 'src/store/auth/thunks';
 import { commonStyles } from 'src/utils/styles';
 
 type FormData = {
   email: string;
   password: string;
+  repeatPassword: string;
 };
 
-export const LoginScreen = () => {
+export const CreateAccountScreen = () => {
   // TODO: Type the navigation screens
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const { status } = useSelector((state: RootState) => state.auth);
+  // const dispatch = useAppDispatch();
+  // const { status } = useSelector((state: RootState) => state.auth);
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       email: '',
       password: '',
+      repeatPassword: '',
     },
   });
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
       const { email, password } = data;
-      await dispatch(startLoginWithEmailPassword({ email, password }));
+      console.log(email, password);
+
+      // await dispatch(startCreateFirebase({ email, password }));
+      navigate('CompleteData');
     } catch (error: any) {
-      Alert.alert(t('screens:login:error'), error.message);
+      Alert.alert(t('screens:signUp:error'), error.message);
     }
   };
 
-  useEffect(() => {
-    if (status === 'succeeded') {
-      navigate('Main');
-    }
-  }, [navigate, status]);
-
   return (
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>
-      <Box padding={20} flex={1} justifyContent="center">
-        <Text size="3xl" textAlign="center">
-          {t('screens:login.heading1')}
+      <Box padding={20} flex={1} justifyContent="center" mb="$12">
+        <Text size="2xl" textAlign="center" mb="$12">
+          {t('screens:signUp.heading1')}
         </Text>
         <ControlledInput
           controller={{
@@ -63,7 +61,7 @@ export const LoginScreen = () => {
             },
           }}
           formControlProps={{
-            marginBottom: '$4',
+            mb: '$4',
           }}
         />
         <PasswordInput
@@ -77,31 +75,30 @@ export const LoginScreen = () => {
             },
           }}
           formControlProps={{
-            marginBottom: '$4',
+            mb: '$4',
+          }}
+        />
+        <PasswordInput
+          controller={{
+            control,
+            name: 'repeatPassword',
+            rules: {
+              required: t('inputs:error.required', {
+                field: t('inputs:label.repeatPassword').toLowerCase(),
+              }),
+            },
+          }}
+          formControlProps={{
+            mb: '$4',
           }}
         />
         <Button
           onPress={handleSubmit(onValidSubmit)}
-          marginBottom="$4"
+          mt="$8"
+          mb="$4"
           bgColor="$lime600"
         >
-          <ButtonText>{t('common:button.login')}</ButtonText>
-        </Button>
-        <GoogleSignInButton
-          onPress={() => {
-            Alert.prompt('Sign in with google');
-          }}
-        />
-        <Divider bg="$backgroundLight300" h={1} my="$4" />
-        <Button variant="link">
-          <ButtonText fontSize="$sm" color="$lime700">
-            {t('screens:login.forgotPassword')}
-          </ButtonText>
-        </Button>
-        <Button variant="link" onPress={() => navigate('CreateAccount')}>
-          <ButtonText fontSize="$sm" color="$lime700">
-            {t('screens:login.createYourAccount')}
-          </ButtonText>
+          <ButtonText>{t('common:button.continue')}</ButtonText>
         </Button>
       </Box>
     </SafeAreaView>

@@ -3,6 +3,7 @@ export default {
   welcome: 'Bienvenido',
   button: {
     login: 'Iniciar sesión',
+    continue: 'Continuar',
     googleSignIn: 'Sign in with Google',
   },
 };
