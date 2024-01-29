@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { startLoginWithEmailPassword, startLogoutUser } from './thunks';
+import {
+  startCreateFirebaseUser,
+  startLoginWithEmailPassword,
+  startLogoutUser,
+} from './thunks';
 
 interface AuthState {
   uid: string | null;
@@ -43,6 +47,25 @@ export const authSlice = createSlice({
         state.errorMessage =
           action.error.message || 'An error occurred during login';
         state.status = 'failed';
+      })
+      .addCase(startCreateFirebaseUser.pending, state => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.errorMessage = null;
+      })
+      .addCase(startCreateFirebaseUser.fulfilled, (state, action) => {
+        state.uid = action.payload.uid;
+        state.email = action.payload.email;
+        state.displayName = action.payload.displayName;
+        state.errorMessage = null;
+      })
+      .addCase(startCreateFirebaseUser.rejected, (state, action) => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.errorMessage =
+          action.error.message || 'An error occurred during signup';
       })
       .addCase(startLogoutUser.pending, state => {
         state.status = 'loading';

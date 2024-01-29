@@ -2,13 +2,12 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
-// import { useSelector } from 'react-redux';
 import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
-// import { useAppDispatch } from 'src/store';
-// import { startCreateFirebase } from 'src/store/auth/thunks';
+import { useAppDispatch } from 'src/store';
+import { startCreateFirebaseUser } from 'src/store/auth/thunks';
 import { commonStyles } from 'src/utils/styles';
 
 type FormData = {
@@ -18,11 +17,9 @@ type FormData = {
 };
 
 export const CreateAccountScreen = () => {
-  // TODO: Type the navigation screens
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation();
-  // const dispatch = useAppDispatch();
-  // const { status } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
 
   const { control, handleSubmit, watch } = useForm<FormData>({
     defaultValues: {
@@ -35,8 +32,7 @@ export const CreateAccountScreen = () => {
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
       const { email, password } = data;
-      console.log(email, password);
-      // await dispatch(startCreateFirebase({ email, password }));
+      await dispatch(startCreateFirebaseUser({ email, password }));
       navigate('CompleteData');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);
