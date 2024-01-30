@@ -21,8 +21,9 @@ export default {
   error: {
     required: '{{field}} es requerido',
     emailFormat: 'formato de email invalido',
-    nameMinLength: '{{field}} debe contener 2 caracteres minimo',
+    nameMinLength: '{{field}} debe contener {{min}} caracteres minimo',
     passwordMinLength: 'el password debe contener 6 caracteres minimo',
     passwordMatch: 'el password ingresado no coincide',
+    genderValue: 'genero invalido, valores: {{male}} / {{female}}',
   },
 };

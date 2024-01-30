@@ -3,24 +3,24 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
 import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 
 import { ControlledInput } from 'src/app/components/inputs';
-// import { useAppDispatch } from 'src/store';
-// import { startCreateFirebase } from 'src/store/auth/thunks';
 import { commonStyles } from 'src/utils/styles';
+
+import { validationSchema } from './form-config';
 
 type FormData = {
   firstName: string;
   lastName: string;
   birthDate: string;
-  gender: 'male' | 'female' | undefined;
+  gender: string;
 };
 
 export const CompleteDataScreen = () => {
   const { navigate } = useNavigation<any>();
   const { t } = useTranslation();
-  // const dispatch = useAppDispatch();
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
@@ -29,14 +29,14 @@ export const CompleteDataScreen = () => {
       birthDate: '',
       gender: undefined,
     },
+    resolver: yupResolver(validationSchema),
   });
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { firstName, lastName, birthDate, gender } = data;
-      console.log(firstName, lastName, birthDate, gender);
-
-      // await dispatch(startCreateFirebase({ email, password }));
+      // TODO: dispatch create userInfo
       navigate('Login');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);
@@ -53,18 +53,6 @@ export const CompleteDataScreen = () => {
           controller={{
             control,
             name: 'firstName',
-            rules: {
-              required: t('inputs:error.required', {
-                field: t('inputs:label.firstName').toLowerCase(),
-              }),
-              minLength: {
-                value: 2,
-                message: t('inputs:error.nameMinLength', {
-                  field: t('inputs:label.firstName').toLowerCase(),
-                  min: 2,
-                }),
-              },
-            },
           }}
           formControlProps={{
             mb: '$4',
@@ -74,18 +62,6 @@ export const CompleteDataScreen = () => {
           controller={{
             control,
             name: 'lastName',
-            rules: {
-              required: t('inputs:error.required', {
-                field: t('inputs:label.lastName').toLowerCase(),
-              }),
-              minLength: {
-                value: 2,
-                message: t('inputs:error.nameMinLength', {
-                  field: t('inputs:label.lastName').toLowerCase(),
-                  min: 2,
-                }),
-              },
-            },
           }}
           formControlProps={{
             mb: '$4',
@@ -96,11 +72,6 @@ export const CompleteDataScreen = () => {
           controller={{
             control,
             name: 'birthDate',
-            rules: {
-              required: t('inputs:error.required', {
-                field: t('inputs:label.birthDate').toLowerCase(),
-              }),
-            },
           }}
           formControlProps={{
             mb: '$4',
@@ -111,11 +82,6 @@ export const CompleteDataScreen = () => {
           controller={{
             control,
             name: 'gender',
-            rules: {
-              required: t('inputs:error.required', {
-                field: t('inputs:label.gender').toLowerCase(),
-              }),
-            },
           }}
           formControlProps={{
             mb: '$4',

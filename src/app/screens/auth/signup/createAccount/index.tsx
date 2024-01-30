@@ -3,12 +3,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, SafeAreaView } from 'react-native';
 import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 
 import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
 import { useAppDispatch } from 'src/store';
 import { startCreateFirebaseUser } from 'src/store/auth/thunks';
 import { commonStyles } from 'src/utils/styles';
+
+import { validationSchema } from './form-config';
 
 type FormData = {
   email: string;
@@ -21,12 +24,13 @@ export const CreateAccountScreen = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const { control, handleSubmit, watch } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       email: '',
       password: '',
       repeatPassword: '',
     },
+    resolver: yupResolver(validationSchema),
   });
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
@@ -49,15 +53,6 @@ export const CreateAccountScreen = () => {
           controller={{
             control,
             name: 'email',
-            rules: {
-              required: t('inputs:error.required', {
-                field: t('inputs:label.email').toLowerCase(),
-              }),
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: t('inputs:error.emailFormat'),
-              },
-            },
           }}
           formControlProps={{
             mb: '$4',
@@ -67,18 +62,6 @@ export const CreateAccountScreen = () => {
           controller={{
             control,
             name: 'password',
-            rules: {
-              required: t('inputs:error.required', {
-                field: t('inputs:label.password').toLowerCase(),
-              }),
-              minLength: {
-                value: 6,
-                message: t('inputs:error.passwordMinLength', {
-                  field: t('inputs:label.password').toLowerCase(),
-                  min: 6,
-                }),
-              },
-            },
           }}
           formControlProps={{
             mb: '$4',
@@ -88,16 +71,6 @@ export const CreateAccountScreen = () => {
           controller={{
             control,
             name: 'repeatPassword',
-            rules: {
-              required: t('inputs:error.required', {
-                field: t('inputs:label.repeatPassword').toLowerCase(),
-              }),
-              validate: value => {
-                if (watch('password') !== value) {
-                  return t('inputs:error.passwordMatch');
-                }
-              },
-            },
           }}
           formControlProps={{
             mb: '$4',

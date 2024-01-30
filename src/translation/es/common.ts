@@ -7,4 +7,8 @@ export default {
     googleSignIn: 'Sign in with Google',
     confirm: 'Confirmar',
   },
+  gender: {
+    male: 'Masculino',
+    female: 'Femenino',
+  },
 };
