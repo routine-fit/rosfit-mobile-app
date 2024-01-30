@@ -17,7 +17,6 @@ export const RootStackNavigator = () => {
     (firebaseUser: FirebaseAuthTypes.User | null) => {
       if (initializing) setInitializing(false);
       setisAuthenticated(!!firebaseUser?.uid);
-      setisAuthenticated(false);
     },
     [initializing],
   );
