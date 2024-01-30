@@ -16,9 +16,7 @@ export const RootStackNavigator = () => {
   const onAuthStateChanged = useCallback(
     (firebaseUser: FirebaseAuthTypes.User | null) => {
       if (initializing) setInitializing(false);
-      // need to fix this flag
-      // setisAuthenticated(!!firebaseUser?.uid);
-      console.log(firebaseUser?.uid);
+      setisAuthenticated(!!firebaseUser?.uid);
       setisAuthenticated(false);
     },
     [initializing],
