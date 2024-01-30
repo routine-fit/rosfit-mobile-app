@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import React from 'react';
 
 import { LoginScreen } from 'src/app/screens/auth/login';
@@ -19,7 +20,7 @@ export const getAuthenticatedGroup = () => {
           options={({ navigation }) => ({
             header: () => (
               <Header
-                leftText="Login"
+                leftText={t('navigation:headers.login')}
                 leftIcon={<BackArrowIcon />}
                 navigation={navigation}
               />
@@ -34,7 +35,7 @@ export const getAuthenticatedGroup = () => {
               <Header
                 leftIcon={<BackArrowIcon />}
                 navigation={navigation}
-                headerTitle="Informacion Personal"
+                headerTitle={t('navigation:headers.completeDataScreen')}
               />
             ),
           })}
