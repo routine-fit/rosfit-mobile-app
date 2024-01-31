@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -14,9 +15,13 @@ export const RootStackNavigator = () => {
   const [isAuthenticated, setisAuthenticated] = useState<boolean>(false);
 
   const onAuthStateChanged = useCallback(
-    (firebaseUser: FirebaseAuthTypes.User | null) => {
+    async (firebaseUser: FirebaseAuthTypes.User | null) => {
       if (initializing) setInitializing(false);
-      setisAuthenticated(!!firebaseUser?.uid);
+
+      if (!firebaseUser) {
+        const token = await AsyncStorage.getItem('token');
+        setisAuthenticated(!!token);
+      }
     },
     [initializing],
   );
@@ -25,6 +30,24 @@ export const RootStackNavigator = () => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, [onAuthStateChanged]);
+
+  const checkToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      setisAuthenticated(!!token);
+    } catch (error) {
+      setisAuthenticated(false);
+    }
+  };
+
+  useEffect(() => {
+    const initializeApp = async () => {
+      await checkToken();
+      setInitializing(false);
+    };
+
+    initializeApp();
+  }, []);
 
   if (initializing) return null;
 
