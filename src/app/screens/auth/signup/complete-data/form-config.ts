@@ -1,6 +1,13 @@
 import { t } from 'i18next';
 import * as yup from 'yup';
 
+export type FormData = {
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  gender: string;
+};
+
 const genderRegex = new RegExp(
   `^(${t('common:gender.male')}|${t('common:gender.female')})$`,
   'i',

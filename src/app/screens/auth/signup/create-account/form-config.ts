@@ -1,6 +1,12 @@
 import { t } from 'i18next';
 import * as yup from 'yup';
 
+export type FormData = {
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
+
 export const validationSchema = yup.object().shape({
   email: yup
     .string()

@@ -9,40 +9,35 @@ import {
 } from 'react-native';
 import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 
-import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
-import { useAppDispatch } from 'src/store';
-import { startCreateFirebaseUser } from 'src/store/auth/thunks';
+import { ControlledInput } from 'src/app/components/inputs';
+import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
-import { validationSchema } from './form-config';
+import { FormData, validationSchema } from './form-config';
 
-type FormData = {
-  email: string;
-  password: string;
-  repeatPassword: string;
-};
-
-export const CreateAccountScreen = () => {
-  const { navigate } = useNavigation<any>();
+export const CompleteDataScreen = ({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'CompleteData'>) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
-      email: '',
-      password: '',
-      repeatPassword: '',
+      firstName: '',
+      lastName: '',
+      birthDate: '',
+      gender: undefined,
     },
     resolver: yupResolver(validationSchema),
   });
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
-      const { email, password } = data;
-      await dispatch(startCreateFirebaseUser({ email, password }));
-      navigate('CompleteData');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { firstName, lastName, birthDate, gender } = data;
+      // TODO: dispatch create userInfo
+      navigation.navigate('Login');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);
     }
@@ -54,44 +49,55 @@ export const CreateAccountScreen = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={commonStyles.keyboardAvoidingView}
       >
-        <Box padding={20} flex={1} justifyContent="center" mb="$12">
-          <Text size="2xl" textAlign="center" mb="$12">
-            {t('screens:signUp.heading1')}
+        <Box padding={20} flex={1} justifyContent="center" mt="$6" mb="$8">
+          <Text size="2xl" textAlign="center" mb="$4">
+            {t('screens:completeData.heading1')}
           </Text>
           <ControlledInput
             controller={{
               control,
-              name: 'email',
+              name: 'firstName',
             }}
             formControlProps={{
               mb: '$4',
             }}
           />
-          <PasswordInput
+          <ControlledInput
             controller={{
               control,
-              name: 'password',
+              name: 'lastName',
             }}
             formControlProps={{
               mb: '$4',
             }}
           />
-          <PasswordInput
+          {/* TODO: datepicker implementation */}
+          <ControlledInput
             controller={{
               control,
-              name: 'repeatPassword',
+              name: 'birthDate',
             }}
             formControlProps={{
               mb: '$4',
             }}
           />
+          {/* TODO: implement a select input */}
+          <ControlledInput
+            controller={{
+              control,
+              name: 'gender',
+            }}
+            formControlProps={{
+              mb: '$4',
+            }}
+          />
+
           <Button
             onPress={handleSubmit(onValidSubmit)}
-            mt="$8"
-            mb="$4"
+            mt="$4"
             bgColor="$lime600"
           >
-            <ButtonText>{t('common:button.continue')}</ButtonText>
+            <ButtonText>{t('common:button.confirm')}</ButtonText>
           </Button>
         </Box>
       </KeyboardAvoidingView>
