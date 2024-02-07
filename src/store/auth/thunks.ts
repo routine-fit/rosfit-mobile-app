@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import firebaseAuth from 'src/config/firebase';
@@ -23,6 +24,8 @@ export const startLoginWithEmailPassword = createAsyncThunk(
       );
       const { uid, displayName } = resp.user;
 
+      const idToken = await resp.user.getIdToken();
+      await AsyncStorage.setItem('token', idToken);
       return {
         uid,
         displayName,
@@ -63,6 +66,7 @@ export const startLogoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await firebaseAuth.signOut();
+      await AsyncStorage.removeItem('token');
       return null;
     } catch (error: any) {
       return rejectWithValue(
