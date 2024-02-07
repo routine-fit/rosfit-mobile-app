@@ -3,6 +3,12 @@ export default {
   welcome: 'Bienvenido',
   button: {
     login: 'Iniciar sesión',
+    continue: 'Continuar',
     googleSignIn: 'Sign in with Google',
+    confirm: 'Confirmar',
+  },
+  gender: {
+    male: 'Masculino',
+    female: 'Femenino',
   },
 };

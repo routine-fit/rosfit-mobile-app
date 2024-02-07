@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
+  startCreateFirebaseUser,
   startGoogleSignIn,
   startLoginWithEmailPassword,
   startLogoutUser,
@@ -48,6 +49,25 @@ export const authSlice = createSlice({
           action.error.message || 'An error occurred during login';
         state.status = 'failed';
       })
+      .addCase(startCreateFirebaseUser.pending, state => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.errorMessage = null;
+      })
+      .addCase(startCreateFirebaseUser.fulfilled, (state, action) => {
+        state.uid = action.payload.uid;
+        state.email = action.payload.email;
+        state.displayName = action.payload.displayName;
+        state.errorMessage = null;
+      })
+      .addCase(startCreateFirebaseUser.rejected, (state, action) => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.errorMessage =
+          action.error.message || 'An error occurred during signup';
+      })
       .addCase(startGoogleSignIn.pending, state => {
         state.uid = null;
         state.email = null;
@@ -65,7 +85,7 @@ export const authSlice = createSlice({
         state.email = null;
         state.displayName = null;
         state.errorMessage =
-          action.error.message || 'An error occurred during login';
+          action.error.message || 'An error occurred during signin';
         state.status = 'failed';
       })
       .addCase(startLogoutUser.pending, state => {

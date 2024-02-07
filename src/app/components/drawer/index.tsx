@@ -34,6 +34,7 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
 
   const handleLogout = async () => {
     await dispatch(startLogoutUser());
+    navigation.navigate('Login');
   };
 
   return (
