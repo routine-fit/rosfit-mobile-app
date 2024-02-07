@@ -36,7 +36,7 @@ export const LoginScreen = () => {
       const { email, password } = data;
       await dispatch(startLoginWithEmailPassword({ email, password }));
     } catch (error: any) {
-      Alert.alert('Authentication Failed', error.message);
+      Alert.alert(t('screens:login:error'), error.message);
     }
   };
 
@@ -98,7 +98,7 @@ export const LoginScreen = () => {
             {t('screens:login.forgotPassword')}
           </ButtonText>
         </Button>
-        <Button variant="link">
+        <Button variant="link" onPress={() => navigate('CreateAccount')}>
           <ButtonText fontSize="$sm" color="$lime700">
             {t('screens:login.createYourAccount')}
           </ButtonText>

@@ -15,4 +15,6 @@ export type RootStackParamList = {
   // TODO : onboarding , auth, etc
   Main: NavigatorScreenParams<MainDrawerParamList>;
   Login: undefined;
+  CreateAccount: undefined;
+  CompleteData: undefined;
 };

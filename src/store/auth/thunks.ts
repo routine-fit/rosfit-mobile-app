@@ -7,6 +7,11 @@ interface LoginCredentials {
   password: string;
 }
 
+interface SignUpCredentials {
+  email: string;
+  password: string;
+}
+
 export const startLoginWithEmailPassword = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials, { rejectWithValue }) => {
@@ -25,6 +30,30 @@ export const startLoginWithEmailPassword = createAsyncThunk(
       };
     } catch (error: any) {
       return rejectWithValue(error.message || 'An error occurred during login');
+    }
+  },
+);
+
+export const startCreateFirebaseUser = createAsyncThunk(
+  'auth/signup',
+  async (credentials: SignUpCredentials, { rejectWithValue }) => {
+    try {
+      const { email, password } = credentials;
+      const resp = await firebaseAuth.createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      const { uid, displayName } = resp.user;
+
+      return {
+        uid,
+        displayName,
+        email,
+      };
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || 'An error occurred during signup',
+      );
     }
   },
 );
