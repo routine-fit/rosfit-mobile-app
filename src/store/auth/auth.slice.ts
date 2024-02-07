@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { startLoginWithEmailPassword, startLogoutUser } from './thunks';
+import {
+  startGoogleSignIn,
+  startLoginWithEmailPassword,
+  startLogoutUser,
+} from './thunks';
 
 interface AuthState {
   uid: string | null;
@@ -37,6 +41,26 @@ export const authSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(startLoginWithEmailPassword.rejected, (state, action) => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.errorMessage =
+          action.error.message || 'An error occurred during login';
+        state.status = 'failed';
+      })
+      .addCase(startGoogleSignIn.pending, state => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.status = 'loading';
+      })
+      .addCase(startGoogleSignIn.fulfilled, (state, action) => {
+        state.uid = action.payload.uid;
+        state.email = action.payload.email;
+        state.displayName = action.payload.displayName;
+        state.status = 'succeeded';
+      })
+      .addCase(startGoogleSignIn.rejected, (state, action) => {
         state.uid = null;
         state.email = null;
         state.displayName = null;
