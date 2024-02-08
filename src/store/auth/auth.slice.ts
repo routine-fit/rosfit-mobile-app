@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   startCreateFirebaseUser,
+  startGoogleSignIn,
   startLoginWithEmailPassword,
   startLogoutUser,
 } from './thunks';
@@ -66,6 +67,26 @@ export const authSlice = createSlice({
         state.displayName = null;
         state.errorMessage =
           action.error.message || 'An error occurred during signup';
+      })
+      .addCase(startGoogleSignIn.pending, state => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.status = 'loading';
+      })
+      .addCase(startGoogleSignIn.fulfilled, (state, action) => {
+        state.uid = action.payload.uid;
+        state.email = action.payload.email;
+        state.displayName = action.payload.displayName;
+        state.status = 'succeeded';
+      })
+      .addCase(startGoogleSignIn.rejected, (state, action) => {
+        state.uid = null;
+        state.email = null;
+        state.displayName = null;
+        state.errorMessage =
+          action.error.message || 'An error occurred during signin';
+        state.status = 'failed';
       })
       .addCase(startLogoutUser.pending, state => {
         state.status = 'loading';

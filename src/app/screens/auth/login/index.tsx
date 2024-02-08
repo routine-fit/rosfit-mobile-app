@@ -9,7 +9,10 @@ import { useNavigation } from '@react-navigation/native';
 import { GoogleSignInButton } from 'src/app/components/buttons';
 import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
 import { RootState, useAppDispatch } from 'src/store';
-import { startLoginWithEmailPassword } from 'src/store/auth/thunks';
+import {
+  startGoogleSignIn,
+  startLoginWithEmailPassword,
+} from 'src/store/auth/thunks';
 import { commonStyles } from 'src/utils/styles';
 
 type FormData = {
@@ -37,6 +40,17 @@ export const LoginScreen = () => {
       await dispatch(startLoginWithEmailPassword({ email, password }));
     } catch (error: any) {
       Alert.alert(t('screens:login:error'), error.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await dispatch(startGoogleSignIn());
+    } catch (error: any) {
+      Alert.alert(
+        'Google Sign-In Failed',
+        error.message || 'An error occurred during Google Sign-In',
+      );
     }
   };
 
@@ -87,11 +101,7 @@ export const LoginScreen = () => {
         >
           <ButtonText>{t('common:button.login')}</ButtonText>
         </Button>
-        <GoogleSignInButton
-          onPress={() => {
-            Alert.prompt('Sign in with google');
-          }}
-        />
+        <GoogleSignInButton onPress={handleGoogleSignIn} />
         <Divider bg="$backgroundLight300" h={1} my="$4" />
         <Button variant="link">
           <ButtonText fontSize="$sm" color="$lime700">

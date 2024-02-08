@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import firebaseAuth from 'src/config/firebase';
@@ -31,6 +33,27 @@ export const startLoginWithEmailPassword = createAsyncThunk(
         displayName,
         email,
       };
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'An error occurred during login');
+    }
+  },
+);
+
+export const startGoogleSignIn = createAsyncThunk(
+  'auth/google-signin',
+  async (_, { rejectWithValue }) => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const { user } =
+        await firebaseAuth.signInWithCredential(googleCredential);
+
+      const firebaseToken = await user.getIdToken();
+      await AsyncStorage.setItem('token', firebaseToken);
+
+      const { uid, displayName, email } = user;
+      return { uid, displayName, email };
     } catch (error: any) {
       return rejectWithValue(error.message || 'An error occurred during login');
     }
