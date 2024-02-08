@@ -17,6 +17,7 @@ export default {
     lastName: '',
     birthDate: 'DD/MM/AAAA',
     gender: '',
+    datepicker: 'Seleccione una fecha',
   },
   error: {
     required: '{{field}} es requerido',
