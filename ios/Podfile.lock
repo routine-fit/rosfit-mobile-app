@@ -486,8 +486,6 @@ PODS:
   - RecaptchaInterop (100.0.0)
   - RNCAsyncStorage (1.21.0):
     - React-Core
-  - RNDateTimePicker (7.6.2):
-    - React-Core
   - RNFBApp (18.7.3):
     - Firebase/CoreOnly (= 10.19.0)
     - React-Core
@@ -585,7 +583,6 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -700,8 +697,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
-  RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -778,7 +773,6 @@ SPEC CHECKSUMS:
   ReactCommon: cfe086d2e2ec9f2907c66666c856082608fba822
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
-  RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
   RNFBApp: 5ee688b07ed0fa692a3a8fd07df6d6ae41e4c3a0
   RNFBAuth: a800af76ce0baed0c839307aa0aa0c2443dbbee6
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
