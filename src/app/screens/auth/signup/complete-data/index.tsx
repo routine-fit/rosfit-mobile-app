@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { ControlledInput } from 'src/app/components/inputs';
+import DatePickerInput from 'src/app/components/inputs/datepicker';
 import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
@@ -72,7 +73,7 @@ export const CompleteDataScreen = ({
             }}
           />
           {/* TODO: datepicker implementation */}
-          <ControlledInput
+          <DatePickerInput
             controller={{
               control,
               name: 'birthDate',
