@@ -16,7 +16,7 @@ export default {
     firstName: '',
     lastName: '',
     birthDate: 'DD/MM/AAAA',
-    gender: '',
+    gender: 'Seleccione una opcion',
   },
   error: {
     required: '{{field}} es requerido',

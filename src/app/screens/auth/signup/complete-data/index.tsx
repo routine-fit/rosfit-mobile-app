@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { ControlledInput } from 'src/app/components/inputs';
+import ControlledSelectInput from 'src/app/components/inputs/select';
 import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
@@ -21,6 +22,11 @@ export const CompleteDataScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, 'CompleteData'>) => {
   const { t } = useTranslation();
+
+  const genderOptions = [
+    { label: t('common:gender.male'), value: 'MALE' },
+    { label: t('common:gender.female'), value: 'FEMALE' },
+  ];
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
@@ -81,8 +87,7 @@ export const CompleteDataScreen = ({
               mb: '$4',
             }}
           />
-          {/* TODO: implement a select input */}
-          <ControlledInput
+          <ControlledSelectInput
             controller={{
               control,
               name: 'gender',
@@ -90,6 +95,7 @@ export const CompleteDataScreen = ({
             formControlProps={{
               mb: '$4',
             }}
+            options={genderOptions}
           />
 
           <Button
