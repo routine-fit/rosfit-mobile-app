@@ -12,10 +12,9 @@ import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import roFitApi from 'src/api/rofit.api';
 import { ControlledInput } from 'src/app/components/inputs';
-import { userInfoData, UserInfoResponse } from 'src/interfaces/user-info';
-import { RootState } from 'src/store';
+import { RootState, useAppDispatch } from 'src/store';
+import { startCreateUserInfo } from 'src/store/auth/thunks';
 import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
@@ -25,6 +24,7 @@ export const CompleteDataScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, 'CompleteData'>) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const { uid } = useSelector((state: RootState) => state.auth);
 
   const { control, handleSubmit } = useForm<FormData>({
@@ -36,20 +36,6 @@ export const CompleteDataScreen = ({
     },
     resolver: yupResolver(validationSchema),
   });
-
-  const createUserInfo = async (userInfo: userInfoData) => {
-    try {
-      const response = await roFitApi.post<UserInfoResponse>(
-        '/user-info',
-        userInfo,
-      );
-      return response.data.data;
-    } catch (error: any) {
-      throw new Error(
-        error.message || 'An error occurred during user info creation',
-      );
-    }
-  };
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
@@ -63,7 +49,7 @@ export const CompleteDataScreen = ({
         gender,
         pushNotification: false,
       };
-      await createUserInfo(userInfo);
+      await dispatch(startCreateUserInfo(userInfo));
       navigation.navigate('Login');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);
