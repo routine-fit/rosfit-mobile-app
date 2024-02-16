@@ -4,7 +4,7 @@ import * as yup from 'yup';
 export type FormData = {
   firstName: string;
   lastName: string;
-  birthDate: string;
+  birthDate: Date;
   gender: string;
 };
 
@@ -42,8 +42,7 @@ export const validationSchema = yup.object().shape({
         min: 2,
       }),
     ),
-  // TODO: define birthdate validations after implementing date picket and date format
-  birthDate: yup.string().required(
+  birthDate: yup.date().required(
     t('inputs:error.required', {
       field: t('inputs:label.birthDate').toLowerCase(),
     }),

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -7,12 +7,11 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
-import DatePicker from 'react-native-date-picker';
-import * as RNLocalize from 'react-native-localize';
 import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import ControlledDatepicker from 'src/app/components/datepicker';
 import { ControlledInput } from 'src/app/components/inputs';
 import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
@@ -24,14 +23,11 @@ export const CompleteDataScreen = ({
 }: StackScreenProps<RootStackParamList, 'CompleteData'>) => {
   const { t } = useTranslation();
 
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-
-  const { control, handleSubmit, setValue } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
       firstName: '',
       lastName: '',
-      birthDate: '',
+      birthDate: new Date(),
       gender: undefined,
     },
     resolver: yupResolver(validationSchema),
@@ -76,16 +72,14 @@ export const CompleteDataScreen = ({
               mb: '$4',
             }}
           />
-          <ControlledInput
+
+          <ControlledDatepicker
             controller={{
               control,
               name: 'birthDate',
             }}
             formControlProps={{
               mb: '$4',
-            }}
-            inputProps={{
-              onTouchStart: () => setShowDatePicker(true),
             }}
           />
           {/* TODO: implement a select input */}
@@ -106,24 +100,6 @@ export const CompleteDataScreen = ({
           >
             <ButtonText>{t('common:button.confirm')}</ButtonText>
           </Button>
-
-          <DatePicker
-            modal
-            open={showDatePicker}
-            date={selectedDate || new Date()}
-            mode="date"
-            maximumDate={new Date()}
-            title={t('inputs:placeholder.datepicker')}
-            locale={RNLocalize.getLocales()[0].languageCode}
-            onConfirm={date => {
-              setShowDatePicker(false);
-              setSelectedDate(date);
-              setValue('birthDate', date.toLocaleDateString());
-            }}
-            onCancel={() => {
-              setShowDatePicker(false);
-            }}
-          />
         </Box>
       </KeyboardAvoidingView>
     </SafeAreaView>
