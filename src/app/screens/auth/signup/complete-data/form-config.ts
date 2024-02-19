@@ -8,10 +8,7 @@ export type FormData = {
   gender: string;
 };
 
-const genderRegex = new RegExp(
-  `^(${t('common:gender.male')}|${t('common:gender.female')})$`,
-  'i',
-);
+const genderRegex = new RegExp(`^(MALE|FEMALE)$`, 'i');
 
 export const validationSchema = yup.object().shape({
   firstName: yup
