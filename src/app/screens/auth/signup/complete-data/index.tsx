@@ -7,12 +7,15 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { ControlledInput } from 'src/app/components/inputs';
 import ControlledSelectInput from 'src/app/components/inputs/select';
+import { RootState, useAppDispatch } from 'src/store';
+import { startCreateUserInfo } from 'src/store/auth/thunks';
 import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
@@ -22,6 +25,8 @@ export const CompleteDataScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, 'CompleteData'>) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { uid } = useSelector((state: RootState) => state.auth);
 
   const genderOptions = [
     { label: t('common:gender.male'), value: 'MALE' },
@@ -40,9 +45,17 @@ export const CompleteDataScreen = ({
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { firstName, lastName, birthDate, gender } = data;
-      // TODO: dispatch create userInfo
+
+      const userInfo = {
+        firebaseUid: uid || '',
+        name: firstName,
+        lastName,
+        birthDate,
+        gender,
+        pushNotification: false,
+      };
+      await dispatch(startCreateUserInfo(userInfo));
       navigation.navigate('Login');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);
