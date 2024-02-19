@@ -3,7 +3,9 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import roFitApi from 'src/api/rofit.api';
 import firebaseAuth from 'src/config/firebase';
+import { userInfoData, UserInfoResponse } from 'src/interfaces/user-info';
 
 interface LoginCredentials {
   email: string;
@@ -76,6 +78,23 @@ export const startCreateFirebaseUser = createAsyncThunk(
         displayName,
         email,
       };
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || 'An error occurred during signup',
+      );
+    }
+  },
+);
+
+export const startCreateUserInfo = createAsyncThunk(
+  'auth/create-user-info',
+  async (userInfo: userInfoData, { rejectWithValue }) => {
+    try {
+      const response = await roFitApi.post<UserInfoResponse>(
+        '/user-info',
+        userInfo,
+      );
+      return response.data.data;
     } catch (error: any) {
       return rejectWithValue(
         error.message || 'An error occurred during signup',

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import {
   startCreateFirebaseUser,
+  startCreateUserInfo,
   startGoogleSignIn,
   startLoginWithEmailPassword,
   startLogoutUser,
@@ -87,6 +88,12 @@ export const authSlice = createSlice({
         state.errorMessage =
           action.error.message || 'An error occurred during signin';
         state.status = 'failed';
+      })
+      .addCase(startCreateUserInfo.pending, () => {})
+      .addCase(startCreateUserInfo.fulfilled, () => {})
+      .addCase(startCreateUserInfo.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message || 'An error occurred during user info creation';
       })
       .addCase(startLogoutUser.pending, state => {
         state.status = 'loading';
