@@ -1,23 +1,23 @@
-import React, { FC } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { FC, ReactNode } from 'react';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Box, ButtonText } from '@gluestack-ui/themed';
 
 interface Props {
-  navigation: any;
-  leftText?: string;
-  leftIcon?: React.ReactNode;
-  headerTitle?: string;
+  leftText?: string | ((props: any) => ReactNode) | undefined;
+  headerLeft?: React.ReactNode;
+  headerTitle?: string | ((props: any) => ReactNode) | undefined;
   rightText?: string;
   rightButton?: React.ReactNode;
+  onPressLeft?: () => void;
 }
 
 export const Header: FC<Props> = ({
-  navigation,
   leftText,
-  leftIcon,
+  headerLeft,
   headerTitle,
   rightText,
   rightButton,
+  onPressLeft,
 }) => {
   return (
     <Box
@@ -30,19 +30,19 @@ export const Header: FC<Props> = ({
       height={65}
       borderBottomLeftRadius={15}
     >
-      {(leftText || leftIcon) && (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          {leftIcon && leftText ? (
+      {(leftText || headerLeft) && (
+        <TouchableWithoutFeedback onPress={onPressLeft}>
+          {headerLeft && leftText ? (
             <Box flexDirection="row" alignItems="center">
-              <Box marginRight={5}>{leftIcon}</Box>
+              <Box marginRight={10}>{headerLeft}</Box>
               <ButtonText>{leftText}</ButtonText>
             </Box>
-          ) : leftIcon ? (
-            <Box>{leftIcon}</Box>
+          ) : headerLeft ? (
+            <Box>{headerLeft}</Box>
           ) : leftText ? (
             <ButtonText>{leftText}</ButtonText>
           ) : null}
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       )}
 
       <Box flex={1} alignItems="center">
@@ -54,7 +54,7 @@ export const Header: FC<Props> = ({
       {rightText && rightButton ? (
         <Box flexDirection="row" alignItems="center">
           <ButtonText>{rightText}</ButtonText>
-          <Box marginLeft={5}>{rightButton}</Box>
+          <Box marginLeft={10}>{rightButton}</Box>
         </Box>
       ) : rightText ? (
         <ButtonText>{rightText}</ButtonText>
