@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Box, Text } from '@gluestack-ui/themed';
 
 interface InfoBoxProps {
-  value: string;
+  value?: string;
   label: string;
 }
 

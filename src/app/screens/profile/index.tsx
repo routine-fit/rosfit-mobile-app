@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Box, Button, ButtonText, Divider, Text } from '@gluestack-ui/themed';
 
 import { PasswordReadOnly } from 'src/app/components/inputs/password-read-only';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
+import { ProfileData } from 'src/interfaces/profile-data';
+import profileDataFile from 'src/mocks/profile-data.json';
 import { RootState } from 'src/store';
 import { commonStyles } from 'src/utils/styles';
 
@@ -14,6 +16,33 @@ import { ProfileSectionHeader } from './components/profile-section-header';
 const deviceWidth = Dimensions.get('window').width;
 
 export const ProfileScreen = () => {
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+
+  const fetchProfileData = (): Promise<ProfileData> => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          resolve(profileDataFile);
+        } catch (error) {
+          reject(error);
+        }
+      }, 1000);
+    });
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchProfileData();
+        setProfileData(data);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchData();
+  }, [profileData]);
+
   const { displayName } = useSelector((state: RootState) => state.auth);
   return (
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>
@@ -42,11 +71,14 @@ export const ProfileScreen = () => {
             />
 
             <Box paddingHorizontal="$7">
-              <InfoBox value="Agustin" label="Nombre" />
-              <InfoBox value="Carthery" label="Apellido" />
-              <InfoBox value="Masculino" label="Genero" />
-              <InfoBox value="agcarthery@gmail.com" label="Email" />
-              <InfoBox value="01/01/1992" label="Fecha de nacimiento" />
+              <InfoBox value={profileData?.name} label="Nombre" />
+              <InfoBox value={profileData?.lastName} label="Apellido" />
+              <InfoBox value={profileData?.gender} label="Genero" />
+              <InfoBox value={profileData?.email} label="Email" />
+              <InfoBox
+                value={profileData?.birthDate}
+                label="Fecha de nacimiento"
+              />
             </Box>
             <Divider bg="$backgroundLight300" h={2} my="$1.5" />
 
@@ -55,8 +87,8 @@ export const ProfileScreen = () => {
               onEditPress={() => {}}
             />
             <Box paddingHorizontal="$7">
-              <InfoBox value="70kg" label="Peso" />
-              <InfoBox value="179cm" label="Estatura" />
+              <InfoBox value={profileData?.weight} label="Peso" />
+              <InfoBox value={profileData?.height} label="Estatura" />
             </Box>
             <Divider bg="$backgroundLight300" h={2} my="$1.5" />
 
@@ -65,11 +97,20 @@ export const ProfileScreen = () => {
               onEditPress={() => {}}
             />
             <Box paddingHorizontal="$7">
-              <InfoBox value="Fuerza" label="Tipo de entrenamiento" />
-              <InfoBox value="90'" label="Tiempo de entrenamiento" />
-              <InfoBox value="Medio" label="Intensidad de entrenamiento" />
               <InfoBox
-                value="Aumento de masa muscular"
+                value={profileData?.trainingType}
+                label="Tipo de entrenamiento"
+              />
+              <InfoBox
+                value={profileData?.trainingTime}
+                label="Tiempo de entrenamiento"
+              />
+              <InfoBox
+                value={profileData?.trainingIntensity}
+                label="Intensidad de entrenamiento"
+              />
+              <InfoBox
+                value={profileData?.trainingGoals}
                 label="Objetivos de entrenamiento"
               />
             </Box>
