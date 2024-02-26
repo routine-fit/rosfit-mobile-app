@@ -6,5 +6,6 @@ export default {
     routines: 'Rutinas',
     home: 'Home',
     exercises: 'Mis Ejercicios',
+    returnProfile: 'Perfil',
   },
 };

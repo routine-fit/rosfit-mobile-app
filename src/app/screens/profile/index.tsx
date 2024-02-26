@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Box, Button, ButtonText, Divider, Text } from '@gluestack-ui/themed';
+import { Box, Divider, Text } from '@gluestack-ui/themed';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
-import { PasswordReadOnly } from 'src/app/components/inputs/password-read-only';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 import { RootState } from 'src/store';
+import { MainDrawerParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
 import { InfoBox } from './components/info-box';
@@ -15,7 +16,9 @@ import { ProfileSectionHeader } from './components/profile-section-header';
 
 const deviceWidth = Dimensions.get('window').width;
 
-export const ProfileScreen = () => {
+interface Props extends DrawerScreenProps<MainDrawerParamList, 'Profile'> {}
+
+export const ProfileScreen = ({ navigation }: Props) => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
   const fetchProfileData = (): Promise<ProfileData> => {
@@ -67,7 +70,7 @@ export const ProfileScreen = () => {
           >
             <ProfileSectionHeader
               title="Informacion de perfil"
-              onEditPress={() => {}}
+              onEditPress={() => navigation.navigate('EditPersonalInfo')}
             />
 
             <Box paddingHorizontal="$7">
@@ -94,7 +97,7 @@ export const ProfileScreen = () => {
 
             <ProfileSectionHeader
               title="Preferencias de entrenamiento"
-              onEditPress={() => {}}
+              onEditPress={() => navigation.navigate('EditTrainingPreferences')}
             />
             <Box paddingHorizontal="$7">
               <InfoBox
@@ -113,26 +116,6 @@ export const ProfileScreen = () => {
                 value={profileData?.trainingGoals}
                 label="Objetivos de entrenamiento"
               />
-            </Box>
-            <Divider bg="$backgroundLight300" h={2} my="$1.5" />
-
-            <Box alignItems="center">
-              <Text color="$textDark950">Contraseña</Text>
-            </Box>
-            <Box paddingHorizontal="$7">
-              <Box gap="$1" marginVertical="$1.5">
-                <PasswordReadOnly value="test" />
-                <Text size="xs">Contraseña actual</Text>
-                <Button
-                  bgColor="$lime600"
-                  width="$48"
-                  height="$7"
-                  my="$2"
-                  onPress={() => {}}
-                >
-                  <ButtonText size="sm">Actualizar contraseña</ButtonText>
-                </Button>
-              </Box>
             </Box>
           </Box>
         </Box>

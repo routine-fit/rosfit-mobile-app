@@ -7,6 +7,10 @@ export default {
     lastName: 'Apellido',
     birthDate: 'Fecha de nacimiento',
     gender: 'Genero',
+    trainingType: '',
+    trainingTime: '',
+    trainingIntensity: '',
+    trainingGoals: '',
   },
   placeholder: {
     email: 'john.doe@example.com',

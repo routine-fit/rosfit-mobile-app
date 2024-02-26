@@ -10,10 +10,13 @@ import {
 import DrawerContent from 'src/app/components/drawer';
 import { ProfileScreen } from 'src/app/screens/index';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
+import { BackArrowIcon } from 'src/assets/svg/navigation-icons';
 import { RootState } from 'src/store';
 import { MainDrawerParamList } from 'src/types/navigation';
 
 import { Header } from '../components/header';
+import { EditPersonalInfoScreen } from '../screens/edit-personal-info';
+import { EditTrainingPreferencesScreen } from '../screens/edit-training-preferences';
 import { BottomTab } from './bottom-tab';
 
 const renderContent = (props: DrawerContentComponentProps) => (
@@ -22,10 +25,11 @@ const renderContent = (props: DrawerContentComponentProps) => (
 
 const screenOptions: DrawerNavigationOptions = {
   drawerStyle: { width: 240 },
-  header: ({ options }) => (
+  header: ({ options, navigation }) => (
     <Header
       leftText={options.headerTitle}
-      headerLeft={<UserAvatar color="#fff" width={20} />}
+      headerLeft={options.headerLeft}
+      onPressLeft={() => navigation.goBack()}
     />
   ),
 };
@@ -46,15 +50,35 @@ export const MainAppNavigation = () => {
         component={BottomTab}
         options={{ headerShown: false }}
       />
-      <Drawer.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          headerTitle: t('navigation:headers.profile', {
-            user: displayName?.split(' ')[0],
-          }),
-        }}
-      />
+
+      <Drawer.Group>
+        <Drawer.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            headerTitle: t('navigation:headers.profile', {
+              user: displayName?.split(' ')[0],
+            }),
+            headerLeft: <UserAvatar color="#fff" width={20} />,
+          }}
+        />
+        <Drawer.Screen
+          name="EditPersonalInfo"
+          component={EditPersonalInfoScreen}
+          options={{
+            headerTitle: t('navigation:headers.returnProfile'),
+            headerLeft: <BackArrowIcon color="#fff" width={20} />,
+          }}
+        />
+        <Drawer.Screen
+          name="EditTrainingPreferences"
+          component={EditTrainingPreferencesScreen}
+          options={{
+            headerTitle: t('navigation:headers.returnProfile'),
+            headerLeft: <BackArrowIcon color="#fff" width={20} />,
+          }}
+        />
+      </Drawer.Group>
     </Drawer.Navigator>
   );
 };
