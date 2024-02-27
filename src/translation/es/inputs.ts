@@ -11,6 +11,8 @@ export default {
     trainingTime: '',
     trainingIntensity: '',
     trainingGoals: '',
+    weight: '',
+    height: '',
   },
   placeholder: {
     email: 'john.doe@example.com',
@@ -21,6 +23,12 @@ export default {
     lastName: '',
     birthDate: 'DD/MM/AAAA',
     gender: 'Seleccione una opcion',
+    trainingType: '',
+    trainingTime: '',
+    trainingIntensity: '',
+    trainingGoals: '',
+    weight: 'Peso',
+    height: 'Estatura',
   },
   error: {
     required: '{{field}} es requerido',

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Box, Divider, Text } from '@gluestack-ui/themed';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 
+import { SharedModal } from 'src/app/components/modal';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
@@ -12,6 +13,7 @@ import { MainDrawerParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
 import { InfoBox } from './components/info-box';
+import { ModalContent } from './components/modal-content';
 import { ProfileSectionHeader } from './components/profile-section-header';
 
 const deviceWidth = Dimensions.get('window').width;
@@ -20,6 +22,7 @@ interface Props extends DrawerScreenProps<MainDrawerParamList, 'Profile'> {}
 
 export const ProfileScreen = ({ navigation }: Props) => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const fetchProfileData = (): Promise<ProfileData> => {
     return new Promise((resolve, reject) => {
@@ -87,7 +90,9 @@ export const ProfileScreen = ({ navigation }: Props) => {
 
             <ProfileSectionHeader
               title="Medidas corporales"
-              onEditPress={() => {}}
+              onEditPress={() => {
+                setShowModal(true);
+              }}
             />
             <Box paddingHorizontal="$7">
               <InfoBox value={profileData?.weight} label="Peso" />
@@ -118,6 +123,12 @@ export const ProfileScreen = ({ navigation }: Props) => {
               />
             </Box>
           </Box>
+          <SharedModal
+            open={showModal}
+            onClose={() => setShowModal(false)}
+            title="Medidas corporales"
+            body={<ModalContent onClose={() => setShowModal(false)} />}
+          />
         </Box>
       </ScrollView>
     </SafeAreaView>
