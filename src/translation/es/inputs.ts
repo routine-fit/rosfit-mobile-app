@@ -1,4 +1,12 @@
 export default {
+  name: {
+    trainingType: 'Tipo de entrenamiento',
+    trainingTime: 'Tiempo de entrenamiento',
+    trainingIntensity: 'Intensidad de entrenamiento',
+    trainingGoals: 'Metas de entrenamiento',
+    weight: 'Peso',
+    height: 'Estatura',
+  },
   label: {
     email: 'Email',
     password: 'Contraseña',

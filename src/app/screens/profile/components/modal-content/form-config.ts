@@ -9,12 +9,12 @@ export type FormData = {
 export const validationSchema = yup.object().shape({
   weight: yup.string().required(
     t('inputs:error.required', {
-      field: t('inputs:label.trainingType').toLowerCase(),
+      field: t('inputs:name.weight').toLowerCase(),
     }),
   ),
   height: yup.string().required(
     t('inputs:error.required', {
-      field: t('inputs:label.trainingTime').toLowerCase(),
+      field: t('inputs:name.height').toLowerCase(),
     }),
   ),
 });

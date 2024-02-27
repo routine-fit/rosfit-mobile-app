@@ -11,22 +11,22 @@ export type FormData = {
 export const validationSchema = yup.object().shape({
   trainingType: yup.string().required(
     t('inputs:error.required', {
-      field: t('inputs:label.trainingType').toLowerCase(),
+      field: t('inputs:name.trainingType').toLowerCase(),
     }),
   ),
   trainingTime: yup.string().required(
     t('inputs:error.required', {
-      field: t('inputs:label.trainingTime').toLowerCase(),
+      field: t('inputs:name.trainingTime').toLowerCase(),
     }),
   ),
   trainingIntensity: yup.string().required(
     t('inputs:error.required', {
-      field: t('inputs:label.trainingIntensity').toLowerCase(),
+      field: t('inputs:name.trainingIntensity').toLowerCase(),
     }),
   ),
   trainingGoals: yup.string().required(
     t('inputs:error.required', {
-      field: t('inputs:label.trainingGoals').toLowerCase(),
+      field: t('inputs:name.trainingGoals').toLowerCase(),
     }),
   ),
 });
