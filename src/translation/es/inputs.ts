@@ -16,6 +16,7 @@ export default {
     firstName: '',
     lastName: '',
     birthDate: 'DD/MM/AAAA',
+    datepicker: 'Seleccione una fecha',
     gender: 'Seleccione una opcion',
   },
   error: {

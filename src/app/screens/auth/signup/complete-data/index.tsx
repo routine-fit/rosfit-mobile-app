@@ -12,6 +12,7 @@ import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import ControlledDatepicker from 'src/app/components/datepicker';
 import { ControlledInput } from 'src/app/components/inputs';
 import ControlledSelectInput from 'src/app/components/inputs/select';
 import { RootState, useAppDispatch } from 'src/store';
@@ -37,7 +38,7 @@ export const CompleteDataScreen = ({
     defaultValues: {
       firstName: '',
       lastName: '',
-      birthDate: '',
+      birthDate: new Date(),
       gender: undefined,
     },
     resolver: yupResolver(validationSchema),
@@ -90,8 +91,8 @@ export const CompleteDataScreen = ({
               mb: '$4',
             }}
           />
-          {/* TODO: datepicker implementation */}
-          <ControlledInput
+
+          <ControlledDatepicker
             controller={{
               control,
               name: 'birthDate',
