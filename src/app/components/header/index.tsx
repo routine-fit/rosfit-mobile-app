@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native';
 import { Box, ButtonText } from '@gluestack-ui/themed';
 
 import { HeaderProps } from './types';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useToken } from '@gluestack-ui/themed';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
@@ -26,13 +25,6 @@ const renderContent = (props: DrawerContentComponentProps) => (
 
 const screenOptions: DrawerNavigationOptions = {
   drawerStyle: { width: 240 },
-  header: ({ options, navigation }) => (
-    <Header
-      leftText={options.headerTitle}
-      headerLeft={options.headerLeft}
-      onPressLeft={navigation.goBack}
-    />
-  ),
 };
 
 const Drawer = createDrawerNavigator<MainDrawerParamList>();
@@ -45,53 +37,53 @@ export const MainAppNavigation = () => {
     <Drawer.Navigator
       screenOptions={screenOptions}
       drawerContent={renderContent}
+      initialRouteName="Home"
     >
       <Drawer.Screen
         name="Home"
         component={BottomTab}
         options={{ headerShown: false }}
       />
-
-      <Drawer.Group>
-        <Drawer.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            headerTitle: t('navigation:headers.profile', {
-              user: displayName,
-            }),
-            headerLeft: (
-              <UserAvatar color={useToken('colors', 'light100')} width={20} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="EditPersonalInfo"
-          component={EditPersonalInfoScreen}
-          options={{
-            headerTitle: t('navigation:headers.returnProfile'),
-            headerLeft: (
-              <BackArrowIcon
-                color={useToken('colors', 'light100')}
-                width={20}
-              />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="EditTrainingPreferences"
-          component={EditTrainingPreferencesScreen}
-          options={{
-            headerTitle: t('navigation:headers.returnProfile'),
-            headerLeft: (
-              <BackArrowIcon
-                color={useToken('colors', 'light100')}
-                width={20}
-              />
-            ),
-          }}
-        />
-      </Drawer.Group>
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={() => ({
+          header: () => (
+            <Header
+              leftText={t('navigation:headers.profile', {
+                user: displayName,
+              })}
+              headerLeft={<UserAvatar color="light100" width={20} />}
+            />
+          ),
+        })}
+      />
+      <Drawer.Screen
+        name="EditPersonalInfo"
+        component={EditPersonalInfoScreen}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header
+              leftText={t('navigation:headers.returnProfile')}
+              headerLeft={<BackArrowIcon color="light100" width={20} />}
+              onPressLeft={navigation.goBack}
+            />
+          ),
+        })}
+      />
+      <Drawer.Screen
+        name="EditTrainingPreferences"
+        component={EditTrainingPreferencesScreen}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header
+              leftText={t('navigation:headers.returnProfile')}
+              headerLeft={<BackArrowIcon color="light100" width={20} />}
+              onPressLeft={navigation.goBack}
+            />
+          ),
+        })}
+      />
     </Drawer.Navigator>
   );
 };
