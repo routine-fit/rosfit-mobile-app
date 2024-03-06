@@ -11,21 +11,19 @@ import {
 import { Box, ButtonText, Text } from '@gluestack-ui/themed';
 import { Button } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { DrawerScreenProps } from '@react-navigation/drawer';
 
 import { ControlledInput } from 'src/app/components/inputs';
 import ControlledSelectInput from 'src/app/components/inputs/select';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
-import { MainDrawerParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
 import { FormData, validationSchema } from './form-config';
+import { EditPersonalInfoProps } from './types';
 
-interface Props
-  extends DrawerScreenProps<MainDrawerParamList, 'EditPersonalInfo'> {}
-
-export const EditPersonalInfoScreen = ({ navigation }: Props) => {
+export const EditPersonalInfoScreen = ({
+  navigation,
+}: EditPersonalInfoProps) => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const { t } = useTranslation();
 
@@ -75,10 +73,10 @@ export const EditPersonalInfoScreen = ({ navigation }: Props) => {
     fetchData();
   }, [profileData, reset]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
       //TODO: dispatch thunks
-      console.log(data);
     } catch (error: any) {
       Alert.alert(t('screens:editPersonalData:error'), error.message);
     }
@@ -138,11 +136,7 @@ export const EditPersonalInfoScreen = ({ navigation }: Props) => {
                 options={genderOptions}
               />
 
-              <Button
-                onPress={() => navigation.goBack()}
-                mt="$4"
-                bgColor="$error500"
-              >
+              <Button onPress={navigation.goBack} mt="$4" bgColor="$error500">
                 <ButtonText>{t('common:button.cancel')}</ButtonText>
               </Button>
               <Button

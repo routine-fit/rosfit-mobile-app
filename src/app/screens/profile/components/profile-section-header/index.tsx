@@ -2,10 +2,7 @@ import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Box, EditIcon, Text } from '@gluestack-ui/themed';
 
-interface ProfileSectionProps {
-  title: string;
-  onEditPress: () => void;
-}
+import { ProfileSectionProps } from './types';
 
 export const ProfileSectionHeader: FC<ProfileSectionProps> = ({
   title,

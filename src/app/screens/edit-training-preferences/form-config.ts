@@ -1,5 +1,6 @@
 import { t } from 'i18next';
 import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export type FormData = {
   trainingType: string;
@@ -30,3 +31,13 @@ export const validationSchema = yup.object().shape({
     }),
   ),
 });
+
+export const formConfig = {
+  defaultValues: {
+    trainingType: '',
+    trainingTime: '',
+    trainingIntensity: '',
+    trainingGoals: '',
+  },
+  resolver: yupResolver(validationSchema),
+};

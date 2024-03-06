@@ -2,25 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Box, Divider, Text } from '@gluestack-ui/themed';
-import { DrawerScreenProps } from '@react-navigation/drawer';
 
 import { SharedModal } from 'src/app/components/modal';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 import { RootState } from 'src/store';
-import { MainDrawerParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
 import { InfoBox } from './components/info-box';
 import { ModalContent } from './components/modal-content';
 import { ProfileSectionHeader } from './components/profile-section-header';
+import { ProfileScreenProps } from './types';
 
 const deviceWidth = Dimensions.get('window').width;
 
-interface Props extends DrawerScreenProps<MainDrawerParamList, 'Profile'> {}
-
-export const ProfileScreen = ({ navigation }: Props) => {
+export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [showModal, setShowModal] = useState(false);
 

@@ -1,10 +1,7 @@
 import React, { FC } from 'react';
 import { Box, Text } from '@gluestack-ui/themed';
 
-interface InfoBoxProps {
-  value?: string;
-  label: string;
-}
+import { InfoBoxProps } from './types';
 
 export const InfoBox: FC<InfoBoxProps> = ({ value, label }) => {
   return (

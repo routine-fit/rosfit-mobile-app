@@ -4,26 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { Box, Button, HStack } from '@gluestack-ui/themed';
 import { ButtonText } from '@gluestack-ui/themed';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ControlledInput } from 'src/app/components/inputs';
 
-import { FormData, validationSchema } from './form-config';
+import { formConfig, FormData } from './form-config';
+import { ModalContentProps } from './types';
 
-interface Props {
-  onClose: () => void;
-}
-
-export const ModalContent: FC<Props> = ({ onClose }) => {
+export const ModalContent: FC<ModalContentProps> = ({ onClose }) => {
   const { t } = useTranslation();
 
-  const { control, handleSubmit } = useForm<FormData>({
-    defaultValues: {
-      weight: '',
-      height: '',
-    },
-    resolver: yupResolver(validationSchema),
-  });
+  const { control, handleSubmit } = useForm<FormData>(formConfig);
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {

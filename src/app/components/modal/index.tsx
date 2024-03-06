@@ -1,4 +1,3 @@
-// SharedModal.tsx
 import React, { FC } from 'react';
 import {
   Heading,
@@ -12,14 +11,7 @@ import {
   VStack,
 } from '@gluestack-ui/themed';
 
-interface SharedModalProps {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  subtitle?: string;
-  body: React.JSX.Element;
-  footer?: React.JSX.Element;
-}
+import { SharedModalProps } from './types';
 
 export const SharedModal: FC<SharedModalProps> = ({
   open,

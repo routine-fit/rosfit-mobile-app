@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -10,40 +10,32 @@ import {
 } from 'react-native';
 import { Box, ButtonText, Text } from '@gluestack-ui/themed';
 import { Button } from '@gluestack-ui/themed';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { DrawerScreenProps } from '@react-navigation/drawer';
 
 import { ControlledInput } from 'src/app/components/inputs';
 import ControlledSelectInput from 'src/app/components/inputs/select';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
-import { MainDrawerParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
-import { FormData, validationSchema } from './form-config';
+import { formConfig, FormData } from './form-config';
+import { EditTrainingPreferencesProps } from './types';
 
-interface Props
-  extends DrawerScreenProps<MainDrawerParamList, 'EditTrainingPreferences'> {}
-
-export const EditTrainingPreferencesScreen = ({ navigation }: Props) => {
+export const EditTrainingPreferencesScreen = ({
+  navigation,
+}: EditTrainingPreferencesProps) => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const { t } = useTranslation();
 
-  const trainingIntensityOptions = [
-    { label: t('common:trainingIntensity.low'), value: 'LOW' },
-    { label: t('common:trainingIntensity.medium'), value: 'MEDIUM' },
-    { label: t('common:trainingIntensity.high'), value: 'HIGH' },
-  ];
+  const trainingIntensityOptions = useMemo(
+    () => [
+      { label: t('common:trainingIntensity.low'), value: 'LOW' },
+      { label: t('common:trainingIntensity.medium'), value: 'MEDIUM' },
+      { label: t('common:trainingIntensity.high'), value: 'HIGH' },
+    ],
+    [t],
+  );
 
-  const { control, handleSubmit, reset } = useForm<FormData>({
-    defaultValues: {
-      trainingType: profileData?.trainingType,
-      trainingTime: profileData?.trainingTime,
-      trainingIntensity: profileData?.trainingIntensity,
-      trainingGoals: profileData?.trainingGoals,
-    },
-    resolver: yupResolver(validationSchema),
-  });
+  const { control, handleSubmit, reset } = useForm<FormData>(formConfig);
 
   const fetchProfileData = (): Promise<ProfileData> => {
     return new Promise((resolve, reject) => {
@@ -88,7 +80,10 @@ export const EditTrainingPreferencesScreen = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.select({
+          ios: 'padding',
+          android: 'height',
+        })}
         style={commonStyles.keyboardAvoidingView}
       >
         <ScrollView>
@@ -140,11 +135,7 @@ export const EditTrainingPreferencesScreen = ({ navigation }: Props) => {
                 }}
               />
 
-              <Button
-                onPress={() => navigation.goBack()}
-                mt="$6"
-                bgColor="$error500"
-              >
+              <Button onPress={navigation.goBack} mt="$6" bgColor="$error500">
                 <ButtonText>{t('common:button.cancel')}</ButtonText>
               </Button>
               <Button

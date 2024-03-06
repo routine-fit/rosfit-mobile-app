@@ -1,17 +1,10 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Box, ButtonText } from '@gluestack-ui/themed';
 
-interface Props {
-  leftText?: string | ((props: any) => ReactNode) | undefined;
-  headerLeft?: React.ReactNode;
-  headerTitle?: string | ((props: any) => ReactNode) | undefined;
-  rightText?: string;
-  rightButton?: React.ReactNode;
-  onPressLeft?: () => void;
-}
+import { HeaderProps } from './types';
 
-export const Header: FC<Props> = ({
+export const Header: FC<HeaderProps> = ({
   leftText,
   headerLeft,
   headerTitle,

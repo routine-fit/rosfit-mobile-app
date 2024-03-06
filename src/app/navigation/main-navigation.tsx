@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useToken } from '@gluestack-ui/themed';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
@@ -29,7 +30,7 @@ const screenOptions: DrawerNavigationOptions = {
     <Header
       leftText={options.headerTitle}
       headerLeft={options.headerLeft}
-      onPressLeft={() => navigation.goBack()}
+      onPressLeft={navigation.goBack}
     />
   ),
 };
@@ -57,9 +58,11 @@ export const MainAppNavigation = () => {
           component={ProfileScreen}
           options={{
             headerTitle: t('navigation:headers.profile', {
-              user: displayName?.split(' ')[0],
+              user: displayName,
             }),
-            headerLeft: <UserAvatar color="#fff" width={20} />,
+            headerLeft: (
+              <UserAvatar color={useToken('colors', 'light100')} width={20} />
+            ),
           }}
         />
         <Drawer.Screen
@@ -67,7 +70,12 @@ export const MainAppNavigation = () => {
           component={EditPersonalInfoScreen}
           options={{
             headerTitle: t('navigation:headers.returnProfile'),
-            headerLeft: <BackArrowIcon color="#fff" width={20} />,
+            headerLeft: (
+              <BackArrowIcon
+                color={useToken('colors', 'light100')}
+                width={20}
+              />
+            ),
           }}
         />
         <Drawer.Screen
@@ -75,7 +83,12 @@ export const MainAppNavigation = () => {
           component={EditTrainingPreferencesScreen}
           options={{
             headerTitle: t('navigation:headers.returnProfile'),
-            headerLeft: <BackArrowIcon color="#fff" width={20} />,
+            headerLeft: (
+              <BackArrowIcon
+                color={useToken('colors', 'light100')}
+                width={20}
+              />
+            ),
           }}
         />
       </Drawer.Group>

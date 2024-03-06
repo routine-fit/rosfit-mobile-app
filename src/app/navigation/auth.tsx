@@ -22,7 +22,7 @@ export const getAuthenticatedGroup = () => {
               <Header
                 leftText={t('navigation:headers.login')}
                 headerLeft={<BackArrowIcon />}
-                onPressLeft={() => navigation.goBack()}
+                onPressLeft={navigation.goBack}
               />
             ),
           })}
@@ -35,7 +35,7 @@ export const getAuthenticatedGroup = () => {
               <Header
                 headerTitle={t('navigation:headers.completeDataScreen')}
                 headerLeft={<BackArrowIcon />}
-                onPressLeft={() => navigation.goBack()}
+                onPressLeft={navigation.goBack}
               />
             ),
           })}
