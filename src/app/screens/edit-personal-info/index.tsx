@@ -85,7 +85,10 @@ export const EditPersonalInfoScreen = ({
   return (
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.select({
+          ios: 'padding',
+          android: 'height',
+        })}
         style={commonStyles.keyboardAvoidingView}
       >
         <ScrollView>
