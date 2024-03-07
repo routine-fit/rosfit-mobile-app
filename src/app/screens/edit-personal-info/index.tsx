@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { Box, ButtonText, Text } from '@gluestack-ui/themed';
 import { Button } from '@gluestack-ui/themed';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ControlledInput } from 'src/app/components/inputs';
 import ControlledSelectInput from 'src/app/components/inputs/select';
@@ -18,7 +17,7 @@ import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 import { commonStyles } from 'src/utils/styles';
 
-import { formConfig, FormData, validationSchema } from './form-config';
+import { formConfig, FormData } from './form-config';
 import { EditPersonalInfoProps } from './types';
 
 export const EditPersonalInfoScreen = ({
