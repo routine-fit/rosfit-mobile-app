@@ -1,5 +1,6 @@
 import { t } from 'i18next';
 import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export type FormData = {
   firstName: string;
@@ -59,3 +60,13 @@ export const validationSchema = yup.object().shape({
       }),
     ),
 });
+
+export const formConfig = {
+  defaultValues: {
+    firstName: '',
+    lastName: '',
+    birthDate: '',
+    gender: '',
+  },
+  resolver: yupResolver(validationSchema),
+};

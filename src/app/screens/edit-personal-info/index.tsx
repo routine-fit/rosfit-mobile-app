@@ -18,7 +18,7 @@ import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 import { commonStyles } from 'src/utils/styles';
 
-import { FormData, validationSchema } from './form-config';
+import { formConfig, FormData, validationSchema } from './form-config';
 import { EditPersonalInfoProps } from './types';
 
 export const EditPersonalInfoScreen = ({
@@ -32,15 +32,7 @@ export const EditPersonalInfoScreen = ({
     { label: t('common:gender.female'), value: 'FEMALE' },
   ];
 
-  const { control, handleSubmit, reset } = useForm<FormData>({
-    defaultValues: {
-      firstName: profileData?.name,
-      lastName: profileData?.birthDate,
-      birthDate: profileData?.birthDate,
-      gender: profileData?.gender,
-    },
-    resolver: yupResolver(validationSchema),
-  });
+  const { control, handleSubmit, reset } = useForm<FormData>(formConfig);
 
   const fetchProfileData = (): Promise<ProfileData> => {
     return new Promise((resolve, reject) => {
