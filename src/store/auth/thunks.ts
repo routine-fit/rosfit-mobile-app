@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import roFitApi from 'src/api/rofit.api';
+import rosFitApi from 'src/api/rosfit.api';
 import firebaseAuth from 'src/config/firebase';
 import { userInfoData, UserInfoResponse } from 'src/interfaces/user-info';
 
@@ -90,7 +90,7 @@ export const startCreateUserInfo = createAsyncThunk(
   'auth/create-user-info',
   async (userInfo: userInfoData, { rejectWithValue }) => {
     try {
-      const response = await roFitApi.post<UserInfoResponse>(
+      const response = await rosFitApi.post<UserInfoResponse>(
         '/user-info',
         userInfo,
       );

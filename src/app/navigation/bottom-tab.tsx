@@ -5,11 +5,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 
-import {
-  ExerciseScreen,
-  HomeScreen,
-  RoutinesScreen,
-} from 'src/app/screens/index';
+import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
 import {
   DumbbellIcon,
   HomeIcon,

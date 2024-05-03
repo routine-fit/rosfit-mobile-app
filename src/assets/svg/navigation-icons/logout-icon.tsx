@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-import { IconProps } from './types';
+import { IconProps } from '../types';
 
 export const LogoutIcon: FC<IconProps> = ({ width = 24, height = 24 }) => {
   return (

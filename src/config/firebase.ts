@@ -9,7 +9,7 @@ if (Config.USE_EMULATOR === 'true') {
 }
 
 GoogleSignin.configure({
-  webClientId: process.env.WEBCLIENT_ID,
+  webClientId: Config.WEBCLIENT_ID,
 });
 
 export default firebaseAuth;

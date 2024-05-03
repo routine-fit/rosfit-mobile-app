@@ -10,14 +10,14 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.prod&quot; &gt; /tmp/envfile&#10;&#10;&quot;${SRCROOT}/../node_modules/react-native-config/ios/ReactNativeConfig/BuildXCConfig.rb&quot; &quot;${SRCROOT}/..&quot; &quot;${SRCROOT}/tmp.xcconfig&quot;&#10;&#10;">
+               scriptText = "rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.dev&quot; &gt; /tmp/envfile&#10;&#10;&quot;${SRCROOT}/../node_modules/react-native-config/ios/ReactNativeConfig/BuildXCConfig.rb&quot; &quot;${SRCROOT}/..&quot; &quot;${SRCROOT}/tmp.xcconfig&quot;&#10;&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "mobile.app"
-                     BlueprintName = "mobile"
-                     ReferencedContainer = "container:mobile.xcodeproj">
+                     BuildableName = "routinefit.app"
+                     BlueprintName = "routinefit"
+                     ReferencedContainer = "container:routinefit.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
             </ActionContent>
@@ -28,14 +28,14 @@
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "mobile.app"
-               BlueprintName = "mobile"
-               ReferencedContainer = "container:mobile.xcodeproj">
+               BuildableName = "routinefit.app"
+               BlueprintName = "routinefit"
+               ReferencedContainer = "container:routinefit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -63,14 +63,14 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mobile.app"
-            BlueprintName = "mobile"
-            ReferencedContainer = "container:mobile.xcodeproj">
+            BuildableName = "routinefit.app"
+            BlueprintName = "routinefit"
+            ReferencedContainer = "container:routinefit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mobile.app"
-            BlueprintName = "mobile"
-            ReferencedContainer = "container:mobile.xcodeproj">
+            BuildableName = "routinefit.app"
+            BlueprintName = "routinefit"
+            ReferencedContainer = "container:routinefit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
@@ -90,7 +90,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

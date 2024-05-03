@@ -108,7 +108,7 @@ For Android there is no need to create a folder because the file is the same for
 
 #### IOS
 
-`ios/mobile/GoogleServices`
+`ios/routinefit/GoogleServices`
 
 This folders are ignored by default.
 
