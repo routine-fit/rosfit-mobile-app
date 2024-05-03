@@ -48,8 +48,9 @@ export const startGoogleSignIn = createAsyncThunk(
       await GoogleSignin.hasPlayServices();
       const { idToken } = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      const { user } =
-        await firebaseAuth.signInWithCredential(googleCredential);
+      const { user } = await firebaseAuth.signInWithCredential(
+        googleCredential,
+      );
 
       const firebaseToken = await user.getIdToken();
       await AsyncStorage.setItem('token', firebaseToken);
