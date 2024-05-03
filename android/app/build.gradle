@@ -131,10 +131,6 @@ android {
             resValue "string", "app_name", project.env.get("APP_DISPLAY_NAME")
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_16
-        targetCompatibility JavaVersion.VERSION_16
-    }
 }
 
 dependencies {
