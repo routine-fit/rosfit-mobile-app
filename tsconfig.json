@@ -3,11 +3,25 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"],
-      "tests": ["tests/*"]
+      "src/*": [
+        "src/*"
+      ],
+      "tests": [
+        "tests/*"
+      ]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types"
+    ],
   },
-  "include": ["./src/**/*", "./tests/**/*"],
-  "exclude": ["node_modules", "node_modules/reactotron-core-client"]
+  "include": [
+    "./src/**/*",
+    "./tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "node_modules/reactotron-core-client"
+  ]
 }
