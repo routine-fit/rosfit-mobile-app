@@ -13,7 +13,7 @@ import {
 
 import { SharedModalProps } from './types';
 
-export const SharedModal: FC<SharedModalProps> = ({
+const SharedModal: FC<SharedModalProps> = ({
   open,
   onClose,
   title,
@@ -37,3 +37,5 @@ export const SharedModal: FC<SharedModalProps> = ({
     </Modal>
   );
 };
+
+export default SharedModal;

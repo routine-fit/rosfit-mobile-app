@@ -1,79 +1,39 @@
 import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
+import { useTheme } from 'styled-components';
 import React, { useState } from 'react';
-import { FieldValues, useController } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import {
-  FormControl,
-  FormControlError,
-  FormControlErrorText,
-  FormControlLabel,
-  FormControlLabelText,
-  Input,
-  InputField,
-  InputIcon,
-  InputSlot,
-} from '@gluestack-ui/themed';
+import { FieldValues } from 'react-hook-form';
+import { TextInput as RNTextInput } from 'react-native/types';
 
-import { PasswordInputProps } from './types';
+import ControlledTextInput from '../controlled';
+import { FormTextFieldProps } from '../controlled/types';
 
-const PasswordInput = <Form extends FieldValues>({
-  controller,
-  inputProps = {},
-  inputFieldProps = {},
-  formControlProps = {},
-}: PasswordInputProps<Form>) => {
-  const { field, fieldState } = useController(controller);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const { t } = useTranslation();
-
-  const label = t(`inputs:label.${controller.name}`);
-  const placeholder = t(`inputs:placeholder.${controller.name}`);
-
-  const handleState = () => {
-    setShowPassword(showState => {
-      return !showState;
-    });
-  };
+const PasswordInputInner = <Form extends FieldValues>(
+  { controller, ...restOfProps }: FormTextFieldProps<Form>,
+  ref: React.RefObject<RNTextInput>,
+) => {
+  const [secureEntry, setSecureEntry] = useState<boolean>(true);
+  const theme = useTheme();
 
   return (
-    <FormControl
-      {...formControlProps}
-      isInvalid={fieldState.invalid}
-      isRequired={formControlProps.isRequired || !!controller.rules?.required}
-    >
-      <FormControlLabel>
-        <FormControlLabelText>{label}</FormControlLabelText>
-      </FormControlLabel>
-      <Input
-        {...inputProps}
-        sx={{
-          ':focus': {
-            borderColor: '$lime700',
-          },
-        }}
-      >
-        <InputField
-          autoCapitalize="none"
-          autoComplete="off"
-          placeholder={placeholder}
-          {...inputFieldProps}
-          type={showPassword ? 'text' : 'password'}
-          onChangeText={field.onChange}
-          value={field.value}
-          onBlur={field.onBlur}
-        />
-        <InputSlot marginRight={16} onPress={handleState}>
-          <InputIcon
-            as={showPassword ? EyeIcon : EyeOffIcon}
-            color={fieldState.invalid ? '$error500' : '$lime700'}
-          />
-        </InputSlot>
-      </Input>
-      <FormControlError>
-        <FormControlErrorText>{fieldState.error?.message}</FormControlErrorText>
-      </FormControlError>
-    </FormControl>
+    <ControlledTextInput
+      controller={controller}
+      secureTextEntry={secureEntry}
+      trailingIcon={
+        secureEntry ? (
+          <EyeIcon color={theme.colors.stroke.default} fillOpacity={0} />
+        ) : (
+          <EyeOffIcon color={theme.colors.stroke.default} fillOpacity={0} />
+        )
+      }
+      onTrailingIconPress={() => {
+        setSecureEntry(prev => !prev);
+      }}
+      {...restOfProps}
+      inputRef={ref}
+    />
   );
 };
+
+const PasswordInput = React.forwardRef(PasswordInputInner);
 
 export default PasswordInput;

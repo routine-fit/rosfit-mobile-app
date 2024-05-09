@@ -11,6 +11,7 @@ import {
 
 import { PasswordReadOnlyProps } from './types';
 
+// TODO: Review if is required
 export const PasswordReadOnly: FC<PasswordReadOnlyProps> = ({ value }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
