@@ -11,7 +11,7 @@ const GoogleSignInButton = ({ onPress }: GoogleSignInProps) => {
 
   return (
     <Button
-      marginBottom="$4"
+      marginBottom={4}
       backgroundColor="#FFFFFF"
       borderColor="#DADCE0"
       borderWidth={1}
@@ -19,7 +19,7 @@ const GoogleSignInButton = ({ onPress }: GoogleSignInProps) => {
       onPress={onPress}
     >
       <ButtonIcon as={GoogleIcon} />
-      <ButtonText ml="$6" color="#3C4043">
+      <ButtonText marginLeft={6} color="#3C4043">
         {t('common:button.googleSignIn')}
       </ButtonText>
     </Button>

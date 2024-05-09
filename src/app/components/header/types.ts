@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
 export interface HeaderProps {
-  leftText?: string | ((props: any) => ReactNode) | undefined;
+  leftText?: string | ReactNode;
   headerLeft?: React.ReactNode;
-  headerTitle?: string | ((props: any) => ReactNode) | undefined;
+  headerTitle?: string | ReactNode;
   rightText?: string;
   rightButton?: React.ReactNode;
   onPressLeft?: () => void;

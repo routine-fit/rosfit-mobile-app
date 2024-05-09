@@ -1,3 +1,9 @@
 {
- "cSpell.words": ["gluestack", "Gluestack", "reactotron", "routinefit"]
+"cSpell.words": [
+  "gluestack",
+  "Gluestack",
+  "reactotron",
+  "routinefit"
+],
+"typescript.tsdk": "node_modules/typescript/lib"
 }

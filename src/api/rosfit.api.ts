@@ -1,10 +1,11 @@
 import axios from 'axios';
+import Config from 'react-native-config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const baseURL = process.env.API_BASE_URL;
-const roFitApi = axios.create({ baseURL });
+const baseURL = Config.API_BASE_URL;
+const rosFitApi = axios.create({ baseURL });
 
-roFitApi.interceptors.request.use(async config => {
+rosFitApi.interceptors.request.use(async config => {
   const token = await AsyncStorage.getItem('token');
   if (token) {
     config.headers.token = token;
@@ -12,4 +13,4 @@ roFitApi.interceptors.request.use(async config => {
   return config;
 });
 
-export default roFitApi;
+export default rosFitApi;

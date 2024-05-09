@@ -51,7 +51,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
       <Select {...inputProps} onValueChange={handleSelect}>
         <SelectTrigger variant="outline" size="md">
           <SelectInput placeholder={placeholder} />
-          <SelectIcon mr="$3">
+          <SelectIcon marginLeft={3}>
             <Icon as={ChevronDownIcon} />
           </SelectIcon>
         </SelectTrigger>

@@ -5,9 +5,9 @@ import Reactotron from 'reactotron-react-native';
 import { config as gluestackConfig } from '@gluestack-ui/config';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 
-import NavigationWrapper from 'src/app/navigation';
-import LocalizationProvider from 'src/config/localization/provider';
-import { store } from 'src/store';
+import NavigationWrapper from './src/app/navigation';
+import LocalizationProvider from './src/config/localization/provider';
+import { store } from './src/store';
 
 if (__DEV__) {
   import('./ReactotronConfig').then(() => {
@@ -16,7 +16,7 @@ if (__DEV__) {
   });
 }
 
-const App = (): JSX.Element => {
+const App = (): React.JSX.Element => {
   return (
     <Provider store={store}>
       <GluestackUIProvider config={gluestackConfig}>

@@ -15,7 +15,7 @@ export const store = configureStore({
     // reducers
     auth: authSlice.reducer,
   },
-  enhancers: __DEV__ ? [reactotron.createEnhancer()] : [],
+  enhancers: __DEV__ ? [reactotron.createEnhancer!()] : [],
 });
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
