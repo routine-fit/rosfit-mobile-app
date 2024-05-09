@@ -1,10 +1,10 @@
 import { t } from 'i18next';
 import React from 'react';
 
+import { Header } from 'src/app/components';
 import { LoginScreen } from 'src/app/screens/auth/login';
 import { BackArrowIcon } from 'src/assets/svg/navigation-icons';
 
-import { Header } from '../components/header';
 import { CompleteDataScreen } from '../screens/auth/signup/complete-data';
 import { CreateAccountScreen } from '../screens/auth/signup/create-account';
 import { RootStack } from './root-stack';

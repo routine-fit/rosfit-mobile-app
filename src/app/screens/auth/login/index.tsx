@@ -1,40 +1,41 @@
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, SafeAreaView } from 'react-native';
+import { Alert } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Box, Button, ButtonText, Divider, Text } from '@gluestack-ui/themed';
-import { useNavigation } from '@react-navigation/native';
 
-import { GoogleSignInButton } from 'src/app/components/buttons';
-import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
+import {
+  Button,
+  ControlledTextInput,
+  Divider,
+  GapContainer,
+  GoogleSignInButton,
+  Heading,
+  PasswordInput,
+  ScreenContainer,
+} from 'src/app/components';
 import { RootState, useAppDispatch } from 'src/store';
 import {
   startGoogleSignIn,
   startLoginWithEmailPassword,
 } from 'src/store/auth/thunks';
-import { commonStyles } from 'src/utils/styles';
 
-type FormData = {
-  email: string;
-  password: string;
-};
+import { Container } from './styles';
+import { LoginForm, LoginProps } from './types';
 
-export const LoginScreen = () => {
-  // TODO: Type the navigation screens
-  const { navigate } = useNavigation<any>();
+export const LoginScreen = ({ navigation }: LoginProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { status } = useSelector((state: RootState) => state.auth);
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<LoginForm>({
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onValidSubmit: SubmitHandler<FormData> = async data => {
+  const onValidSubmit: SubmitHandler<LoginForm> = async data => {
     try {
       const { email, password } = data;
       await dispatch(startLoginWithEmailPassword({ email, password }));
@@ -56,17 +57,19 @@ export const LoginScreen = () => {
 
   useEffect(() => {
     if (status === 'succeeded') {
-      navigate('Main');
+      navigation.navigate('Main', { screen: 'Home' });
     }
-  }, [navigate, status]);
+  }, [navigation, status]);
 
   return (
-    <SafeAreaView style={commonStyles.safeAreaViewStyle}>
-      <Box padding={20} flex={1} justifyContent="center">
-        <Text size="3xl" textAlign="center">
-          {t('screens:login.heading1')}
-        </Text>
-        <ControlledInput
+    <ScreenContainer>
+      <Container>
+        <Heading
+          title={t('screens:login.heading1')}
+          flexTitleAlign="center"
+          type="h1"
+        />
+        <ControlledTextInput
           controller={{
             control,
             name: 'email',
@@ -75,9 +78,6 @@ export const LoginScreen = () => {
                 field: t('inputs:label.email').toLowerCase(),
               }),
             },
-          }}
-          formControlProps={{
-            marginBottom: '$4',
           }}
         />
         <PasswordInput
@@ -90,30 +90,26 @@ export const LoginScreen = () => {
               }),
             },
           }}
-          formControlProps={{
-            marginBottom: '$4',
-          }}
+        />
+        <GapContainer space={16}>
+          <Button
+            content={t('common:button.login')}
+            onPress={handleSubmit(onValidSubmit)}
+          />
+          <GoogleSignInButton onPress={handleGoogleSignIn} />
+        </GapContainer>
+        <Divider marginBottom={16} marginTop={16} />
+        <Button
+          content={t('screens:login.forgotPassword')}
+          onPress={() => {}}
+          variant="ghost"
         />
         <Button
-          onPress={handleSubmit(onValidSubmit)}
-          marginBottom="$4"
-          bgColor="$lime600"
-        >
-          <ButtonText>{t('common:button.login')}</ButtonText>
-        </Button>
-        <GoogleSignInButton onPress={handleGoogleSignIn} />
-        <Divider bg="$backgroundLight300" h={1} my="$4" />
-        <Button variant="link">
-          <ButtonText fontSize="$sm" color="$lime700">
-            {t('screens:login.forgotPassword')}
-          </ButtonText>
-        </Button>
-        <Button variant="link" onPress={() => navigate('CreateAccount')}>
-          <ButtonText fontSize="$sm" color="$lime700">
-            {t('screens:login.createYourAccount')}
-          </ButtonText>
-        </Button>
-      </Box>
-    </SafeAreaView>
+          content={t('screens:login.createYourAccount')}
+          onPress={() => navigation.navigate('CreateAccount')}
+          variant="ghost"
+        />
+      </Container>
+    </ScreenContainer>
   );
 };

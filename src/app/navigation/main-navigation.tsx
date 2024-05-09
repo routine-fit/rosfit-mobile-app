@@ -7,17 +7,17 @@ import {
   DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 
+import { Header } from 'src/app/components';
 import DrawerContent from 'src/app/components/drawer';
 import { ProfileScreen } from 'src/app/screens/index';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { BackArrowIcon } from 'src/assets/svg/navigation-icons';
 import { RootState } from 'src/store';
-import { MainDrawerParamList } from 'src/types/navigation';
 
-import { Header } from '../components/header';
 import { EditPersonalInfoScreen } from '../screens/edit-personal-info';
 import { EditTrainingPreferencesScreen } from '../screens/edit-training-preferences';
 import { BottomTab } from './bottom-tab';
+import { MainDrawerParamList } from './types';
 
 const renderContent = (props: DrawerContentComponentProps) => (
   <DrawerContent {...props} />

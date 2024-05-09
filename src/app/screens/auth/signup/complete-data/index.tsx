@@ -12,12 +12,15 @@ import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import ControlledDatepicker from 'src/app/components/datepicker';
-import { ControlledInput } from 'src/app/components/inputs';
-import ControlledSelectInput from 'src/app/components/inputs/select';
+import {
+  ControlledDatePicker,
+  ControlledSelect,
+  ControlledTextInput,
+  GapContainer,
+} from 'src/app/components';
+import { RootStackParamList } from 'src/app/navigation/types';
 import { RootState, useAppDispatch } from 'src/store';
 import { startCreateUserInfo } from 'src/store/auth/thunks';
-import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
 import { FormData, validationSchema } from './form-config';
@@ -76,52 +79,36 @@ export const CompleteDataScreen = ({
           <Text size="2xl" textAlign="center" mb="$4">
             {t('screens:completeData.heading1')}
           </Text>
-          <ControlledInput
-            controller={{
-              control,
-              name: 'firstName',
-            }}
-            formControlProps={{
-              mb: '$4',
-            }}
-          />
-          <ControlledInput
-            controller={{
-              control,
-              name: 'lastName',
-            }}
-            formControlProps={{
-              mb: '$4',
-            }}
-          />
-
-          <ControlledDatepicker
-            controller={{
-              control,
-              name: 'birthDate',
-            }}
-            formControlProps={{
-              mb: '$4',
-            }}
-          />
-          <ControlledSelectInput
-            controller={{
-              control,
-              name: 'gender',
-            }}
-            formControlProps={{
-              mb: '$4',
-            }}
-            options={genderOptions}
-          />
-
-          <Button
-            onPress={handleSubmit(onValidSubmit)}
-            mt="$4"
-            bgColor="$lime600"
-          >
-            <ButtonText>{t('common:button.confirm')}</ButtonText>
-          </Button>
+          <GapContainer>
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'firstName',
+              }}
+            />
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'lastName',
+              }}
+            />
+            <ControlledDatePicker
+              controller={{
+                control,
+                name: 'birthDate',
+              }}
+            />
+            <ControlledSelect
+              controller={{
+                control,
+                name: 'gender',
+              }}
+              options={genderOptions}
+            />
+            <Button onPress={handleSubmit(onValidSubmit)} bgColor="$lime600">
+              <ButtonText>{t('common:button.confirm')}</ButtonText>
+            </Button>
+          </GapContainer>
         </Box>
       </KeyboardAvoidingView>
     </SafeAreaView>

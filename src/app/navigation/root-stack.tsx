@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import { RootStackParamList } from 'src/types/navigation';
 
 import { getAuthenticatedGroup } from './auth';
 import { MainAppNavigation } from './main-navigation';
+import { RootStackParamList } from './types';
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
