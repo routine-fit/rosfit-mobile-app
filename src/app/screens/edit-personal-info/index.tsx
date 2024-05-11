@@ -11,8 +11,11 @@ import {
 import { Box, ButtonText, Text } from '@gluestack-ui/themed';
 import { Button } from '@gluestack-ui/themed';
 
-import { ControlledInput } from 'src/app/components/inputs';
-import ControlledSelectInput from 'src/app/components/inputs/select';
+import {
+  ControlledSelect,
+  ControlledTextInput,
+  GapContainer,
+} from 'src/app/components';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 import { commonStyles } from 'src/utils/styles';
@@ -90,56 +93,42 @@ export const EditPersonalInfoScreen = ({
               </Text>
             </Box>
             <Box>
-              <ControlledInput
-                controller={{
-                  control,
-                  name: 'firstName',
-                }}
-                formControlProps={{
-                  mb: '$4',
-                }}
-              />
-
-              <ControlledInput
-                controller={{
-                  control,
-                  name: 'lastName',
-                }}
-                formControlProps={{
-                  mb: '$4',
-                }}
-              />
-
-              <ControlledInput
-                controller={{
-                  control,
-                  name: 'birthDate',
-                }}
-                formControlProps={{
-                  mb: '$4',
-                }}
-              />
-              <ControlledSelectInput
-                controller={{
-                  control,
-                  name: 'gender',
-                }}
-                formControlProps={{
-                  mb: '$4',
-                }}
-                options={genderOptions}
-              />
-
-              <Button onPress={navigation.goBack} mt="$4" bgColor="$error500">
-                <ButtonText>{t('common:button.cancel')}</ButtonText>
-              </Button>
-              <Button
-                onPress={handleSubmit(onValidSubmit)}
-                mt="$4"
-                bgColor="$lime700"
-              >
-                <ButtonText>{t('common:button.confirm')}</ButtonText>
-              </Button>
+              <GapContainer>
+                <ControlledTextInput
+                  controller={{
+                    control,
+                    name: 'firstName',
+                  }}
+                />
+                <ControlledTextInput
+                  controller={{
+                    control,
+                    name: 'lastName',
+                  }}
+                />
+                <ControlledTextInput
+                  controller={{
+                    control,
+                    name: 'birthDate',
+                  }}
+                />
+                <ControlledSelect
+                  controller={{
+                    control,
+                    name: 'gender',
+                  }}
+                  options={genderOptions}
+                />
+                <Button onPress={navigation.goBack} bgColor="$error500">
+                  <ButtonText>{t('common:button.cancel')}</ButtonText>
+                </Button>
+                <Button
+                  onPress={handleSubmit(onValidSubmit)}
+                  bgColor="$lime700"
+                >
+                  <ButtonText>{t('common:button.confirm')}</ButtonText>
+                </Button>
+              </GapContainer>
             </Box>
           </Box>
         </ScrollView>

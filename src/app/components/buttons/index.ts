@@ -1,3 +1,4 @@
+import Button from './button';
 import GoogleSignInButton from './google-sign-in';
 
-export { GoogleSignInButton };
+export { Button, GoogleSignInButton };

@@ -11,8 +11,11 @@ import {
 import { Box, ButtonText, Text } from '@gluestack-ui/themed';
 import { Button } from '@gluestack-ui/themed';
 
-import { ControlledInput } from 'src/app/components/inputs';
-import ControlledSelectInput from 'src/app/components/inputs/select';
+import {
+  ControlledSelect,
+  ControlledTextInput,
+  GapContainer,
+} from 'src/app/components';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 import { commonStyles } from 'src/utils/styles';
@@ -93,59 +96,39 @@ export const EditTrainingPreferencesScreen = ({
                 {t('screens:editTrainingPreferences.heading1')}
               </Text>
             </Box>
-            <Box>
-              <ControlledInput
+            <GapContainer>
+              <ControlledTextInput
                 controller={{
                   control,
                   name: 'trainingType',
                 }}
-                formControlProps={{
-                  mb: '$2',
-                }}
               />
-
-              <ControlledInput
+              <ControlledTextInput
                 controller={{
                   control,
                   name: 'trainingTime',
                 }}
-                formControlProps={{
-                  mb: '$2',
-                }}
               />
-
-              <ControlledSelectInput
+              <ControlledSelect
                 controller={{
                   control,
                   name: 'trainingIntensity',
                 }}
-                formControlProps={{
-                  mb: '$2',
-                }}
                 options={trainingIntensityOptions}
               />
-
-              <ControlledInput
+              <ControlledTextInput
                 controller={{
                   control,
                   name: 'trainingGoals',
                 }}
-                formControlProps={{
-                  mb: '$2',
-                }}
               />
-
-              <Button onPress={navigation.goBack} mt="$6" bgColor="$error500">
+              <Button onPress={navigation.goBack} bgColor="$error500">
                 <ButtonText>{t('common:button.cancel')}</ButtonText>
               </Button>
-              <Button
-                onPress={handleSubmit(onValidSubmit)}
-                mt="$4"
-                bgColor="$lime700"
-              >
+              <Button onPress={handleSubmit(onValidSubmit)} bgColor="$lime700">
                 <ButtonText>{t('common:button.confirm')}</ButtonText>
               </Button>
-            </Box>
+            </GapContainer>
           </Box>
         </ScrollView>
       </KeyboardAvoidingView>

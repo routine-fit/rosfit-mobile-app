@@ -3,7 +3,7 @@ import { Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Box, Divider, Text } from '@gluestack-ui/themed';
 
-import { SharedModal } from 'src/app/components/modal';
+import { SharedModal } from 'src/app/components';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';

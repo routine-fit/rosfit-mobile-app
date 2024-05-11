@@ -4,7 +4,7 @@ import { Box, ButtonText } from '@gluestack-ui/themed';
 
 import { HeaderProps } from './types';
 
-export const Header: FC<HeaderProps> = ({
+const Header: FC<HeaderProps> = ({
   leftText,
   headerLeft,
   headerTitle,
@@ -39,7 +39,7 @@ export const Header: FC<HeaderProps> = ({
       )}
 
       <Box flex={1} alignItems="center">
-        {headerTitle && (
+        {typeof headerTitle === 'string' && (
           <ButtonText fontWeight="$bold">{headerTitle}</ButtonText>
         )}
       </Box>
@@ -57,3 +57,5 @@ export const Header: FC<HeaderProps> = ({
     </Box>
   );
 };
+
+export default Header;

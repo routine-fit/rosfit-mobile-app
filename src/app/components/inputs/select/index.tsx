@@ -23,6 +23,7 @@ import {
 
 import { SelectInputProps } from './types';
 
+// TODO: Redo without gluestack
 const ControlledSelectInput = <Form extends FieldValues>({
   controller,
   inputProps = {},

@@ -5,15 +5,15 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 
+import { Header } from 'src/app/components';
 import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
 import {
   DumbbellIcon,
   HomeIcon,
   RoutineIcon,
 } from 'src/assets/svg/navigation-icons';
-import { BottomTabParamList } from 'src/types/navigation';
 
-import { Header } from '../components/header';
+import { BottomTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 

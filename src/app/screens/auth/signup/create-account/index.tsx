@@ -11,10 +11,14 @@ import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { ControlledInput, PasswordInput } from 'src/app/components/inputs';
+import {
+  ControlledTextInput,
+  GapContainer,
+  PasswordInput,
+} from 'src/app/components';
+import { RootStackParamList } from 'src/app/navigation/types';
 import { useAppDispatch } from 'src/store';
 import { startCreateFirebaseUser } from 'src/store/auth/thunks';
-import { RootStackParamList } from 'src/types/navigation';
 import { commonStyles } from 'src/utils/styles';
 
 import { FormData, validationSchema } from './form-config';
@@ -57,33 +61,26 @@ export const CreateAccountScreen = ({
           <Text size="2xl" textAlign="center" mb="$12">
             {t('screens:signUp.heading1')}
           </Text>
-          <ControlledInput
-            controller={{
-              control,
-              name: 'email',
-            }}
-            formControlProps={{
-              mb: '$4',
-            }}
-          />
-          <PasswordInput
-            controller={{
-              control,
-              name: 'password',
-            }}
-            formControlProps={{
-              mb: '$4',
-            }}
-          />
-          <PasswordInput
-            controller={{
-              control,
-              name: 'repeatPassword',
-            }}
-            formControlProps={{
-              mb: '$4',
-            }}
-          />
+          <GapContainer>
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'email',
+              }}
+            />
+            <PasswordInput
+              controller={{
+                control,
+                name: 'password',
+              }}
+            />
+            <PasswordInput
+              controller={{
+                control,
+                name: 'repeatPassword',
+              }}
+            />
+          </GapContainer>
           <Button
             onPress={handleSubmit(onValidSubmit)}
             mt="$8"
