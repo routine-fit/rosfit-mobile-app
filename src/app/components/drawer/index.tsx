@@ -10,21 +10,25 @@ import {
   ProfileIcon,
   SettingsIcon,
 } from 'src/assets/svg/navigation-icons/';
-import ROUTES from 'src/constants/routes';
 import { RootState, useAppDispatch } from 'src/store';
 import { startLogoutUser } from 'src/store/auth/thunks';
 
 import { MenuItem } from './components/menu-item';
 
 const navigationRoutes = [
-  { route: ROUTES.HOME, icon: <HomeIcon color="#4D7C0F" />, label: 'Home' },
   {
-    route: ROUTES.PROFILE,
+    route: 'Main',
+    params: { screen: 'Home' },
+    icon: <HomeIcon color="#4D7C0F" />,
+    label: 'Home',
+  },
+  {
+    route: 'Profile',
     icon: <ProfileIcon color="#4D7C0F" />,
     label: 'Profile',
   },
   {
-    route: ROUTES.SETTINGS,
+    route: 'Settings',
     icon: <SettingsIcon color="#4D7C0F" />,
     label: 'Settings',
   },
@@ -55,12 +59,14 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
       </Box>
 
       <Box padding={15}>
-        {navigationRoutes.map(({ route, icon, label }) => (
+        {navigationRoutes.map(({ route, params, icon, label }) => (
           <MenuItem
             key={route}
             icon={icon}
             label={label}
-            onPress={() => navigation.navigate(route)}
+            onPress={() =>
+              navigation.reset({ index: 0, routes: [{ name: route, params }] })
+            }
           />
         ))}
       </Box>

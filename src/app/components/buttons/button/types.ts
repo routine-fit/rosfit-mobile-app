@@ -17,4 +17,5 @@ export interface ButtonProps {
   fullWidth?: boolean;
   marginTop?: number;
   radius?: ButtonRadius;
+  alignSelf?: boolean;
 }

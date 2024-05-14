@@ -28,6 +28,17 @@ const inputVariantsMap = (
       border-width: 2px;
     `}
   `,
+
+  rounded: css`
+    border: 1px solid ${props.theme.colors.stroke.default};
+    border-radius: 100px;
+    padding: 10px 16px;
+
+    ${props.isFocused &&
+    css`
+      border-width: 2px;
+    `}
+  `,
 });
 
 export const Container = styled.View`
