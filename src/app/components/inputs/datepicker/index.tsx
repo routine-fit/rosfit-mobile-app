@@ -46,6 +46,9 @@ const ControlledDatepickerInner = <Form extends FieldValues>(
           onChange(date);
           setShowDatepicker(false);
         }}
+        onCancel={() => {
+          setShowDatepicker(false);
+        }}
       />
     </>
   );
