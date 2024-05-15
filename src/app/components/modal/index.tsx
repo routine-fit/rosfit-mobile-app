@@ -1,19 +1,16 @@
-import React, { FC } from 'react';
-import {
-  Heading,
-  Modal,
-  ModalBackdrop,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  Text,
-  VStack,
-} from '@gluestack-ui/themed';
+import React from 'react';
+import { Modal, View } from 'react-native';
 
+import {
+  FooterContainer,
+  ModalContainer,
+  ModalContent,
+  ModalSubtitle,
+  ModalTitle,
+} from './styles';
 import { SharedModalProps } from './types';
 
-const SharedModal: FC<SharedModalProps> = ({
+const SharedModal: React.FC<SharedModalProps> = ({
   open,
   onClose,
   title,
@@ -22,18 +19,20 @@ const SharedModal: FC<SharedModalProps> = ({
   footer,
 }) => {
   return (
-    <Modal isOpen={open} onClose={onClose}>
-      <ModalBackdrop />
-      <ModalContent>
-        <ModalHeader>
-          <VStack>
-            <Heading size="lg">{title}</Heading>
-            <Text size="sm">{subtitle}</Text>
-          </VStack>
-        </ModalHeader>
-        <ModalBody>{body}</ModalBody>
-        {footer && <ModalFooter>{footer}</ModalFooter>}
-      </ModalContent>
+    <Modal
+      visible={open}
+      transparent={true}
+      animationType="fade"
+      onRequestClose={onClose}
+    >
+      <ModalContainer>
+        <ModalContent>
+          <ModalTitle>{title}</ModalTitle>
+          {subtitle && <ModalSubtitle>{subtitle}</ModalSubtitle>}
+          <View>{body}</View>
+          {footer && <FooterContainer>{footer}</FooterContainer>}
+        </ModalContent>
+      </ModalContainer>
     </Modal>
   );
 };
