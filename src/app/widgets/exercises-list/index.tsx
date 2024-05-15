@@ -1,6 +1,7 @@
 import { SearchIcon } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 
 import { TextInput } from 'src/app/components';
@@ -28,11 +29,24 @@ const exercises: Exercise[] = [
     muscleGroup: 'LATISSIMUS_DORSI',
     userInfoId: '1',
   },
+  {
+    id: 4,
+    name: 'Sentadillas',
+    muscleGroup: 'LATISSIMUS_DORSI',
+    userInfoId: '1',
+  },
+  {
+    id: 5,
+    name: 'Sentadillas',
+    muscleGroup: 'LATISSIMUS_DORSI',
+    userInfoId: '1',
+  },
 ];
 
 const ExerciseList = () => {
   const [searchByName, setSearchByName] = useState('');
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const filtered = useMemo(
     () =>
@@ -56,7 +70,7 @@ const ExerciseList = () => {
               width={16}
             />
           }
-          placeholder="Buscar en la lista"
+          placeholder={t('inputs:placeholder.searchOnList')}
           variant="rounded"
         />
       </SearchWrapper>
@@ -64,6 +78,8 @@ const ExerciseList = () => {
         data={filtered}
         renderItem={({ item }) => <ExerciseItem item={item} />}
         contentContainerStyle={styles.flatListContent}
+        showsVerticalScrollIndicator={false}
+        style={styles.flatListContainer}
       />
     </>
   );

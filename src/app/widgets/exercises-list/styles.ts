@@ -10,4 +10,7 @@ export const styles = StyleSheet.create({
   flatListContent: {
     gap: 8,
   },
+  flatListContainer: {
+    marginBottom: 16,
+  },
 });

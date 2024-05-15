@@ -1,5 +1,6 @@
 import { PlusIcon } from 'lucide-react-native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
 import ExerciseList from 'src/app/widgets/exercises-list';
@@ -7,10 +8,12 @@ import ExerciseList from 'src/app/widgets/exercises-list';
 import { BottomContainer } from './styles';
 
 export const ExerciseScreen = () => {
+  const { t } = useTranslation();
+
   return (
     <ScreenContainer>
       <Text fontSize="xl" fontWeight="medium">
-        Ejercicios
+        {t('screens:exercises.heading1')}
       </Text>
       <ExerciseList />
       <BottomContainer>
@@ -18,7 +21,7 @@ export const ExerciseScreen = () => {
           onPress={() => {}}
           fullWidth={false}
           alignSelf={false}
-          content="Nuevo ejercicio"
+          content={t('screens:exercises.newExercise')}
           trailingIcon={<PlusIcon />}
           themeColor="secondary"
         />
