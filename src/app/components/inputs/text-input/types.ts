@@ -10,7 +10,7 @@ export type WithIconProps = {
   height?: string | number;
 };
 
-export type InputVariants = 'outlined' | 'underline';
+export type InputVariants = 'outlined' | 'underline' | 'rounded';
 
 export interface TextInputProps extends RNTextInputProps {
   label?: string;

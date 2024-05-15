@@ -27,6 +27,7 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { status } = useSelector((state: RootState) => state.auth);
+  const isLoading = status === 'loading';
 
   const { control, handleSubmit } = useForm<LoginForm>({
     defaultValues: {
@@ -79,6 +80,7 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
               }),
             },
           }}
+          autoCapitalize="none"
         />
         <PasswordInput
           controller={{
@@ -95,6 +97,7 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
           <Button
             content={t('common:button.login')}
             onPress={handleSubmit(onValidSubmit)}
+            loading={isLoading}
           />
           <GoogleSignInButton onPress={handleGoogleSignIn} />
         </GapContainer>
@@ -103,11 +106,13 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
           content={t('screens:login.forgotPassword')}
           onPress={() => {}}
           variant="ghost"
+          disabled={isLoading}
         />
         <Button
           content={t('screens:login.createYourAccount')}
           onPress={() => navigation.navigate('CreateAccount')}
           variant="ghost"
+          disabled={isLoading}
         />
       </Container>
     </ScreenContainer>

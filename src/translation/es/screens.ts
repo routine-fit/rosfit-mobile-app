@@ -20,4 +20,8 @@ export default {
     heading1: 'Edita tus preferencias \nde entrenamiento',
     error: 'Error al editar preferencias de entrenamiento',
   },
+  exercises: {
+    heading1: 'Ejercicios',
+    newExercise: 'Nuevo ejercicio',
+  },
 };

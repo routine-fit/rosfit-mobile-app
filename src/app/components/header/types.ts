@@ -8,4 +8,5 @@ export interface HeaderProps {
   rightText?: string;
   rightButton?: React.ReactNode;
   onPressLeft?: () => void;
+  onPressRight?: () => void;
 }

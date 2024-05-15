@@ -17,4 +17,14 @@ export default {
     medium: 'Medio',
     high: 'Alta',
   },
+  muscleGroups: {
+    ABDOMINAL: 'Abdominal',
+    BICEPS: 'Bíceps',
+    DELTOID: 'Deltoides',
+    ERECTOR_SPINAE: 'Erector de la columna',
+    LATISSIMUS_DORSI: 'Dorsal ancho',
+    PECTORAL: 'Pectoral',
+    TRAPEZIUS: 'Trapecio',
+    TRICEPS: 'Triceps',
+  },
 };

@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import { useTheme } from 'styled-components';
+import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Text } from '@gluestack-ui/themed';
+import { Box } from '@gluestack-ui/themed';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
@@ -10,34 +11,43 @@ import {
   ProfileIcon,
   SettingsIcon,
 } from 'src/assets/svg/navigation-icons/';
-import ROUTES from 'src/constants/routes';
 import { RootState, useAppDispatch } from 'src/store';
 import { startLogoutUser } from 'src/store/auth/thunks';
 
+import Text from '../text';
 import { MenuItem } from './components/menu-item';
-
-const navigationRoutes = [
-  { route: ROUTES.HOME, icon: <HomeIcon color="#4D7C0F" />, label: 'Home' },
-  {
-    route: ROUTES.PROFILE,
-    icon: <ProfileIcon color="#4D7C0F" />,
-    label: 'Profile',
-  },
-  {
-    route: ROUTES.SETTINGS,
-    icon: <SettingsIcon color="#4D7C0F" />,
-    label: 'Settings',
-  },
-];
 
 const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const { displayName } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = async () => {
     await dispatch(startLogoutUser());
     navigation.navigate('Login');
   };
+
+  const navRoutes = useMemo(
+    () => [
+      {
+        route: 'Main',
+        params: { screen: 'Home' },
+        icon: <HomeIcon color={theme.colors.primary.default} />,
+        label: 'Home',
+      },
+      {
+        route: 'Profile',
+        icon: <ProfileIcon color={theme.colors.primary.default} />,
+        label: 'Profile',
+      },
+      {
+        route: 'Settings',
+        icon: <SettingsIcon color={theme.colors.primary.default} />,
+        label: 'Settings',
+      },
+    ],
+    [theme.colors.primary.default],
+  );
 
   return (
     <Box flexDirection="column" flex={1}>
@@ -51,16 +61,18 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
         borderBottomWidth={2}
       >
         <UserAvatar width={70} height={70} />
-        <Text size="xl">{displayName}</Text>
+        <Text fontSize="xl">{displayName}</Text>
       </Box>
 
       <Box padding={15}>
-        {navigationRoutes.map(({ route, icon, label }) => (
+        {navRoutes.map(({ route, params, icon, label }) => (
           <MenuItem
             key={route}
             icon={icon}
             label={label}
-            onPress={() => navigation.navigate(route)}
+            onPress={() =>
+              navigation.reset({ index: 0, routes: [{ name: route, params }] })
+            }
           />
         ))}
       </Box>

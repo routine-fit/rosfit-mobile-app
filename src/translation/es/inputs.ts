@@ -38,6 +38,7 @@ export default {
     trainingGoals: '',
     weight: 'Peso',
     height: 'Estatura',
+    searchOnList: 'Buscar en la lista',
   },
   error: {
     required: '{{field}} es requerido',

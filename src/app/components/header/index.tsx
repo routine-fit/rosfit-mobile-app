@@ -1,60 +1,52 @@
+import { useTheme } from 'styled-components';
 import React, { FC } from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
-import { Box, ButtonText } from '@gluestack-ui/themed';
 
+import Text from '../text';
+import { Container, Content, CurvedContainer, TitleWrapper } from './styles';
 import { HeaderProps } from './types';
 
 const Header: FC<HeaderProps> = ({
   leftText,
   headerLeft,
+  onPressLeft,
   headerTitle,
   rightText,
   rightButton,
-  onPressLeft,
+  onPressRight,
 }) => {
+  const theme = useTheme();
+
   return (
-    <Box
-      flexDirection="row"
-      alignItems="center"
-      justifyContent="space-between"
-      backgroundColor="$lime600"
-      paddingHorizontal={15}
-      paddingTop={20}
-      height={65}
-      borderBottomLeftRadius={15}
-    >
-      {(leftText || headerLeft) && (
-        <TouchableWithoutFeedback onPress={onPressLeft}>
-          {headerLeft && leftText ? (
-            <Box flexDirection="row" alignItems="center">
-              <Box marginRight={10}>{headerLeft}</Box>
-              <ButtonText>{leftText}</ButtonText>
-            </Box>
-          ) : headerLeft ? (
-            <Box>{headerLeft}</Box>
-          ) : leftText ? (
-            <ButtonText>{leftText}</ButtonText>
-          ) : null}
-        </TouchableWithoutFeedback>
-      )}
-
-      <Box flex={1} alignItems="center">
-        {typeof headerTitle === 'string' && (
-          <ButtonText fontWeight="$bold">{headerTitle}</ButtonText>
+    <Container>
+      <CurvedContainer>
+        {(leftText || headerLeft) && (
+          <TouchableWithoutFeedback onPress={onPressLeft}>
+            <Content>
+              {headerLeft}
+              <Text color={theme.colors.content.inverse}>{leftText}</Text>
+            </Content>
+          </TouchableWithoutFeedback>
         )}
-      </Box>
 
-      {rightText && rightButton ? (
-        <Box flexDirection="row" alignItems="center">
-          <ButtonText>{rightText}</ButtonText>
-          <Box marginLeft={10}>{rightButton}</Box>
-        </Box>
-      ) : rightText ? (
-        <ButtonText>{rightText}</ButtonText>
-      ) : rightButton ? (
-        <Box>{rightButton}</Box>
-      ) : null}
-    </Box>
+        <TitleWrapper>
+          {typeof headerTitle === 'string' && (
+            <Text fontWeight="bold" color={theme.colors.content.inverse}>
+              {headerTitle}
+            </Text>
+          )}
+        </TitleWrapper>
+
+        {(rightText || rightButton) && (
+          <TouchableWithoutFeedback onPress={onPressRight}>
+            <Content>
+              {rightButton}
+              <Text color={theme.colors.content.inverse}>{rightText}</Text>
+            </Content>
+          </TouchableWithoutFeedback>
+        )}
+      </CurvedContainer>
+    </Container>
   );
 };
 

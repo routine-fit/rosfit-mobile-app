@@ -31,10 +31,11 @@ export const ButtonContainer = styled.Pressable<{
   fullWidth?: boolean;
   withTrailingIcon?: boolean;
   marginTop?: number;
+  alignSelf?: boolean;
 }>`
   ${({ stringStyles }) => stringStyles || ''}
   width: ${props => (props.fullWidth ? '100%' : 'auto')};
-  align-self: flex-start;
+  ${props => (props.alignSelf ? 'align-self: flex-start;' : '')}
   border-radius: ${props => radius[props.radius]}px;
   height: ${props => sizes[props.size]}px;
   margin-top: ${props => props.marginTop || 0}px;
@@ -96,7 +97,7 @@ export const getThemeVariantMap = (theme: ExtendedTheme) => {
           content: { color: theme.colors.content.subtle },
         },
         disabled: {
-          button: `background-color: ${theme.colors.neutral.palest};`,
+          button: ``,
           content: { color: theme.colors.content.disabled },
         },
         pressed: {
@@ -158,7 +159,7 @@ export const getThemeVariantMap = (theme: ExtendedTheme) => {
           content: { color: theme.colors.secondary.strong },
         },
         disabled: {
-          button: `background-color: ${theme.colors.secondary.palest};`,
+          button: ``,
           content: { color: theme.colors.secondary.disabled },
         },
         pressed: {
@@ -174,7 +175,7 @@ export const getThemeVariantMap = (theme: ExtendedTheme) => {
     primary: {
       filled: {
         default: {
-          button: `background-color: ${theme.colors.primary.pale};`,
+          button: `background-color: ${theme.colors.primary.default};`,
           content: { color: theme.colors.content.inverse },
         },
         disabled: {
@@ -220,7 +221,7 @@ export const getThemeVariantMap = (theme: ExtendedTheme) => {
           content: { color: theme.colors.primary.default },
         },
         disabled: {
-          button: `background-color: ${theme.colors.primary.palest};`,
+          button: ``,
           content: { color: theme.colors.primary.disabled },
         },
         pressed: {
@@ -281,7 +282,7 @@ export const getThemeVariantMap = (theme: ExtendedTheme) => {
           content: { color: theme.colors.feedback.error.default },
         },
         disabled: {
-          button: `background-color: ${theme.colors.feedback.error.palest};`,
+          button: ``,
           content: { color: theme.colors.feedback.error.default },
         },
         pressed: {
