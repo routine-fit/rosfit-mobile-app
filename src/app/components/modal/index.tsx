@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Modal, View } from 'react-native';
 
 import {
@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { SharedModalProps } from './types';
 
-const SharedModal: React.FC<SharedModalProps> = ({
+const SharedModal: FC<SharedModalProps> = ({
   open,
   onClose,
   title,
