@@ -2,12 +2,11 @@ import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { Button, HStack } from '@gluestack-ui/themed';
-import { ButtonText } from '@gluestack-ui/themed';
 
-import { ControlledTextInput, GapContainer } from 'src/app/components';
+import { Button, ControlledTextInput, GapContainer } from 'src/app/components';
 
 import { formConfig, FormData } from './form-config';
+import { ButtonContainer } from './styles';
 import { ModalContentProps } from './types';
 
 export const ModalContent: FC<ModalContentProps> = ({ onClose }) => {
@@ -39,14 +38,22 @@ export const ModalContent: FC<ModalContentProps> = ({ onClose }) => {
           name: 'height',
         }}
       />
-      <HStack justifyContent="flex-end" gap="$2" paddingVertical="$2">
-        <Button onPress={onClose} bgColor="$error500">
-          <ButtonText>{t('common:button.cancel')}</ButtonText>
-        </Button>
-        <Button onPress={handleSubmit(onValidSubmit)} bgColor="$lime700">
-          <ButtonText>{t('common:button.confirm')}</ButtonText>
-        </Button>
-      </HStack>
+      <ButtonContainer>
+        <Button
+          content={t('common:button.confirm')}
+          onPress={handleSubmit(onValidSubmit)}
+          variant="filled"
+          themeColor="primary"
+          size="m"
+        />
+        <Button
+          content={t('common:button.cancel')}
+          onPress={onClose}
+          variant="filled"
+          themeColor="error"
+          size="m"
+        />
+      </ButtonContainer>
     </GapContainer>
   );
 };
