@@ -1,13 +1,8 @@
 import React, { FC } from 'react';
 import { Modal, View } from 'react-native';
 
-import {
-  FooterContainer,
-  ModalContainer,
-  ModalContent,
-  ModalSubtitle,
-  ModalTitle,
-} from './styles';
+import Text from '../text';
+import { FooterContainer, ModalContainer, ModalContent } from './styles';
 import { SharedModalProps } from './types';
 
 const SharedModal: FC<SharedModalProps> = ({
@@ -27,8 +22,10 @@ const SharedModal: FC<SharedModalProps> = ({
     >
       <ModalContainer>
         <ModalContent>
-          <ModalTitle>{title}</ModalTitle>
-          {subtitle && <ModalSubtitle>{subtitle}</ModalSubtitle>}
+          <Text fontSize="xl" fontWeight="bold">
+            {title}
+          </Text>
+          {subtitle && <Text>{subtitle}</Text>}
           <View>{body}</View>
           {footer && <FooterContainer>{footer}</FooterContainer>}
         </ModalContent>

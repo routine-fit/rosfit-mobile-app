@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Modal, TouchableOpacity } from 'react-native';
+import { FlatList, Modal } from 'react-native';
 
 import TextInput from 'src/app/components/inputs/text-input';
 import Text from 'src/app/components/text';
 
-import { ModalContent, Option, Overlay } from './styles';
+import { BottomSheetContent, Option, Overlay } from './styles';
 import { SelectInputProps } from './types';
 
 const ControlledSelectInput = <Form extends FieldValues>({
@@ -56,21 +56,17 @@ const ControlledSelectInput = <Form extends FieldValues>({
         }}
       >
         <Overlay>
-          <ModalContent>
+          <BottomSheetContent>
             <FlatList
               data={options}
               renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => handleSelect(item.value, item.label)}
-                >
-                  <Option>
-                    <Text fontSize="lg">{item.label}</Text>
-                  </Option>
-                </TouchableOpacity>
+                <Option onPress={() => handleSelect(item.value, item.label)}>
+                  <Text fontSize="lg">{item.label}</Text>
+                </Option>
               )}
-              keyExtractor={(item, i) => i.toString()}
+              keyExtractor={item => item.value.toString()}
             />
-          </ModalContent>
+          </BottomSheetContent>
         </Overlay>
       </Modal>
     </>
