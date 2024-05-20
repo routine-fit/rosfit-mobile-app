@@ -7,7 +7,3 @@ export const MenuItemContainer = styled.View`
   padding-vertical: 17px;
   padding-horizontal: 5px;
 `;
-
-export const MenuItemLabel = styled.Text`
-  font-size: ${({ theme }) => theme.sizes.fontSize.m}px;
-`;
