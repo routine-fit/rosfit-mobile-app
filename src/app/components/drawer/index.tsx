@@ -66,7 +66,7 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
           <MenuItem
             key={route}
             icon={React.cloneElement(icon, {
-              color: theme.palette.primary[500],
+              color: theme.colors.primary.default,
             })}
             label={label}
             onPress={() =>

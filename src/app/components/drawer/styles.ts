@@ -11,7 +11,7 @@ export const ProfileInfoContainer = styled.View`
   padding-top: 40px;
   padding-bottom: 15px;
   gap: 10px;
-  border-bottom-color: ${({ theme }) => theme.palette.neutral[400]};
+  border-bottom-color: ${({ theme }) => theme.colors.stroke.default};
   border-bottom-width: 2px;
 `;
 
