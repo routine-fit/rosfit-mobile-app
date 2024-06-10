@@ -1,81 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import {
-  ChevronDownIcon,
-  FormControl,
-  FormControlError,
-  FormControlErrorText,
-  FormControlLabel,
-  FormControlLabelText,
-  Icon,
-  Select,
-  SelectBackdrop,
-  SelectContent,
-  SelectDragIndicator,
-  SelectDragIndicatorWrapper,
-  SelectIcon,
-  SelectInput,
-  SelectItem,
-  SelectPortal,
-  SelectTrigger,
-} from '@gluestack-ui/themed';
+import { FlatList, Modal } from 'react-native';
 
+import TextInput from 'src/app/components/inputs/text-input';
+import Text from 'src/app/components/text';
+
+import { BottomSheetContent, Option, Overlay } from './styles';
 import { SelectInputProps } from './types';
 
-// TODO: Redo without gluestack
 const ControlledSelectInput = <Form extends FieldValues>({
   controller,
-  inputProps = {},
-  formControlProps = {},
   options,
+  ...restOfProps
 }: SelectInputProps<Form>) => {
-  const { field, fieldState } = useController(controller);
+  const {
+    field: { onChange, onBlur },
+    fieldState: { error },
+  } = useController(controller);
   const { t } = useTranslation();
 
   const label = t(`inputs:label.${controller.name}`);
   const placeholder = t(`inputs:placeholder.${controller.name}`);
 
-  const handleSelect = (selectedValue: string) => {
-    field.onChange(selectedValue);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedLabel, setSelectedLabel] = useState('');
+
+  const handleSelect = (selectedValue: string, valueLabel: string) => {
+    onChange(selectedValue);
+    setSelectedLabel(valueLabel);
+    setModalVisible(false);
   };
 
   return (
-    <FormControl
-      {...formControlProps}
-      isInvalid={fieldState.invalid}
-      isRequired={formControlProps.isRequired || !!controller.rules?.required}
-    >
-      <FormControlLabel>
-        <FormControlLabelText>{label}</FormControlLabelText>
-      </FormControlLabel>
-      <Select {...inputProps} onValueChange={handleSelect}>
-        <SelectTrigger variant="outline" size="md">
-          <SelectInput placeholder={placeholder} />
-          <SelectIcon marginLeft={3}>
-            <Icon as={ChevronDownIcon} />
-          </SelectIcon>
-        </SelectTrigger>
-        <SelectPortal>
-          <SelectBackdrop />
-          <SelectContent>
-            <SelectDragIndicatorWrapper>
-              <SelectDragIndicator />
-            </SelectDragIndicatorWrapper>
-            {options.map(option => (
-              <SelectItem
-                key={option.value}
-                label={option.label}
-                value={option.value}
-              />
-            ))}
-          </SelectContent>
-        </SelectPortal>
-      </Select>
-      <FormControlError>
-        <FormControlErrorText>{fieldState.error?.message}</FormControlErrorText>
-      </FormControlError>
-    </FormControl>
+    <>
+      <TextInput
+        error={error?.message}
+        label={label}
+        placeholder={placeholder}
+        {...restOfProps}
+        onBlur={onBlur}
+        value={selectedLabel}
+        readOnly
+        onChangeText={(val: string) =>
+          onChange(val.length === 1 ? val.trim() : val)
+        }
+        onPress={() => setModalVisible(true)}
+      />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <Overlay>
+          <BottomSheetContent>
+            <FlatList
+              data={options}
+              renderItem={({ item }) => (
+                <Option onPress={() => handleSelect(item.value, item.label)}>
+                  <Text fontSize="lg">{item.label}</Text>
+                </Option>
+              )}
+              keyExtractor={item => item.value.toString()}
+            />
+          </BottomSheetContent>
+        </Overlay>
+      </Modal>
+    </>
   );
 };
 
