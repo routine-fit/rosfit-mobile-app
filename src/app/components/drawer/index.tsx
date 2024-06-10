@@ -1,9 +1,9 @@
 import { useTheme } from 'styled-components';
 import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Box } from '@gluestack-ui/themed';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 
+import Text from 'src/app/components/text';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
   HomeIcon,
@@ -14,8 +14,13 @@ import {
 import { RootState, useAppDispatch } from 'src/store';
 import { startLogoutUser } from 'src/store/auth/thunks';
 
-import Text from '../text';
 import { MenuItem } from './components/menu-item';
+import {
+  DrawerContainer,
+  LogoutContainer,
+  MenuContainer,
+  ProfileInfoContainer,
+} from './styles';
 
 const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
@@ -50,37 +55,31 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   );
 
   return (
-    <Box flexDirection="column" flex={1}>
-      <Box
-        flexDirection="column"
-        alignItems="center"
-        paddingTop={40}
-        paddingBottom={15}
-        gap={10}
-        borderBottomColor="$secondary300"
-        borderBottomWidth={2}
-      >
+    <DrawerContainer>
+      <ProfileInfoContainer>
         <UserAvatar width={70} height={70} />
         <Text fontSize="xl">{displayName}</Text>
-      </Box>
+      </ProfileInfoContainer>
 
-      <Box padding={15}>
+      <MenuContainer>
         {navRoutes.map(({ route, params, icon, label }) => (
           <MenuItem
             key={route}
-            icon={icon}
+            icon={React.cloneElement(icon, {
+              color: theme.colors.primary.default,
+            })}
             label={label}
             onPress={() =>
               navigation.reset({ index: 0, routes: [{ name: route, params }] })
             }
           />
         ))}
-      </Box>
+      </MenuContainer>
 
-      <Box justifyContent="flex-end" flex={1} paddingHorizontal={10}>
+      <LogoutContainer>
         <MenuItem icon={<LogoutIcon />} label="Logout" onPress={handleLogout} />
-      </Box>
-    </Box>
+      </LogoutContainer>
+    </DrawerContainer>
   );
 };
 

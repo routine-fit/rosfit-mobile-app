@@ -16,7 +16,7 @@ export interface TextInputProps extends RNTextInputProps {
   label?: string;
   variant?: InputVariants;
   value: string;
-  onChangeText: (value: string) => void;
+  onChangeText?: (value: string) => void;
   error?: string;
   inputRef?: React.ForwardedRef<TextInput>;
   leadingIcon?: React.ReactElement<WithIconProps>;
