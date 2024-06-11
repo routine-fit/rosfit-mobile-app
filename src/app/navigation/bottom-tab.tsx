@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -7,11 +8,13 @@ import {
 
 import { Header } from 'src/app/components';
 import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
+import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
   DumbbellIcon,
   HomeIcon,
   RoutineIcon,
 } from 'src/assets/svg/navigation-icons';
+import { RootState } from 'src/store';
 
 import { BottomTabParamList } from './types';
 
@@ -32,6 +35,7 @@ const renderIcon = (icon: JSX.Element, focused: boolean) =>
 
 export const BottomTab = () => {
   const { t } = useTranslation();
+  const { displayName } = useSelector((state: RootState) => state.auth);
   return (
     <Tab.Navigator screenOptions={tabBarOptions} initialRouteName="HomeScreen">
       <Tab.Screen
@@ -45,10 +49,17 @@ export const BottomTab = () => {
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{
+        options={() => ({
+          header: () => (
+            <Header
+              leftText={t('navigation:headers.profile', {
+                user: displayName,
+              })}
+              headerLeft={<UserAvatar color="light100" width={20} />}
+            />
+          ),
           tabBarIcon: ({ focused }) => renderIcon(<HomeIcon />, focused),
-          headerTitle: t('navigation:headers.home'),
-        }}
+        })}
       />
       <Tab.Screen
         name="ExerciseScreen"
