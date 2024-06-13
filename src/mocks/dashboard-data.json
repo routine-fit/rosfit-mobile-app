@@ -1,0 +1,38 @@
+{
+  "routine": {
+    "title": "Piernas",
+    "duration": "1 Hr aprox"
+  },
+  "trainingInfo": [
+    {
+      "label": "Frecuencia de entrenamiento",
+      "value": "2/3"
+    },
+    {
+      "label": "Duracion de sesiones",
+      "value": "90 min"
+    },
+    {
+      "label": "Tipo de ejercicio",
+      "value": "Peso"
+    }
+  ],
+  "personalRecords": [
+    {
+      "exercise": "Peso Muerto",
+      "weight": "50 Kg"
+    },
+    {
+      "exercise": "Remo",
+      "weight": "45 Kg"
+    },
+    {
+      "exercise": "Cuadriceps",
+      "weight": "90 Kg"
+    },
+    {
+      "exercise": "Pecho Plano",
+      "weight": "80 Kg"
+    }
+  ]
+}

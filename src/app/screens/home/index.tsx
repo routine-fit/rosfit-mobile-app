@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { DashboardData } from 'src/interfaces/dashboard';
+import dashboardDataFile from 'src/mocks/dashboard-data.json';
 
 import ExerciseInfoRow from './components/exercise-info-row';
 import PersonalRecordCard from './components/personal-record-card';
@@ -18,6 +20,43 @@ import {
 
 export const HomeScreen = () => {
   const { t } = useTranslation();
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(
+    null,
+  );
+
+  const fetchDashboardData = (): Promise<DashboardData> => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          resolve(dashboardDataFile);
+        } catch (error) {
+          reject(error);
+        }
+      }, 1000);
+    });
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDashboardData();
+        setDashboardData(data);
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!dashboardData) {
+    return (
+      <ScreenContainer withoutVerticalPadding>
+        <Text>Loading...</Text>
+      </ScreenContainer>
+    );
+  }
+
   return (
     <ScreenContainer withoutVerticalPadding>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -28,10 +67,11 @@ export const HomeScreen = () => {
             type="h3"
           />
           <RoutineBadge
-            title="Piernas"
-            duration="1 Hr aprox"
+            title={dashboardData.routine.title}
+            duration={dashboardData.routine.duration}
             onPress={() => {}}
           />
+
           <Heading
             title={t('screens:dashboard.heading2')}
             flexTitleAlign="center"
@@ -39,18 +79,13 @@ export const HomeScreen = () => {
           />
           <SectionContainer>
             <RowContainer>
-              <ExerciseInfoRow
-                label={t('screens:dashboard.trainingFrequency')}
-                value="2/3"
-              />
-              <ExerciseInfoRow
-                label={t('screens:dashboard.trainingDuration')}
-                value="90 min"
-              />
-              <ExerciseInfoRow
-                label={t('screens:dashboard.trainingType')}
-                value="Peso"
-              />
+              {dashboardData.trainingInfo.map(info => (
+                <ExerciseInfoRow
+                  key={info.value}
+                  label={info.label}
+                  value={info.value}
+                />
+              ))}
             </RowContainer>
             <Button
               radius="oval"
@@ -66,7 +101,6 @@ export const HomeScreen = () => {
             flexTitleAlign="center"
             type="h3"
           />
-
           <SectionContainer>
             <FlexRow>
               <Button
@@ -90,6 +124,7 @@ export const HomeScreen = () => {
               <Text fontSize="3xl">Chart placeholder</Text>
             </CenteredView>
           </SectionContainer>
+
           <Heading
             title={t('screens:dashboard.heading4')}
             flexTitleAlign="center"
@@ -97,10 +132,13 @@ export const HomeScreen = () => {
           />
           <SectionContainer>
             <FlexWrapView>
-              <PersonalRecordCard exercise="Peso Muerto" weight="50 Kg" />
-              <PersonalRecordCard exercise="Remo" weight="45 Kg" />
-              <PersonalRecordCard exercise="Cuadriceps" weight="90 Kg" />
-              <PersonalRecordCard exercise="Pecho Plano" weight="80 Kg" />
+              {dashboardData.personalRecords.map((record, index) => (
+                <PersonalRecordCard
+                  key={index}
+                  exercise={record.exercise}
+                  weight={record.weight}
+                />
+              ))}
             </FlexWrapView>
           </SectionContainer>
         </Container>
