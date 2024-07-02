@@ -9,11 +9,11 @@ import {
   ControlledTextInput,
   Divider,
   GapContainer,
-  GoogleSignInButton,
   Heading,
   PasswordInput,
   ScreenContainer,
 } from 'src/app/components';
+import { GoogleIcon } from 'src/assets/svg/social-media/google';
 import { RootState, useAppDispatch } from 'src/store';
 import {
   startGoogleSignIn,
@@ -99,7 +99,14 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
             onPress={handleSubmit(onValidSubmit)}
             loading={isLoading}
           />
-          <GoogleSignInButton onPress={handleGoogleSignIn} />
+          <Button
+            onPress={handleGoogleSignIn}
+            content={t('common:button.googleSignIn')}
+            leadingIcon={<GoogleIcon />}
+            radius="oval"
+            variant="outlined"
+            themeColor="neutral"
+          />
         </GapContainer>
         <Divider marginBottom={16} marginTop={16} />
         <Button

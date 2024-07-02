@@ -10,7 +10,8 @@ export default {
     error: 'Error al crear cuenta',
   },
   completeData: {
-    heading1: 'Ya falta poco\n Completa con tus datos',
+    heading1: 'Ya falta poco',
+    heading2: 'Completa con tus datos',
   },
   editPersonalData: {
     heading1: 'Edita tus datos',
