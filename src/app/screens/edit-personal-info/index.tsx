@@ -1,26 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
-import { Box, ButtonText, Text } from '@gluestack-ui/themed';
-import { Button } from '@gluestack-ui/themed';
+import { Alert, ScrollView } from 'react-native';
 
 import {
+  Button,
   ControlledSelect,
   ControlledTextInput,
   GapContainer,
+  Heading,
+  ScreenContainer,
 } from 'src/app/components';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
-import { commonStyles } from 'src/utils/styles';
 
 import { formConfig, FormData } from './form-config';
+import { Container } from './styles';
 import { EditPersonalInfoProps } from './types';
 
 export const EditPersonalInfoScreen = ({
@@ -77,62 +72,55 @@ export const EditPersonalInfoScreen = ({
   };
 
   return (
-    <SafeAreaView style={commonStyles.safeAreaViewStyle}>
-      <KeyboardAvoidingView
-        behavior={Platform.select({
-          ios: 'padding',
-          android: 'height',
-        })}
-        style={commonStyles.keyboardAvoidingView}
-      >
-        <ScrollView>
-          <Box flex={1} paddingVertical="$10" paddingHorizontal="$12">
-            <Box alignItems="center" padding="$2" mb="$6">
-              <Text size="2xl" color="$textDark950">
-                {t('screens:editPersonalData.heading1')}
-              </Text>
-            </Box>
-            <Box>
-              <GapContainer>
-                <ControlledTextInput
-                  controller={{
-                    control,
-                    name: 'firstName',
-                  }}
-                />
-                <ControlledTextInput
-                  controller={{
-                    control,
-                    name: 'lastName',
-                  }}
-                />
-                <ControlledTextInput
-                  controller={{
-                    control,
-                    name: 'birthDate',
-                  }}
-                />
-                <ControlledSelect
-                  controller={{
-                    control,
-                    name: 'gender',
-                  }}
-                  options={genderOptions}
-                />
-                <Button onPress={navigation.goBack} bgColor="$error500">
-                  <ButtonText>{t('common:button.cancel')}</ButtonText>
-                </Button>
-                <Button
-                  onPress={handleSubmit(onValidSubmit)}
-                  bgColor="$lime700"
-                >
-                  <ButtonText>{t('common:button.confirm')}</ButtonText>
-                </Button>
-              </GapContainer>
-            </Box>
-          </Box>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <ScreenContainer withKeyboardAvoidingView withoutVerticalPadding>
+      <ScrollView>
+        <Container>
+          <Heading
+            title={t('screens:editPersonalData.heading1')}
+            flexTitleAlign="center"
+          />
+          <GapContainer>
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'firstName',
+              }}
+            />
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'lastName',
+              }}
+            />
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'birthDate',
+              }}
+            />
+            <ControlledSelect
+              controller={{
+                control,
+                name: 'gender',
+              }}
+              options={genderOptions}
+            />
+            <GapContainer space={15}>
+              <Button
+                onPress={handleSubmit(onValidSubmit)}
+                content={t('common:button.confirm')}
+                size="m"
+              />
+              <Button
+                onPress={navigation.goBack}
+                content={t('common:button.cancel')}
+                themeColor="error"
+                size="m"
+              />
+            </GapContainer>
+          </GapContainer>
+        </Container>
+      </ScrollView>
+    </ScreenContainer>
   );
 };

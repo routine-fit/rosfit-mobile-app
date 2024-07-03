@@ -18,7 +18,8 @@ export default {
     error: 'Error al editar datos',
   },
   editTrainingPreferences: {
-    heading1: 'Edita tus preferencias \nde entrenamiento',
+    heading1: 'Edita tus preferencias',
+    heading2: 'de entrenamiento',
     error: 'Error al editar preferencias de entrenamiento',
   },
   exercises: {
