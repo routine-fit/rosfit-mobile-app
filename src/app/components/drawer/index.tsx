@@ -57,7 +57,11 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   return (
     <DrawerContainer>
       <ProfileInfoContainer>
-        <UserAvatar width={70} height={70} />
+        <UserAvatar
+          width={70}
+          height={70}
+          color={theme.colors.feedback.info.default}
+        />
         <Text fontSize="xl">{displayName}</Text>
       </ProfileInfoContainer>
 

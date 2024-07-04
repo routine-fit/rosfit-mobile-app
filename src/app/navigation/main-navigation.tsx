@@ -1,3 +1,4 @@
+import { useTheme } from 'styled-components';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -32,6 +33,7 @@ const Drawer = createDrawerNavigator<MainDrawerParamList>();
 export const MainAppNavigation = () => {
   const { t } = useTranslation();
   const { displayName } = useSelector((state: RootState) => state.auth);
+  const theme = useTheme();
 
   return (
     <Drawer.Navigator
@@ -53,7 +55,9 @@ export const MainAppNavigation = () => {
               leftText={t('navigation:headers.profile', {
                 user: displayName,
               })}
-              headerLeft={<UserAvatar color="light100" width={20} />}
+              headerLeft={
+                <UserAvatar color={theme.colors.background} width={20} />
+              }
             />
           ),
         })}
@@ -65,7 +69,7 @@ export const MainAppNavigation = () => {
           header: () => (
             <Header
               leftText={t('navigation:headers.returnProfile')}
-              headerLeft={<BackArrowIcon color="light100" width={20} />}
+              headerLeft={<BackArrowIcon width={20} />}
               onPressLeft={navigation.goBack}
             />
           ),
@@ -78,7 +82,7 @@ export const MainAppNavigation = () => {
           header: () => (
             <Header
               leftText={t('navigation:headers.returnProfile')}
-              headerLeft={<BackArrowIcon color="light100" width={20} />}
+              headerLeft={<BackArrowIcon width={20} />}
               onPressLeft={navigation.goBack}
             />
           ),

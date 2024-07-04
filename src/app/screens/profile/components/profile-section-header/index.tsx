@@ -1,22 +1,22 @@
 import React, { FC } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Box, EditIcon, Text } from '@gluestack-ui/themed';
 
+import { Text } from 'src/app/components';
+import { EditIcon } from 'src/assets/svg/navigation-icons/edit-icon';
+
+import { Container, EditButton, TitleContainer } from './styles';
 import { ProfileSectionProps } from './types';
 
 export const ProfileSectionHeader: FC<ProfileSectionProps> = ({
   title,
   onEditPress,
 }) => (
-  <Box flexDirection="row" justifyContent="space-between" alignItems="center">
-    <Box flex={1} ml="$7">
-      <Text color="$textDark950" textAlign="center">
-        {title}
-      </Text>
-    </Box>
+  <Container>
+    <TitleContainer>
+      <Text textAlign="center">{title}</Text>
+    </TitleContainer>
 
-    <TouchableOpacity onPress={onEditPress}>
-      <EditIcon mr="$2.5" color="$green700" />
-    </TouchableOpacity>
-  </Box>
+    <EditButton onPress={onEditPress}>
+      <EditIcon />
+    </EditButton>
+  </Container>
 );

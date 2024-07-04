@@ -4,6 +4,8 @@ export type FontFamily = 'Roboto';
 
 export type FontWeights = 'light' | 'medium' | 'semiBold' | 'bold';
 
+export type TextAlignValues = 'auto' | 'left' | 'right' | 'center' | 'justify';
+
 export type FontSizes =
   | '5xl'
   | '3xl'
@@ -22,4 +24,5 @@ export interface TextProps extends RNTextProps {
   fontWeight?: FontWeights;
   fontSize?: FontSizes;
   stringStyles?: string;
+  textAlign?: TextAlignValues;
 }

@@ -1,3 +1,4 @@
+import { useTheme } from 'styled-components/';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -18,6 +19,7 @@ import { ProfileScreenProps } from './types';
 export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const theme = useTheme();
 
   const fetchProfileData = (): Promise<ProfileData> => {
     return new Promise((resolve, reject) => {
@@ -49,7 +51,11 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>
       <ScrollView>
         <HeaderBox>
-          <UserAvatar width={70} height={70} />
+          <UserAvatar
+            width={70}
+            height={70}
+            color={theme.colors.feedback.info.default}
+          />
           <Text>{displayName}</Text>
         </HeaderBox>
         <SectionBox>
