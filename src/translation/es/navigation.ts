@@ -4,7 +4,7 @@ export default {
     login: 'Login',
     profile: 'Hola {{user}}!',
     routines: 'Rutinas',
-    home: 'Home',
+    home: 'Hola {{user}}!',
     exercises: 'Mis Ejercicios',
     returnProfile: 'Perfil',
   },

@@ -8,6 +8,7 @@ export type TextAlignValues = 'auto' | 'left' | 'right' | 'center' | 'justify';
 
 export type FontSizes =
   | '5xl'
+  | '4xl'
   | '3xl'
   | '2xl'
   | 'xl'

@@ -26,4 +26,16 @@ export default {
     heading1: 'Ejercicios',
     newExercise: 'Nuevo ejercicio',
   },
+  dashboard: {
+    heading1: 'Rutina de hoy',
+    heading2: 'Resumen de la semana',
+    heading3: 'Ejercicios populares',
+    heading4: 'Records personales (PR)',
+    trainingFrequency: 'Frecuencia de entrenamiento',
+    trainingDuration: 'Duración de sesiones',
+    trainingType: 'Tipo de entrenamiento',
+    progressButton: 'Revisa tu progreso',
+    weeklyExercisesButton: 'Semanal',
+    monthlyExercisesButton: 'Mensual',
+  },
 };

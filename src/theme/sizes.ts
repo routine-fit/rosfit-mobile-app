@@ -1,6 +1,7 @@
 export const sizes = {
   fontSize: {
     '5xl': ['48px', '67.2px'],
+    '4xl': ['36px', '50.4px'],
     '3xl': ['30px', '42px'],
     '2xl': ['24px', '33.6px'],
     xl: ['20px', '28px'],
