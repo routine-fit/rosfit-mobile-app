@@ -10,14 +10,16 @@ export default {
     error: 'Error al crear cuenta',
   },
   completeData: {
-    heading1: 'Ya falta poco\n Completa con tus datos',
+    heading1: 'Ya falta poco',
+    heading2: 'Completa con tus datos',
   },
   editPersonalData: {
     heading1: 'Edita tus datos',
     error: 'Error al editar datos',
   },
   editTrainingPreferences: {
-    heading1: 'Edita tus preferencias \nde entrenamiento',
+    heading1: 'Edita tus preferencias',
+    heading2: 'de entrenamiento',
     error: 'Error al editar preferencias de entrenamiento',
   },
   exercises: {

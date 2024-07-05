@@ -1,29 +1,26 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-} from 'react-native';
+import { Alert } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Box, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import {
+  Button,
   ControlledDatePicker,
   ControlledSelect,
   ControlledTextInput,
   GapContainer,
+  Heading,
+  ScreenContainer,
 } from 'src/app/components';
 import { RootStackParamList } from 'src/app/navigation/types';
 import { RootState, useAppDispatch } from 'src/store';
 import { startCreateUserInfo } from 'src/store/auth/thunks';
-import { commonStyles } from 'src/utils/styles';
 
 import { FormData, validationSchema } from './form-config';
+import { Container } from './styles';
 
 export const CompleteDataScreen = ({
   navigation,
@@ -67,50 +64,51 @@ export const CompleteDataScreen = ({
   };
 
   return (
-    <SafeAreaView style={commonStyles.safeAreaViewStyle}>
-      <KeyboardAvoidingView
-        behavior={Platform.select({
-          ios: 'padding',
-          android: 'height',
-        })}
-        style={commonStyles.keyboardAvoidingView}
-      >
-        <Box padding={20} flex={1} justifyContent="center" mt="$6" mb="$8">
-          <Text size="2xl" textAlign="center" mb="$4">
-            {t('screens:completeData.heading1')}
-          </Text>
-          <GapContainer>
-            <ControlledTextInput
-              controller={{
-                control,
-                name: 'firstName',
-              }}
-            />
-            <ControlledTextInput
-              controller={{
-                control,
-                name: 'lastName',
-              }}
-            />
-            <ControlledDatePicker
-              controller={{
-                control,
-                name: 'birthDate',
-              }}
-            />
-            <ControlledSelect
-              controller={{
-                control,
-                name: 'gender',
-              }}
-              options={genderOptions}
-            />
-            <Button onPress={handleSubmit(onValidSubmit)} bgColor="$lime600">
-              <ButtonText>{t('common:button.confirm')}</ButtonText>
-            </Button>
-          </GapContainer>
-        </Box>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <ScreenContainer withKeyboardAvoidingView>
+      <Container>
+        <Heading
+          flexTitleAlign="center"
+          bottomSpace={false}
+          type="h2"
+          title={t('screens:completeData.heading1')}
+        />
+        <Heading
+          flexTitleAlign="center"
+          type="h2"
+          title={t('screens:completeData.heading2')}
+        />
+        <GapContainer>
+          <ControlledTextInput
+            controller={{
+              control,
+              name: 'firstName',
+            }}
+          />
+          <ControlledTextInput
+            controller={{
+              control,
+              name: 'lastName',
+            }}
+          />
+          <ControlledDatePicker
+            controller={{
+              control,
+              name: 'birthDate',
+            }}
+          />
+          <ControlledSelect
+            controller={{
+              control,
+              name: 'gender',
+            }}
+            options={genderOptions}
+          />
+          <Button
+            onPress={handleSubmit(onValidSubmit)}
+            content={t('common:button.confirm')}
+          />
+        </GapContainer>
+      </Container>
+    </ScreenContainer>
   );
 };

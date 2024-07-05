@@ -1,26 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
-import { Box, ButtonText, Text } from '@gluestack-ui/themed';
-import { Button } from '@gluestack-ui/themed';
+import { Alert, ScrollView } from 'react-native';
 
 import {
+  Button,
   ControlledSelect,
   ControlledTextInput,
   GapContainer,
+  Heading,
+  ScreenContainer,
 } from 'src/app/components';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
-import { commonStyles } from 'src/utils/styles';
 
 import { formConfig, FormData } from './form-config';
+import { Container } from './styles';
 import { EditTrainingPreferencesProps } from './types';
 
 export const EditTrainingPreferencesScreen = ({
@@ -81,57 +76,60 @@ export const EditTrainingPreferencesScreen = ({
   };
 
   return (
-    <SafeAreaView style={commonStyles.safeAreaViewStyle}>
-      <KeyboardAvoidingView
-        behavior={Platform.select({
-          ios: 'padding',
-          android: 'height',
-        })}
-        style={commonStyles.keyboardAvoidingView}
-      >
-        <ScrollView>
-          <Box flex={1} paddingVertical="$10" paddingHorizontal="$12">
-            <Box alignItems="center" padding="$2" mb="$6">
-              <Text size="2xl" color="$textDark950" textAlign="center">
-                {t('screens:editTrainingPreferences.heading1')}
-              </Text>
-            </Box>
-            <GapContainer>
-              <ControlledTextInput
-                controller={{
-                  control,
-                  name: 'trainingType',
-                }}
+    <ScreenContainer withKeyboardAvoidingView withoutVerticalPadding>
+      <ScrollView>
+        <Container>
+          <Heading
+            title={t('screens:editTrainingPreferences.heading1')}
+            flexTitleAlign="center"
+            bottomSpace={false}
+          />
+          <Heading
+            title={t('screens:editTrainingPreferences.heading2')}
+            flexTitleAlign="center"
+          />
+          <GapContainer>
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'trainingType',
+              }}
+            />
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'trainingTime',
+              }}
+            />
+            <ControlledSelect
+              controller={{
+                control,
+                name: 'trainingIntensity',
+              }}
+              options={trainingIntensityOptions}
+            />
+            <ControlledTextInput
+              controller={{
+                control,
+                name: 'trainingGoals',
+              }}
+            />
+            <GapContainer space={15}>
+              <Button
+                onPress={handleSubmit(onValidSubmit)}
+                content={t('common:button.confirm')}
+                size="m"
               />
-              <ControlledTextInput
-                controller={{
-                  control,
-                  name: 'trainingTime',
-                }}
+              <Button
+                onPress={navigation.goBack}
+                content={t('common:button.cancel')}
+                themeColor="error"
+                size="m"
               />
-              <ControlledSelect
-                controller={{
-                  control,
-                  name: 'trainingIntensity',
-                }}
-                options={trainingIntensityOptions}
-              />
-              <ControlledTextInput
-                controller={{
-                  control,
-                  name: 'trainingGoals',
-                }}
-              />
-              <Button onPress={navigation.goBack} bgColor="$error500">
-                <ButtonText>{t('common:button.cancel')}</ButtonText>
-              </Button>
-              <Button onPress={handleSubmit(onValidSubmit)} bgColor="$lime700">
-                <ButtonText>{t('common:button.confirm')}</ButtonText>
-              </Button>
             </GapContainer>
-          </Box>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          </GapContainer>
+        </Container>
+      </ScrollView>
+    </ScreenContainer>
   );
 };

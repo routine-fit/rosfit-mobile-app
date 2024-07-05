@@ -4,8 +4,6 @@ import React from 'react';
 import { useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
-import { config as gluestackConfig } from '@gluestack-ui/config';
-import { GluestackUIProvider } from '@gluestack-ui/themed';
 
 import NavigationWrapper from './src/app/navigation';
 import LocalizationProvider from './src/config/localization/provider';
@@ -26,11 +24,9 @@ const App = (): React.JSX.Element => {
   return (
     <ThemeProvider theme={isDarkMode ? DarkTheme : LightTheme}>
       <Provider store={store}>
-        <GluestackUIProvider config={gluestackConfig}>
-          <LocalizationProvider>
-            <NavigationWrapper />
-          </LocalizationProvider>
-        </GluestackUIProvider>
+        <LocalizationProvider>
+          <NavigationWrapper />
+        </LocalizationProvider>
       </Provider>
     </ThemeProvider>
   );
