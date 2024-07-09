@@ -69,7 +69,7 @@ export const BottomTab = () => {
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<HomeIcon />, focused),
     }),
-    [t, displayName],
+    [t, displayName, theme, renderIcon],
   );
 
   const ExerciseHeaderOptions = useMemo(
@@ -78,7 +78,7 @@ export const BottomTab = () => {
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<DumbbellIcon />, focused),
     }),
-    [t],
+    [renderIcon, t],
   );
 
   return (
