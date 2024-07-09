@@ -21,15 +21,20 @@ import { BottomTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const renderIcon = (icon: JSX.Element, focused: boolean) =>
-  React.cloneElement(icon, {
-    color: focused ? '#4D7C0F' : '#404040',
-  });
-
 export const BottomTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { displayName } = useSelector((state: RootState) => state.auth);
+
+  const renderIcon = useMemo(
+    () => (icon: JSX.Element, focused: boolean) =>
+      React.cloneElement(icon, {
+        color: focused
+          ? theme.colors.primary.default
+          : theme.colors.neutral.strong,
+      }),
+    [theme],
+  );
 
   const tabBarOptions = useMemo<BottomTabNavigationOptions>(
     () => ({
