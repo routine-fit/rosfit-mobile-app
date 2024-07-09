@@ -78,7 +78,10 @@ export const WeekSummaryScreen = () => {
           />
         </CardsContainer>
         {/* TODO: Navigate to Exercises */}
-        <Button onPress={() => {}} content="Ejercicios Realizados" />
+        <Button
+          onPress={() => {}}
+          content={t('screens:weekSummary.exercisesBtn')}
+        />
       </ScrollView>
     </ScreenContainer>
   );

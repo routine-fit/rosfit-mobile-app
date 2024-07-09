@@ -49,5 +49,6 @@ export default {
     trainingVolumeDescription:
       'Numero de series de ejercicios que realizaste en una sesion promedio',
     weightProgressionDescription: 'Variación de peso esta semana',
+    exercisesBtn: 'Ejercicios Realizados',
   },
 };
