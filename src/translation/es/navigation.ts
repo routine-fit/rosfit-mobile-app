@@ -7,5 +7,6 @@ export default {
     home: 'Hola {{user}}!',
     exercises: 'Mis Ejercicios',
     returnProfile: 'Perfil',
+    returnHome: 'Home',
   },
 };

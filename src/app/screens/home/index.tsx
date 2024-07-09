@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { MainDrawerParamList } from 'src/app/navigation/types';
 import { DashboardData } from 'src/interfaces/dashboard';
 import dashboardDataFile from 'src/mocks/dashboard-data.json';
 
@@ -20,6 +22,7 @@ import {
 
 export const HomeScreen = () => {
   const { t } = useTranslation();
+  const navigation = useNavigation<NavigationProp<MainDrawerParamList>>();
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(
     null,
   );
@@ -92,7 +95,9 @@ export const HomeScreen = () => {
               variant="outlined"
               content={t('screens:dashboard.progressButton')}
               size="sm"
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate('WeekSummary');
+              }}
             />
           </SectionContainer>
 

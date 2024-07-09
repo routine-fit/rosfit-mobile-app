@@ -11,6 +11,7 @@ export type MainDrawerParamList = {
   Profile: undefined;
   EditPersonalInfo: undefined;
   EditTrainingPreferences: undefined;
+  WeekSummary: undefined;
 };
 
 export type RootStackParamList = {

@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
@@ -17,6 +17,7 @@ import { RootState } from 'src/store';
 
 import { EditPersonalInfoScreen } from '../screens/edit-personal-info';
 import { EditTrainingPreferencesScreen } from '../screens/edit-training-preferences';
+import { WeekSummaryScreen } from '../screens/week-summary';
 import { BottomTab } from './bottom-tab';
 import { MainDrawerParamList } from './types';
 
@@ -35,6 +36,20 @@ export const MainAppNavigation = () => {
   const { displayName } = useSelector((state: RootState) => state.auth);
   const theme = useTheme();
 
+  const profileHeaderOptions = useMemo(
+    () => ({
+      header: () => (
+        <Header
+          leftText={t('navigation:headers.profile', {
+            user: displayName,
+          })}
+          headerLeft={<UserAvatar color={theme.colors.background} width={20} />}
+        />
+      ),
+    }),
+    [displayName, t, theme.colors.background],
+  );
+
   return (
     <Drawer.Navigator
       screenOptions={screenOptions}
@@ -47,20 +62,22 @@ export const MainAppNavigation = () => {
         options={{ headerShown: false }}
       />
       <Drawer.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={() => ({
+        name="WeekSummary"
+        component={WeekSummaryScreen}
+        options={({ navigation }) => ({
           header: () => (
             <Header
-              leftText={t('navigation:headers.profile', {
-                user: displayName,
-              })}
-              headerLeft={
-                <UserAvatar color={theme.colors.background} width={20} />
-              }
+              leftText={t('navigation:headers.returnHome')}
+              headerLeft={<BackArrowIcon width={20} />}
+              onPressLeft={navigation.goBack}
             />
           ),
         })}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={profileHeaderOptions}
       />
       <Drawer.Screen
         name="EditPersonalInfo"
