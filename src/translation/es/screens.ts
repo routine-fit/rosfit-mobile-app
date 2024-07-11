@@ -38,4 +38,17 @@ export default {
     weeklyExercisesButton: 'Semanal',
     monthlyExercisesButton: 'Mensual',
   },
+  weekSummary: {
+    heading1: 'Resumen Semanal',
+    trainingFrequencyHeader: 'Frecuencia de entrenamiento',
+    trainingDurationHeader: 'Duración de sesiones',
+    trainingVolumeHeader: 'Volumen de entrenamiento',
+    weightProgressionHeader: 'Progresión de peso',
+    trainingFrequencyDescription: 'Días esta semana',
+    trainingDurationDescription: 'Duración de sesiones promedio',
+    trainingVolumeDescription:
+      'Numero de series de ejercicios que realizaste en una sesion promedio',
+    weightProgressionDescription: 'Variación de peso esta semana',
+    exercisesBtn: 'Ejercicios Realizados',
+  },
 };

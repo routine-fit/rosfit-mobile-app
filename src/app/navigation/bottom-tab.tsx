@@ -1,3 +1,4 @@
+import { useTheme } from 'styled-components';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -20,22 +21,31 @@ import { BottomTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const tabBarOptions: BottomTabNavigationOptions = {
-  headerShown: true,
-  tabBarActiveBackgroundColor: '#D9D9D9',
-  tabBarInactiveBackgroundColor: '#D9D9D9',
-  tabBarShowLabel: false,
-  header: ({ options }) => <Header headerTitle={options.headerTitle} />,
-};
-
-const renderIcon = (icon: JSX.Element, focused: boolean) =>
-  React.cloneElement(icon, {
-    color: focused ? '#4D7C0F' : '#404040',
-  });
-
 export const BottomTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { displayName } = useSelector((state: RootState) => state.auth);
+
+  const renderIcon = useMemo(
+    () => (icon: JSX.Element, focused: boolean) =>
+      React.cloneElement(icon, {
+        color: focused
+          ? theme.colors.primary.default
+          : theme.colors.neutral.strong,
+      }),
+    [theme],
+  );
+
+  const tabBarOptions = useMemo<BottomTabNavigationOptions>(
+    () => ({
+      headerShown: true,
+      tabBarActiveBackgroundColor: theme.palette.neutral[200],
+      tabBarInactiveBackgroundColor: theme.palette.neutral[200],
+      tabBarShowLabel: false,
+      header: ({ options }) => <Header headerTitle={options.headerTitle} />,
+    }),
+    [theme],
+  );
 
   const RoutineHeaderOptions = useMemo(
     () => ({
@@ -53,13 +63,13 @@ export const BottomTab = () => {
           leftText={t('navigation:headers.profile', {
             user: displayName,
           })}
-          headerLeft={<UserAvatar color="light100" width={20} />}
+          headerLeft={<UserAvatar color={theme.colors.background} width={20} />}
         />
       ),
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<HomeIcon />, focused),
     }),
-    [t, displayName],
+    [t, displayName, theme, renderIcon],
   );
 
   const ExerciseHeaderOptions = useMemo(
@@ -68,7 +78,7 @@ export const BottomTab = () => {
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<DumbbellIcon />, focused),
     }),
-    [t],
+    [renderIcon, t],
   );
 
   return (

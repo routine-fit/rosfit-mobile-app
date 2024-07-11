@@ -1,0 +1,6 @@
+{
+  "trainingFrequency": "4",
+  "trainingDuration": "90 min",
+  "trainingVolume": "100",
+  "weightProgression": "5%"
+}
