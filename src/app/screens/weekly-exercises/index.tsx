@@ -1,15 +1,19 @@
+import { ArrowRightCircle } from 'lucide-react-native';
+import { useTheme } from 'styled-components';
 import React, { useEffect, useState } from 'react';
-// import { useTranslation } from 'react-i18next';
-import { FlatList, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 // import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Heading, ScreenContainer, Text } from 'src/app/components';
+import { AccordionItem } from 'src/app/components/accordion';
 // import { MainDrawerParamList } from 'src/app/navigation/types';
 import { Exercise, MuscleGroup } from 'src/interfaces/exercises';
 import weeklyExercisesDataFile from 'src/mocks/weekly-exercises-data.json';
 
 export const WeeklyExercisesScreen = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
+  const theme = useTheme();
   // const navigation = useNavigation<NavigationProp<MainDrawerParamList>>();
   const [weeklyExercisesData, setWeeklyExercisesData] = useState<
     Exercise[] | null
@@ -82,15 +86,37 @@ export const WeeklyExercisesScreen = () => {
         data={muscleGroups}
         keyExtractor={item => item.muscleGroup}
         renderItem={({ item }) => (
-          <View>
-            <Heading title={item.muscleGroup} type="h3" />
-            {item.exercises.map(exercise => (
-              <Text key={exercise.id}>{exercise.name}</Text>
-            ))}
-          </View>
+          <AccordionItem
+            title={t(`common:muscleGroups.${item.muscleGroup}`)}
+            count={item.exercises.length}
+            body={
+              <>
+                {item.exercises.map(exercise => (
+                  <View key={exercise.id} style={styles.exerciseRow}>
+                    <Text fontSize="sm" textAlign="center">
+                      {exercise.name}
+                    </Text>
+                    <TouchableOpacity>
+                      <ArrowRightCircle
+                        color={theme.colors.secondary.default}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </>
+            }
+          />
         )}
       />
-      <View />
     </ScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  exerciseRow: {
+    flexDirection: 'row',
+    margin: 7,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+});
