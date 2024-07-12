@@ -1,0 +1,8 @@
+{
+  "trainingFrequency": "4",
+  "trainingVolume": "100",
+  "trainingIntensity": "8",
+  "weightProgression": "5%",
+  "personalRecord": "50kg",
+  "personalGoal": "70kg"
+}

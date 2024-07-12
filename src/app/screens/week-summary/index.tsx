@@ -8,7 +8,7 @@ import { MainDrawerParamList } from 'src/app/navigation/types';
 import { WeekSummaryData } from 'src/interfaces/week-summary';
 import weekSummaryDataFile from 'src/mocks/week-summary-data.json';
 
-import { SummaryCard } from './components/summary-card';
+import { SummaryCard } from '../../components/summary-card';
 import { CardsContainer } from './styles';
 
 export const WeekSummaryScreen = () => {

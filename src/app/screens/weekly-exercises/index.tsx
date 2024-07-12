@@ -1,20 +1,21 @@
 import { ArrowRightCircle } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
-// import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Heading, ScreenContainer, Text } from 'src/app/components';
 import { AccordionItem } from 'src/app/components/accordion';
-// import { MainDrawerParamList } from 'src/app/navigation/types';
+import { MainDrawerParamList } from 'src/app/navigation/types';
 import { Exercise, MuscleGroup } from 'src/interfaces/exercises';
 import weeklyExercisesDataFile from 'src/mocks/weekly-exercises-data.json';
 
-export const WeeklyExercisesScreen = () => {
+type Props = DrawerScreenProps<MainDrawerParamList, 'WeeklyExercises'>;
+
+export const WeeklyExercisesScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  // const navigation = useNavigation<NavigationProp<MainDrawerParamList>>();
   const [weeklyExercisesData, setWeeklyExercisesData] = useState<
     Exercise[] | null
   >(null);
@@ -37,7 +38,7 @@ export const WeeklyExercisesScreen = () => {
         const data = await fetchWeeklyExercisesData();
         setWeeklyExercisesData(data);
       } catch (error) {
-        console.error('Error fetching dashboard data:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -96,7 +97,13 @@ export const WeeklyExercisesScreen = () => {
                     <Text fontSize="sm" textAlign="center">
                       {exercise.name}
                     </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('WeeklyExerciseStatistics', {
+                          exerciseName: exercise.name,
+                        })
+                      }
+                    >
                       <ArrowRightCircle
                         color={theme.colors.secondary.default}
                       />

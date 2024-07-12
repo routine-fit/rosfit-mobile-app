@@ -10,7 +10,10 @@ import {
 
 import { Header } from 'src/app/components';
 import DrawerContent from 'src/app/components/drawer';
-import { ProfileScreen } from 'src/app/screens/index';
+import {
+  ProfileScreen,
+  WeeklyExerciseStatisticsScreen,
+} from 'src/app/screens/index';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { BackArrowIcon } from 'src/assets/svg/navigation-icons';
 import { RootState } from 'src/store';
@@ -109,6 +112,19 @@ export const MainAppNavigation = () => {
       <Drawer.Screen
         name="WeeklyExercises"
         component={WeeklyExercisesScreen}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header
+              leftText={t('navigation:headers.returnHome')}
+              headerLeft={<BackArrowIcon width={20} />}
+              onPressLeft={navigation.goBack}
+            />
+          ),
+        })}
+      />
+      <Drawer.Screen
+        name="WeeklyExerciseStatistics"
+        component={WeeklyExerciseStatisticsScreen}
         options={({ navigation }) => ({
           header: () => (
             <Header
