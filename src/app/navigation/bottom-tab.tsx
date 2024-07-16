@@ -53,7 +53,7 @@ export const BottomTab = () => {
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<RoutineIcon />, focused),
     }),
-    [t],
+    [renderIcon, t],
   );
 
   const HomeHeaderOptions = useMemo(
