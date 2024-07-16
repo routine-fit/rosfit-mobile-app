@@ -4,11 +4,11 @@ import { FlatList } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 
 import { Heading, ScreenContainer, Text } from 'src/app/components';
+import { SummaryCard } from 'src/app/components/summary-card';
 import { MainDrawerParamList } from 'src/app/navigation/types';
 import { WeeklyExerciseStatisticsData } from 'src/interfaces/weekly-exercise-statistics-data';
 import weeklyExerciseStatisticData from 'src/mocks/weekly-exercise-statistic-data.json';
 
-import { SummaryCard } from '../../components/summary-card';
 import { CardsContainer } from './styles';
 
 type Props = DrawerScreenProps<MainDrawerParamList, 'WeeklyExerciseStatistics'>;

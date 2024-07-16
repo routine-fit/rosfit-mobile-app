@@ -4,11 +4,11 @@ import { ScrollView } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { SummaryCard } from 'src/app/components/summary-card';
 import { MainDrawerParamList } from 'src/app/navigation/types';
 import { WeekSummaryData } from 'src/interfaces/week-summary';
 import weekSummaryDataFile from 'src/mocks/week-summary-data.json';
 
-import { SummaryCard } from '../../components/summary-card';
 import { CardsContainer } from './styles';
 
 export const WeekSummaryScreen = () => {

@@ -2,7 +2,7 @@ import { ArrowRightCircle } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 
 import { Heading, ScreenContainer, Text } from 'src/app/components';
@@ -10,6 +10,8 @@ import { AccordionItem } from 'src/app/components/accordion';
 import { MainDrawerParamList } from 'src/app/navigation/types';
 import { Exercise, MuscleGroup } from 'src/interfaces/exercises';
 import weeklyExercisesDataFile from 'src/mocks/weekly-exercises-data.json';
+
+import { ExerciseRow } from './styles';
 
 type Props = DrawerScreenProps<MainDrawerParamList, 'WeeklyExercises'>;
 
@@ -93,7 +95,7 @@ export const WeeklyExercisesScreen: FC<Props> = ({ navigation }) => {
             body={
               <>
                 {item.exercises.map(exercise => (
-                  <View key={exercise.id} style={styles.exerciseRow}>
+                  <ExerciseRow key={exercise.id}>
                     <Text fontSize="sm" textAlign="center">
                       {exercise.name}
                     </Text>
@@ -108,7 +110,7 @@ export const WeeklyExercisesScreen: FC<Props> = ({ navigation }) => {
                         color={theme.colors.secondary.default}
                       />
                     </TouchableOpacity>
-                  </View>
+                  </ExerciseRow>
                 ))}
               </>
             }
@@ -118,12 +120,3 @@ export const WeeklyExercisesScreen: FC<Props> = ({ navigation }) => {
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  exerciseRow: {
-    flexDirection: 'row',
-    margin: 7,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-});
