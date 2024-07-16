@@ -79,7 +79,7 @@ export const WeeklyExercisesScreen: FC<Props> = ({ navigation }) => {
   return (
     <ScreenContainer>
       <Heading
-        title="Ejercicios de la semana"
+        title={t(`screens:weeklyExercises.heading1`)}
         flexTitleAlign="center"
         type="h3"
       />

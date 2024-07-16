@@ -1,6 +1,7 @@
 import { ChevronUp } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { FC, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Animated,
   LayoutAnimation,
@@ -14,6 +15,7 @@ import { AccordionProps } from './types';
 export const AccordionItem: FC<AccordionProps> = ({ title, count, body }) => {
   const [showContent, setshowContent] = useState<boolean>(false);
   const theme = useTheme();
+  const { t } = useTranslation();
   const animationController = useRef(new Animated.Value(0)).current;
 
   const chevronTransform = animationController.interpolate({
@@ -52,7 +54,7 @@ export const AccordionItem: FC<AccordionProps> = ({ title, count, body }) => {
         <Header>
           <Text>{title}</Text>
           <ChevronCell>
-            <Text>{`${count} Ejercicios`}</Text>
+            <Text>{t('screens:weeklyExercises.exercises', { count })}</Text>
             <Animated.View
               style={{ transform: [{ rotateZ: chevronTransform }] }}
             >

@@ -51,6 +51,10 @@ export default {
     weightProgressionDescription: 'Variación de peso esta semana',
     exercisesBtn: 'Ejercicios Realizados',
   },
+  weeklyExercises: {
+    heading1: 'Ejercicios de la semana',
+    exercises: '{{count}} Ejercicios',
+  },
   weeklyExerciseStatistics: {
     trainingFrequencyHeader: 'Frecuencia de entrenamiento',
     trainingVolumeHeader: 'Volumen de entrenamiento',
