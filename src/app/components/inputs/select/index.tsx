@@ -15,7 +15,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
   ...restOfProps
 }: SelectInputProps<Form>) => {
   const {
-    field: { onChange, onBlur },
+    field: { onChange, onBlur, value },
     fieldState: { error },
   } = useController(controller);
   const { t } = useTranslation();
@@ -24,11 +24,9 @@ const ControlledSelectInput = <Form extends FieldValues>({
   const placeholder = t(`inputs:placeholder.${controller.name}`);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState('');
 
-  const handleSelect = (selectedValue: string, valueLabel: string) => {
+  const handleSelect = (selectedValue: string) => {
     onChange(selectedValue);
-    setSelectedLabel(valueLabel);
     setModalVisible(false);
   };
 
@@ -40,11 +38,8 @@ const ControlledSelectInput = <Form extends FieldValues>({
         placeholder={placeholder}
         {...restOfProps}
         onBlur={onBlur}
-        value={selectedLabel}
+        value={value}
         readOnly
-        onChangeText={(val: string) =>
-          onChange(val.length === 1 ? val.trim() : val)
-        }
         onPress={() => setModalVisible(true)}
       />
       <Modal
@@ -60,11 +55,11 @@ const ControlledSelectInput = <Form extends FieldValues>({
             <FlatList
               data={options}
               renderItem={({ item }) => (
-                <Option onPress={() => handleSelect(item.value, item.label)}>
-                  <Text fontSize="lg">{item.label}</Text>
+                <Option onPress={() => handleSelect(item)}>
+                  <Text fontSize="lg">{item}</Text>
                 </Option>
               )}
-              keyExtractor={item => item.value.toString()}
+              keyExtractor={item => item.toString()}
             />
           </BottomSheetContent>
         </Overlay>

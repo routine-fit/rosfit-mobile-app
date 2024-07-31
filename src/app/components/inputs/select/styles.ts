@@ -17,4 +17,5 @@ export const BottomSheetContent = styled.View`
 
 export const Option = styled.TouchableOpacity`
   padding: 8px;
+  align-items: center;
 `;

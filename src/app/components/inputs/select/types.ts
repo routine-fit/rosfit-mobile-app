@@ -5,5 +5,5 @@ import { TextInput } from 'react-native';
 export interface SelectInputProps<Form extends FieldValues> {
   controller: UseControllerProps<Form>;
   inputProps?: ComponentProps<typeof TextInput>;
-  options: { label: string; value: string }[];
+  options: string[];
 }

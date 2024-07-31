@@ -37,9 +37,7 @@ const Button: FC<ButtonProps> = ({
   const styles = styling[variant][status];
 
   useEffect(() => {
-    if (disabled || loading) {
-      setStatus('disabled');
-    }
+    setStatus(disabled || loading ? 'disabled' : 'default');
   }, [loading, disabled]);
 
   return (

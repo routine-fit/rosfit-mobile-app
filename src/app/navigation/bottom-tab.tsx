@@ -1,9 +1,11 @@
+import { Timer } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
   BottomTabNavigationOptions,
+  BottomTabScreenProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 
@@ -11,17 +13,21 @@ import { Header } from 'src/app/components';
 import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
+  BackArrowIcon,
   DumbbellIcon,
   HomeIcon,
   RoutineIcon,
 } from 'src/assets/svg/navigation-icons';
 import { RootState } from 'src/store';
 
+import { DoRoutineStack } from './do-routine';
 import { BottomTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-export const BottomTab = () => {
+interface Props extends BottomTabScreenProps<BottomTabParamList> {}
+
+export const BottomTab: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { displayName } = useSelector((state: RootState) => state.auth);
@@ -72,6 +78,23 @@ export const BottomTab = () => {
     [t, displayName, theme, renderIcon],
   );
 
+  const DoRoutineHeaderOptions = useMemo(
+    () => ({
+      header: () => (
+        <Header
+          leftText={t('navigation:headers.returnHome')}
+          headerLeft={
+            <BackArrowIcon color={theme.colors.background} width={20} />
+          }
+          onPressLeft={() => navigation.navigate('HomeScreen')}
+        />
+      ),
+      tabBarIcon: ({ focused }: { focused: boolean }) =>
+        renderIcon(<Timer />, focused),
+    }),
+    [t, theme.colors.background, navigation, renderIcon],
+  );
+
   const ExerciseHeaderOptions = useMemo(
     () => ({
       headerTitle: t('navigation:headers.exercises'),
@@ -92,6 +115,11 @@ export const BottomTab = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={HomeHeaderOptions}
+      />
+      <Tab.Screen
+        name="DoRoutineStack"
+        component={DoRoutineStack}
+        options={DoRoutineHeaderOptions}
       />
       <Tab.Screen
         name="ExerciseScreen"

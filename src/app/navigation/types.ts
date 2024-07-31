@@ -4,6 +4,7 @@ export type BottomTabParamList = {
   RoutinesScreen: undefined;
   HomeScreen: undefined;
   ExerciseScreen: undefined;
+  DoRoutineStack: undefined;
 };
 
 export type MainDrawerParamList = {
@@ -20,4 +21,10 @@ export type RootStackParamList = {
   Login: undefined;
   CreateAccount: undefined;
   CompleteData: undefined;
+};
+
+export type DoRoutineStackParamList = {
+  SelectRoutine: undefined;
+  RoutineRunner: undefined;
+  RoutineResults: undefined;
 };
