@@ -13,14 +13,15 @@ import weeklyExercisesDataFile from 'src/mocks/weekly-exercises-data.json';
 
 import { ExerciseRow } from './styles';
 
-type Props = DrawerScreenProps<MainDrawerParamList, 'WeeklyExercises'>;
+interface Props
+  extends DrawerScreenProps<MainDrawerParamList, 'WeeklyExercises'> {}
 
 export const WeeklyExercisesScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [weeklyExercisesData, setWeeklyExercisesData] = useState<
-    Exercise[] | null
-  >(null);
+    Exercise[] | []
+  >([]);
 
   const fetchWeeklyExercisesData = async (): Promise<Exercise[]> => {
     return new Promise((resolve, reject) => {

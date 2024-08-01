@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
 import { SummaryCard } from 'src/app/components/summary-card';
@@ -11,9 +11,10 @@ import weekSummaryDataFile from 'src/mocks/week-summary-data.json';
 
 import { CardsContainer } from './styles';
 
-export const WeekSummaryScreen = () => {
+interface Props extends StackScreenProps<MainDrawerParamList> {}
+
+export const WeekSummaryScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation<NavigationProp<MainDrawerParamList>>();
   const [weekSummaryData, setWeekSummaryData] =
     useState<WeekSummaryData | null>(null);
 

@@ -8,6 +8,8 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
+import { toggleAnimation } from 'src/app/animations/toggle';
+
 import Text from '../text';
 import { Body, ChevronCell, Container, Header } from './styles';
 import { AccordionProps } from './types';
@@ -22,20 +24,6 @@ export const AccordionItem: FC<AccordionProps> = ({ title, count, body }) => {
     inputRange: [0, 1],
     outputRange: ['0deg', '180deg'],
   });
-
-  const toggleAnimation = {
-    duration: 500,
-    update: {
-      duration: 300,
-      property: LayoutAnimation.Properties.opacity,
-      type: LayoutAnimation.Types.easeInEaseOut,
-    },
-    delete: {
-      duration: 200,
-      property: LayoutAnimation.Properties.opacity,
-      type: LayoutAnimation.Types.easeInEaseOut,
-    },
-  };
 
   const toggleListItem = () => {
     const config = {
