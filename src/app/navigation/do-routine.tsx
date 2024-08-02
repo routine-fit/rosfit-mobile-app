@@ -15,23 +15,13 @@ export const DoRoutineStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="SelectRoutine"
-      screenOptions={{ headerShown: false }}
+      screenOptions={() => ({
+        headerShown: false,
+      })}
     >
-      <Stack.Screen
-        name="SelectRoutine"
-        component={SelectRoutineScreen}
-        // options={}
-      />
-      <Stack.Screen
-        name="RoutineRunner"
-        component={RoutineRunnerScreen}
-        // options={}
-      />
-      <Stack.Screen
-        name="RoutineResults"
-        component={RoutineResultsScreen}
-        // options={}
-      />
+      <Stack.Screen name="SelectRoutine" component={SelectRoutineScreen} />
+      <Stack.Screen name="RoutineRunner" component={RoutineRunnerScreen} />
+      <Stack.Screen name="RoutineResults" component={RoutineResultsScreen} />
     </Stack.Navigator>
   );
 };

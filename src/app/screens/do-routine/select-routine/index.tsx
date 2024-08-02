@@ -1,11 +1,12 @@
+import { useTheme } from 'styled-components';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert } from 'react-native';
+import { Alert, FlatList, StyleSheet, View } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { Button, Heading, ScreenContainer } from 'src/app/components';
+import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
 import ControlledSelectInput from 'src/app/components/inputs/select';
 import { DoRoutineStackParamList } from 'src/app/navigation/types';
 import { RoutineExercises } from 'src/interfaces/routine-exercises';
@@ -18,15 +19,15 @@ interface Props
 
 export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
 
-  const routineOptions = useMemo(() => ['Rutina1', 'Rutina2'], []);
+  const routineOptions = useMemo(() => ['Lunes', 'Viernes'], []);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [routineExercisesData, setRoutineExercisesData] = useState<
-    RoutineExercises[] | null
-  >(null);
+    RoutineExercises[] | []
+  >([]);
 
-  const fetchweekSummaryData = (): Promise<RoutineExercises[]> => {
+  const fetchRoutineExercisesData = (): Promise<RoutineExercises[]> => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
@@ -41,7 +42,7 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchweekSummaryData();
+        const data = await fetchRoutineExercisesData();
         setRoutineExercisesData(data);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
@@ -58,18 +59,44 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
     resolver: yupResolver(validationSchema),
   });
 
-  const isRoutineSelected = watch('routine');
+  const selectedRoutine = watch('routine');
+
+  const filteredExercises = useMemo(() => {
+    return routineExercisesData.filter(
+      exercise => exercise.routine === selectedRoutine,
+    );
+  }, [routineExercisesData, selectedRoutine]);
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { routine } = data;
-      console.log(routine);
       //TODO: dispatch startRoutine
       navigation.navigate('RoutineRunner');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);
     }
   };
+
+  const renderExercise = ({ item }: { item: RoutineExercises }) => (
+    <View
+      key={item.id}
+      style={{
+        ...styles.exercisesDataContainer,
+        backgroundColor: theme.colors.fill.section,
+      }}
+    >
+      <Text fontSize="lg" textAlign="center">
+        {item.exercise}
+      </Text>
+      <Text>{`Series: ${item.series}`}</Text>
+      <Text>{`Repeticiones: ${item.repetitions}`}</Text>
+      <Text>{`Tiempo de descanso: ${item.restTime} ''`}</Text>
+      <Text>
+        {item.variableWeight ? 'Con peso variable' : 'Sin peso variable'}
+      </Text>
+    </View>
+  );
 
   return (
     <ScreenContainer>
@@ -85,11 +112,34 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
         }}
         options={routineOptions}
       />
+      {selectedRoutine && (
+        <FlatList
+          data={filteredExercises}
+          renderItem={renderExercise}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={styles.flatlist}
+          collapsable
+        />
+      )}
+
       <Button
         content="Comenzar Rutina"
-        disabled={!isRoutineSelected}
+        disabled={!selectedRoutine}
         onPress={handleSubmit(onValidSubmit)}
       />
     </ScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  exercisesDataContainer: {
+    gap: 2,
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginVertical: 5,
+  },
+  flatlist: {
+    paddingBottom: 20,
+  },
+});

@@ -1,19 +1,18 @@
 import { Timer } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
   BottomTabNavigationOptions,
-  BottomTabScreenProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import { Header } from 'src/app/components';
 import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
-  BackArrowIcon,
   DumbbellIcon,
   HomeIcon,
   RoutineIcon,
@@ -23,11 +22,9 @@ import { RootState } from 'src/store';
 import { DoRoutineStack } from './do-routine';
 import { BottomTabParamList } from './types';
 
-const Tab = createBottomTabNavigator<BottomTabParamList>();
+export const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-interface Props extends BottomTabScreenProps<BottomTabParamList> {}
-
-export const BottomTab: FC<Props> = ({ navigation }) => {
+export const BottomTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { displayName } = useSelector((state: RootState) => state.auth);
@@ -59,7 +56,7 @@ export const BottomTab: FC<Props> = ({ navigation }) => {
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<RoutineIcon />, focused),
     }),
-    [t],
+    [renderIcon, t],
   );
 
   const HomeHeaderOptions = useMemo(
@@ -80,19 +77,11 @@ export const BottomTab: FC<Props> = ({ navigation }) => {
 
   const DoRoutineHeaderOptions = useMemo(
     () => ({
-      header: () => (
-        <Header
-          leftText={t('navigation:headers.returnHome')}
-          headerLeft={
-            <BackArrowIcon color={theme.colors.background} width={20} />
-          }
-          onPressLeft={() => navigation.navigate('HomeScreen')}
-        />
-      ),
+      headerShown: false,
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<Timer />, focused),
     }),
-    [t, theme.colors.background, navigation, renderIcon],
+    [renderIcon],
   );
 
   const ExerciseHeaderOptions = useMemo(
@@ -105,7 +94,18 @@ export const BottomTab: FC<Props> = ({ navigation }) => {
   );
 
   return (
-    <Tab.Navigator screenOptions={tabBarOptions} initialRouteName="HomeScreen">
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        ...tabBarOptions,
+        tabBarStyle: {
+          display:
+            getFocusedRouteNameFromRoute(route) === 'RoutineRunner'
+              ? 'none'
+              : 'flex',
+        },
+      })}
+      initialRouteName="HomeScreen"
+    >
       <Tab.Screen
         name="RoutinesScreen"
         component={RoutinesScreen}

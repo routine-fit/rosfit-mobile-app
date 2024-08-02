@@ -43,7 +43,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
         onPress={() => setModalVisible(true)}
       />
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -60,6 +60,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
                 </Option>
               )}
               keyExtractor={item => item.toString()}
+              showsVerticalScrollIndicator={false}
             />
           </BottomSheetContent>
         </Overlay>

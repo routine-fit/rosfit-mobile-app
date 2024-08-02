@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "routine": "StrengthTraining",
-    "exercise": "BenchPress",
+    "routine": "Lunes",
+    "exercise": "Press de Banca",
     "series": 3,
     "repetitions": 12,
     "restTime": 60,
@@ -10,8 +10,8 @@
   },
   {
     "id": 2,
-    "routine": "StrengthTraining",
-    "exercise": "Squats",
+    "routine": "Lunes",
+    "exercise": "Sentadillas",
     "series": 4,
     "repetitions": 10,
     "restTime": 90,
@@ -19,29 +19,56 @@
   },
   {
     "id": 3,
-    "routine": "CardioRoutine",
-    "exercise": "Running",
-    "series": 5,
-    "repetitions": 8,
-    "restTime": 120,
-    "variableWeight": true
-  },
-  {
-    "id": 4,
-    "routine": "CardioRoutine",
-    "exercise": "Cycling",
+    "routine": "Lunes",
+    "exercise": "Flexiones",
     "series": 3,
     "repetitions": 15,
     "restTime": 45,
     "variableWeight": false
   },
   {
+    "id": 4,
+    "routine": "Lunes",
+    "exercise": "Dominadas",
+    "series": 4,
+    "repetitions": 8,
+    "restTime": 120,
+    "variableWeight": true
+  },
+  {
     "id": 5,
-    "routine": "FullBodyWorkout",
-    "exercise": "Deadlift",
+    "routine": "Viernes",
+    "exercise": "Peso Muerto",
     "series": 4,
     "repetitions": 10,
     "restTime": 75,
+    "variableWeight": true
+  },
+  {
+    "id": 6,
+    "routine": "Viernes",
+    "exercise": "Prensa de Piernas",
+    "series": 3,
+    "repetitions": 12,
+    "restTime": 60,
+    "variableWeight": false
+  },
+  {
+    "id": 7,
+    "routine": "Viernes",
+    "exercise": "Elevaciones Laterales",
+    "series": 3,
+    "repetitions": 15,
+    "restTime": 45,
+    "variableWeight": false
+  },
+  {
+    "id": 8,
+    "routine": "Viernes",
+    "exercise": "Remo con Mancuerna",
+    "series": 4,
+    "repetitions": 8,
+    "restTime": 90,
     "variableWeight": true
   }
 ]
