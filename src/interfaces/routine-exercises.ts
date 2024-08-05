@@ -1,4 +1,4 @@
-export interface RoutineExercises {
+export interface RoutineExercise {
   id: number;
   routine: string;
   exercise: string;
@@ -6,4 +6,5 @@ export interface RoutineExercises {
   repetitions: number;
   restTime: number;
   variableWeight: boolean;
+  status: 'pending' | 'inProgress' | 'done';
 }
