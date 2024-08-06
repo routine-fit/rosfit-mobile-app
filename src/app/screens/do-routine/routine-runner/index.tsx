@@ -7,7 +7,7 @@ import {
 } from 'lucide-react-native';
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
@@ -16,6 +16,8 @@ import { DoRoutineStackParamList } from 'src/app/navigation/types';
 import useTimer from 'src/hooks/useTimer';
 import { RoutineExercise } from 'src/interfaces/routine-exercises';
 import routineExercisesDataFile from 'src/mocks/routine-exercises.json';
+
+import { ExerciseBottomSheetContent } from './components/exercise-bottom-sheet';
 
 interface Props
   extends StackScreenProps<DoRoutineStackParamList, 'RoutineRunner'> {}
@@ -194,19 +196,18 @@ export const RoutineRunnerScreen: FC<Props> = () => {
         index={-1}
         detached
         snapPoints={['70%']}
-        enableContentPanningGesture
         enablePanDownToClose
         ref={bottomSheetRef}
+        backgroundStyle={styles.bottomSheet}
       >
-        <BottomSheetView style={styles.contentContainer}>
-          <Text>
-            {/* BUTTON: INICIAR SERIE, TERMINAR SERIE */}
-            {
-              routineExercisesData.find(ex => ex.id === currentExerciseId)
-                ?.exercise
-            }
-          </Text>
-        </BottomSheetView>
+        {currentExerciseId !== null &&
+          routineExercisesData[currentExerciseId] && (
+            <ExerciseBottomSheetContent
+              exercise={
+                routineExercisesData.find(ex => ex.id === currentExerciseId)!
+              }
+            />
+          )}
       </BottomSheet>
     </ScreenContainer>
   );
@@ -231,8 +232,5 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
   },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
+  bottomSheet: { borderWidth: 2 },
 });
