@@ -6,23 +6,27 @@ import {
   Timer,
 } from 'lucide-react-native';
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
 import { ButtonColorTheme } from 'src/app/components/buttons/button/types';
-import { DoRoutineStackParamList } from 'src/app/navigation/types';
 import useTimer from 'src/hooks/useTimer';
 import { RoutineExercise } from 'src/interfaces/routine-exercises';
 import routineExercisesDataFile from 'src/mocks/routine-exercises.json';
 
+import { FlatlistContainer } from '../select-routine/styles';
 import { ExerciseBottomSheetContent } from './components/exercise-bottom-sheet';
-
-interface Props
-  extends StackScreenProps<DoRoutineStackParamList, 'RoutineRunner'> {}
+import {
+  ButtonContainer,
+  ExercisesContainer,
+  MainRoutineBadge,
+  StyledBottomSheet,
+} from './styles';
+import { Props } from './types';
 
 export const RoutineRunnerScreen: FC<Props> = () => {
+  const { t } = useTranslation();
   const { isPaused, start, pause, formattedTime } = useTimer();
   const [routineExercisesData, setRoutineExercisesData] = useState<
     RoutineExercise[] | []
@@ -59,11 +63,13 @@ export const RoutineRunnerScreen: FC<Props> = () => {
       ex => ex.status === 'pending',
     );
     return {
-      content: isRoutineCompleted ? 'Completar rutina' : 'Completar ejercicio',
+      content: isRoutineCompleted
+        ? t('screens:routineRunner.completeRoutine')
+        : t('screens:routineRunner.completeExercise'),
       themeColor: isRoutineCompleted ? 'secondary' : 'primary',
       disabled: isRoutinePending,
     };
-  }, [routineExercisesData]);
+  }, [routineExercisesData, t]);
 
   const fetchRoutineExercisesData = (): Promise<RoutineExercise[]> => {
     return new Promise((resolve, reject) => {
@@ -83,7 +89,7 @@ export const RoutineRunnerScreen: FC<Props> = () => {
         const data = await fetchRoutineExercisesData();
         setRoutineExercisesData(data);
       } catch (error) {
-        console.error('Error fetching dashboard data:', error);
+        console.error('Error fetching routine data:', error);
       }
     };
 
@@ -142,28 +148,28 @@ export const RoutineRunnerScreen: FC<Props> = () => {
 
   return (
     <ScreenContainer>
-      <View style={styles.mainRoutineBadge}>
-        <Text>Rutina en curso</Text>
+      <MainRoutineBadge>
+        <Text>{t('screens:routineRunner.routineInProgress')}</Text>
         <Text fontSize="5xl">{formattedTime}</Text>
-        <View style={styles.buttonContainer}>
+        <ButtonContainer>
           {isPaused ? (
             <Button
-              content="Continuar"
+              content={t('screens:routineRunner.continue')}
               trailingIcon={<PlayCircle />}
               onPress={start}
             />
           ) : (
             <Button
-              content="Pausar"
+              content={t('screens:routineRunner.pause')}
               trailingIcon={<PauseCircle />}
               themeColor="error"
               onPress={pause}
             />
           )}
-        </View>
-      </View>
-      <View style={styles.exercisesContainer}>
-        <FlatList
+        </ButtonContainer>
+      </MainRoutineBadge>
+      <ExercisesContainer>
+        <FlatlistContainer
           data={routineExercisesData}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => {
@@ -181,9 +187,8 @@ export const RoutineRunnerScreen: FC<Props> = () => {
               />
             );
           }}
-          style={styles.flatList}
         />
-      </View>
+      </ExercisesContainer>
 
       <Button
         content={buttonProperties.content}
@@ -192,13 +197,12 @@ export const RoutineRunnerScreen: FC<Props> = () => {
         disabled={buttonProperties.disabled}
       />
 
-      <BottomSheet
+      <StyledBottomSheet
         index={-1}
         detached
         snapPoints={['70%']}
         enablePanDownToClose
         ref={bottomSheetRef}
-        backgroundStyle={styles.bottomSheet}
       >
         {currentExerciseId !== null &&
           routineExercisesData[currentExerciseId] && (
@@ -208,29 +212,7 @@ export const RoutineRunnerScreen: FC<Props> = () => {
               }
             />
           )}
-      </BottomSheet>
+      </StyledBottomSheet>
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  mainRoutineBadge: {
-    // backgroundColor: 'lightgray',
-    borderRadius: 10,
-    padding: 10,
-    borderWidth: 1,
-    // borderColor: 'lightgreen',
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    gap: 5,
-  },
-  exercisesContainer: {
-    flex: 1,
-    paddingVertical: 10,
-  },
-  flatList: {
-    flex: 1,
-  },
-  bottomSheet: { borderWidth: 2 },
-});

@@ -2,36 +2,33 @@ import { useTheme } from 'styled-components';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, FlatList, StyleSheet, View } from 'react-native';
+import { Alert } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
 import ControlledSelectInput from 'src/app/components/inputs/select';
-import { DoRoutineStackParamList } from 'src/app/navigation/types';
-import { RoutineExercises } from 'src/interfaces/routine-exercises';
+import { RoutineExercise } from 'src/interfaces/routine-exercises';
 import routineExercisesDataFile from 'src/mocks/routine-exercises.json';
 
 import { FormData, validationSchema } from './form-config';
-
-interface Props
-  extends StackScreenProps<DoRoutineStackParamList, 'SelectRoutine'> {}
+import { ExercisesDataContainer, FlatlistContainer } from './styles';
+import { Props } from './types';
 
 export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const routineOptions = useMemo(() => ['Lunes', 'Viernes'], []);
+  const routineOptions = useMemo(() => ['Lunes', 'Miercoles', 'Viernes'], []);
 
   const [routineExercisesData, setRoutineExercisesData] = useState<
-    RoutineExercises[] | []
+    RoutineExercise[] | []
   >([]);
 
-  const fetchRoutineExercisesData = (): Promise<RoutineExercises[]> => {
+  const fetchRoutineExercisesData = (): Promise<RoutineExercise[]> => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          resolve(routineExercisesDataFile as RoutineExercises[]);
+          resolve(routineExercisesDataFile as RoutineExercise[]);
         } catch (error) {
           reject(error);
         }
@@ -45,7 +42,7 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
         const data = await fetchRoutineExercisesData();
         setRoutineExercisesData(data);
       } catch (error) {
-        console.error('Error fetching dashboard data:', error);
+        console.error('Error fetching routines data:', error);
       }
     };
 
@@ -74,28 +71,39 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
       //TODO: dispatch startRoutine
       navigation.navigate('RoutineRunner');
     } catch (error: any) {
-      Alert.alert(t('screens:signUp:error'), error.message);
+      Alert.alert(t('screens:selectRoutine:error'), error.message);
     }
   };
 
-  const renderExercise = ({ item }: { item: RoutineExercises }) => (
-    <View
+  const renderExercise = ({ item }: { item: RoutineExercise }) => (
+    <ExercisesDataContainer
       key={item.id}
-      style={{
-        ...styles.exercisesDataContainer,
-        backgroundColor: theme.colors.fill.section,
-      }}
+      backgroundColor={theme.colors.fill.section}
     >
       <Text fontSize="lg" textAlign="center">
         {item.exercise}
       </Text>
-      <Text>{`Series: ${item.series}`}</Text>
-      <Text>{`Repeticiones: ${item.repetitions}`}</Text>
-      <Text>{`Tiempo de descanso: ${item.restTime} ''`}</Text>
       <Text>
-        {item.variableWeight ? 'Con peso variable' : 'Sin peso variable'}
+        {t('screens:selectRoutine.series', {
+          series: item.series,
+        })}
       </Text>
-    </View>
+      <Text>
+        {t('screens:selectRoutine.repetitions', {
+          repetitions: item.repetitions,
+        })}
+      </Text>
+      <Text>
+        {t('screens:selectRoutine.restTime', {
+          restTime: item.restTime,
+        })}
+      </Text>
+      <Text>
+        {item.variableWeight
+          ? t('screens:selectRoutine.withVariableWeight')
+          : t('screens:selectRoutine.withoutVariableWeight')}
+      </Text>
+    </ExercisesDataContainer>
   );
 
   return (
@@ -113,11 +121,10 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
         options={routineOptions}
       />
       {selectedRoutine && (
-        <FlatList
+        <FlatlistContainer
           data={filteredExercises}
           renderItem={renderExercise}
           keyExtractor={item => item.id.toString()}
-          contentContainerStyle={styles.flatlist}
           collapsable
         />
       )}
@@ -130,16 +137,3 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  exercisesDataContainer: {
-    gap: 2,
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    marginVertical: 5,
-  },
-  flatlist: {
-    paddingBottom: 20,
-  },
-});
