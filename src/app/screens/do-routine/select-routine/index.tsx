@@ -66,10 +66,8 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { routine } = data;
-      //TODO: dispatch startRoutine
-      navigation.navigate('RoutineRunner');
+      navigation.navigate('RoutineRunner', { routine });
     } catch (error: any) {
       Alert.alert(t('screens:selectRoutine:error'), error.message);
     }

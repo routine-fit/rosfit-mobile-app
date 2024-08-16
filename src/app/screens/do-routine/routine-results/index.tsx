@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View } from 'react-native';
 
-import { Text } from 'src/app/components';
+import { ScreenContainer, Text } from 'src/app/components';
 
-export const RoutineResultsScreen = () => {
+import { Props } from './types';
+
+export const RoutineResultsScreen: FC<Props> = ({ route }) => {
+  const { time } = route.params;
   return (
-    <View>
-      <Text>RoutineResults Screen</Text>
-    </View>
+    <ScreenContainer>
+      <View>
+        <Text>Rutina finalizada</Text>
+        <Text>{time}</Text>
+      </View>
+    </ScreenContainer>
   );
 };

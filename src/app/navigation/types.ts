@@ -25,6 +25,6 @@ export type RootStackParamList = {
 
 export type DoRoutineStackParamList = {
   SelectRoutine: undefined;
-  RoutineRunner: undefined;
-  RoutineResults: undefined;
+  RoutineRunner: { routine: string };
+  RoutineResults: { time: string };
 };

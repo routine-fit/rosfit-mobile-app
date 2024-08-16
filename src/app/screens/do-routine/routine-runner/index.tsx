@@ -5,6 +5,7 @@ import {
   PlayCircle,
   Timer,
 } from 'lucide-react-native';
+import { useTheme } from 'styled-components';
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -21,12 +22,15 @@ import {
   ButtonContainer,
   ExercisesContainer,
   MainRoutineBadge,
+  StartBadge,
   StyledBottomSheet,
 } from './styles';
 import { Props } from './types';
 
-export const RoutineRunnerScreen: FC<Props> = () => {
+export const RoutineRunnerScreen: FC<Props> = ({ route, navigation }) => {
+  const { routine } = route.params;
   const { t } = useTranslation();
+  const theme = useTheme();
   const { isPaused, start, pause, formattedTime } = useTimer();
   const [routineExercisesData, setRoutineExercisesData] = useState<
     RoutineExercise[] | []
@@ -139,6 +143,7 @@ export const RoutineRunnerScreen: FC<Props> = () => {
     } else {
       // TODO: Completar toda la rutina
       // dispatch complete routine
+      navigation.navigate('RoutineResults', { time: formattedTime });
     }
   };
 
@@ -148,26 +153,38 @@ export const RoutineRunnerScreen: FC<Props> = () => {
 
   return (
     <ScreenContainer>
-      <MainRoutineBadge>
-        <Text>{t('screens:routineRunner.routineInProgress')}</Text>
-        <Text fontSize="5xl">{formattedTime}</Text>
-        <ButtonContainer>
-          {isPaused ? (
-            <Button
-              content={t('screens:routineRunner.continue')}
-              trailingIcon={<PlayCircle />}
-              onPress={start}
-            />
-          ) : (
-            <Button
-              content={t('screens:routineRunner.pause')}
-              trailingIcon={<PauseCircle />}
-              themeColor="error"
-              onPress={pause}
-            />
-          )}
-        </ButtonContainer>
-      </MainRoutineBadge>
+      {formattedTime === '00:00:00' ? (
+        <StartBadge onPress={start}>
+          <Text color={theme.colors.background} fontSize="3xl">
+            Comenzar rutina
+          </Text>
+          <Text color={theme.colors.background} fontSize="3xl">
+            {routine}
+          </Text>
+        </StartBadge>
+      ) : (
+        <MainRoutineBadge>
+          <Text>{t('screens:routineRunner.routineInProgress')}</Text>
+          <Text fontSize="5xl">{formattedTime}</Text>
+          <ButtonContainer>
+            {isPaused ? (
+              <Button
+                content={t('screens:routineRunner.continue')}
+                trailingIcon={<PlayCircle />}
+                onPress={start}
+              />
+            ) : (
+              <Button
+                content={t('screens:routineRunner.pause')}
+                trailingIcon={<PauseCircle />}
+                themeColor="error"
+                onPress={pause}
+              />
+            )}
+          </ButtonContainer>
+        </MainRoutineBadge>
+      )}
+
       <ExercisesContainer>
         <FlatlistContainer
           data={routineExercisesData}
