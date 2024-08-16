@@ -1,7 +1,7 @@
-import styled from 'styled-components/native';
 import React, { FC } from 'react';
 
 import { LottieAnimation } from '../lottie-animation';
+import { Container } from './styles';
 import { Props } from './types';
 
 export const CustomActivityIndicator: FC<Props> = ({
@@ -20,10 +20,3 @@ export const CustomActivityIndicator: FC<Props> = ({
     </Container>
   );
 };
-
-const Container = styled.View<{ isCentered?: boolean; fullScreen?: boolean }>`
-  flex: ${({ fullScreen }) => (fullScreen ? 1 : 'none')};
-  align-self: ${({ isCentered }) => (isCentered ? 'center' : 'flex-start')};
-  justify-content: ${({ isCentered }) =>
-    isCentered ? 'center' : 'flex-start'};
-`;
