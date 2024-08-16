@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { SummaryCard } from 'src/app/components/summary-card';
+import { MainDrawerParamList } from 'src/app/navigation/types';
 import { WeekSummaryData } from 'src/interfaces/week-summary';
 import weekSummaryDataFile from 'src/mocks/week-summary-data.json';
 
-import { SummaryCard } from './components/summary-card';
 import { CardsContainer } from './styles';
 
-export const WeekSummaryScreen = () => {
+interface Props extends StackScreenProps<MainDrawerParamList> {}
+
+export const WeekSummaryScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const [weekSummaryData, setWeekSummaryData] =
     useState<WeekSummaryData | null>(null);
@@ -77,9 +81,8 @@ export const WeekSummaryScreen = () => {
             description={t('screens:weekSummary.weightProgressionDescription')}
           />
         </CardsContainer>
-        {/* TODO: Navigate to Exercises */}
         <Button
-          onPress={() => {}}
+          onPress={() => navigation.navigate('WeeklyExercises')}
           content={t('screens:weekSummary.exercisesBtn')}
         />
       </ScrollView>

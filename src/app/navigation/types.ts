@@ -12,6 +12,8 @@ export type MainDrawerParamList = {
   EditPersonalInfo: undefined;
   EditTrainingPreferences: undefined;
   WeekSummary: undefined;
+  WeeklyExercises: undefined;
+  WeeklyExerciseStatistics: { exerciseName: string };
 };
 
 export type RootStackParamList = {
