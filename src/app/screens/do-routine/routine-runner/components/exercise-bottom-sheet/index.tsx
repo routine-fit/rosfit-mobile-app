@@ -65,7 +65,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
           size={100}
           strokeWidth={7}
           isPlaying={isResting}
-          duration={15}
+          duration={exercise.restTime}
           isSmoothColorTransition
           colors={['#004777', '#2ecc71', '#F7B801', '#A30000']}
           colorsTime={[10, 7, 4, 0]}
