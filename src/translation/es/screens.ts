@@ -68,4 +68,9 @@ export default {
     startSeries: 'Iniciar serie',
     finishSeries: 'Terminar serie',
   },
+  routineResults: {
+    heading1: 'Rutina finalizada',
+    time: 'Tu tiempo:',
+    loadStatistics: 'Cargar estadisticas',
+  },
 };

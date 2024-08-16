@@ -3,6 +3,10 @@ import { FlatList } from 'react-native';
 
 import { RoutineExercise } from 'src/interfaces/routine-exercises';
 
+export const Container = styled.View`
+  flex: 1;
+`;
+
 export const ExercisesDataContainer = styled.View<{ backgroundColor: string }>`
   gap: 2px;
   border-radius: 10px;

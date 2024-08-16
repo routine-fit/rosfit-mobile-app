@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { CustomActivityIndicator } from 'src/app/components/activity-indicator';
 import { MainDrawerParamList } from 'src/app/navigation/types';
 import { DashboardData } from 'src/interfaces/dashboard';
 import dashboardDataFile from 'src/mocks/dashboard-data.json';
@@ -35,7 +36,7 @@ export const HomeScreen = () => {
         } catch (error) {
           reject(error);
         }
-      }, 1000);
+      }, 2000);
     });
   };
 
@@ -55,7 +56,12 @@ export const HomeScreen = () => {
   if (!dashboardData) {
     return (
       <ScreenContainer withoutVerticalPadding>
-        <Text>Loading...</Text>
+        <CustomActivityIndicator
+          width={150}
+          height={150}
+          isCentered
+          fullScreen
+        />
       </ScreenContainer>
     );
   }

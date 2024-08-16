@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 
-import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { Button, Heading, ScreenContainer } from 'src/app/components';
+import { CustomActivityIndicator } from 'src/app/components/activity-indicator';
 import { WeekSummaryData } from 'src/interfaces/week-summary';
 import weekSummaryDataFile from 'src/mocks/week-summary-data.json';
 
@@ -42,7 +43,12 @@ export const WeekSummaryScreen = () => {
   if (!weekSummaryData) {
     return (
       <ScreenContainer withoutVerticalPadding>
-        <Text>Loading...</Text>
+        <CustomActivityIndicator
+          width={150}
+          height={150}
+          isCentered
+          fullScreen
+        />
       </ScreenContainer>
     );
   }

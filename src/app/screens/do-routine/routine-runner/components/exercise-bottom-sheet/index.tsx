@@ -3,14 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 import { Button, Text } from 'src/app/components';
+import { LottieAnimation } from 'src/app/components/lottie-animation';
 
 import { StepIndicator } from '../step-indicator';
 import { StepData } from '../step-indicator/types';
-import {
-  LottieContainer,
-  StyledBottomSheetView,
-  StyledLottieView,
-} from './styles';
+import { StyledBottomSheetView } from './styles';
 import { Props } from './types';
 
 const initialSteps: StepData[] = [
@@ -68,7 +65,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
           size={100}
           strokeWidth={7}
           isPlaying={isResting}
-          duration={exercise.restTime}
+          duration={15}
           isSmoothColorTransition
           colors={['#004777', '#2ecc71', '#F7B801', '#A30000']}
           colorsTime={[10, 7, 4, 0]}
@@ -76,13 +73,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
           {({ remainingTime }) => <Text fontSize="4xl">{remainingTime}</Text>}
         </CountdownCircleTimer>
       ) : (
-        <LottieContainer>
-          <StyledLottieView
-            source={require('src/assets/lottie/barbell.json')}
-            autoPlay
-            loop
-          />
-        </LottieContainer>
+        <LottieAnimation source={require('src/assets/lottie/barbell.json')} />
       )}
 
       <StepIndicator steps={steps} />

@@ -11,7 +11,7 @@ import { RoutineExercise } from 'src/interfaces/routine-exercises';
 import routineExercisesDataFile from 'src/mocks/routine-exercises.json';
 
 import { FormData, validationSchema } from './form-config';
-import { ExercisesDataContainer, FlatlistContainer } from './styles';
+import { Container, ExercisesDataContainer, FlatlistContainer } from './styles';
 import { Props } from './types';
 
 export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
@@ -106,26 +106,28 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
 
   return (
     <ScreenContainer>
-      <Heading
-        title={'Comenzar rutina'}
-        flexTitleAlign="center"
-        bottomSpace={false}
-      />
-      <ControlledSelectInput
-        controller={{
-          control,
-          name: 'routine',
-        }}
-        options={routineOptions}
-      />
-      {selectedRoutine && (
-        <FlatlistContainer
-          data={filteredExercises}
-          renderItem={renderExercise}
-          keyExtractor={item => item.id.toString()}
-          collapsable
+      <Container>
+        <Heading
+          title={'Comenzar rutina'}
+          flexTitleAlign="center"
+          bottomSpace={false}
         />
-      )}
+        <ControlledSelectInput
+          controller={{
+            control,
+            name: 'routine',
+          }}
+          options={routineOptions}
+        />
+        {selectedRoutine && (
+          <FlatlistContainer
+            data={filteredExercises}
+            renderItem={renderExercise}
+            keyExtractor={item => item.id.toString()}
+            collapsable
+          />
+        )}
+      </Container>
 
       <Button
         content="Comenzar Rutina"
