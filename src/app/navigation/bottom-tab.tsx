@@ -8,7 +8,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 
 import { Header } from 'src/app/components';
-import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
+import { ExerciseScreen, HomeScreen } from 'src/app/screens';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
   DumbbellIcon,
@@ -17,6 +17,7 @@ import {
 } from 'src/assets/svg/navigation-icons';
 import { RootState } from 'src/store';
 
+import { RoutineStack } from './routines-stack';
 import { BottomTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -85,7 +86,7 @@ export const BottomTab = () => {
     <Tab.Navigator screenOptions={tabBarOptions} initialRouteName="HomeScreen">
       <Tab.Screen
         name="RoutinesScreen"
-        component={RoutinesScreen}
+        component={RoutineStack}
         options={RoutineHeaderOptions}
       />
       <Tab.Screen

@@ -71,4 +71,8 @@ export default {
     personalRecordDescription: 'Marcas personales',
     personalGoalDescription: 'Avances hacia tu objetivo personal',
   },
+  addRoutine: {
+    error: 'Error al crear rutina',
+  },
+  exercisesRevision: 'Error al finalizar revision',
 };

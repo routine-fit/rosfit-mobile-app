@@ -1,15 +1,15 @@
+import { ChevronRight } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { FC } from 'react';
 
 import { Text } from 'src/app/components';
-import { ContinueArrowIcon } from 'src/assets/svg/navigation-icons/continue-arrow-icon';
 
 import { RowContainer, StyledTouchableOpacity } from './styles';
 import { RoutineBadgeProps } from './types';
 
 export const RoutineBadge: FC<RoutineBadgeProps> = ({
   title,
-  duration,
+  subtitle,
   onPress,
 }) => {
   const theme = useTheme();
@@ -18,13 +18,9 @@ export const RoutineBadge: FC<RoutineBadgeProps> = ({
     <StyledTouchableOpacity onPress={onPress}>
       <RowContainer>
         <Text>{title}</Text>
-        <Text>{duration}</Text>
+        <Text>{subtitle}</Text>
       </RowContainer>
-      <ContinueArrowIcon
-        width={20}
-        height={18}
-        color={theme.colors.primary.default}
-      />
+      <ChevronRight color={theme.colors.primary.default} />
     </StyledTouchableOpacity>
   );
 };

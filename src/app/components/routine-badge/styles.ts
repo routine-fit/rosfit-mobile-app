@@ -5,10 +5,10 @@ export const StyledTouchableOpacity = styled.TouchableOpacity`
   border-radius: 8px;
   flex-direction: row;
   padding-horizontal: 25px;
-  padding-vertical: 20px;
+  padding-vertical: 18px;
   align-items: center;
   gap: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 `;
 
 export const RowContainer = styled.View`

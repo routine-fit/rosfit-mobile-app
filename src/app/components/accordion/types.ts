@@ -1,5 +1,5 @@
 export interface AccordionProps {
   title: string;
-  count: number;
+  count?: number;
   body: JSX.Element | JSX.Element[];
 }

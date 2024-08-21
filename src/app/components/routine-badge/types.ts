@@ -1,5 +1,5 @@
 export interface RoutineBadgeProps {
   title: string;
-  duration: string;
+  subtitle?: string;
   onPress: () => void;
 }

@@ -4,13 +4,13 @@ import { ScrollView } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { RoutineBadge } from 'src/app/components/routine-badge';
 import { MainDrawerParamList } from 'src/app/navigation/types';
 import { DashboardData } from 'src/interfaces/dashboard';
 import dashboardDataFile from 'src/mocks/dashboard-data.json';
 
 import ExerciseInfoRow from './components/exercise-info-row';
 import PersonalRecordCard from './components/personal-record-card';
-import { RoutineBadge } from './components/routine-badge';
 import {
   CenteredView,
   Container,
@@ -71,7 +71,7 @@ export const HomeScreen = () => {
           />
           <RoutineBadge
             title={dashboardData.routine.title}
-            duration={dashboardData.routine.duration}
+            subtitle={dashboardData.routine.duration}
             onPress={() => {}}
           />
 
