@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import {
@@ -13,6 +13,7 @@ import {
 import { RoutinesParamList } from 'src/app/navigation/types';
 
 import { formConfig, FormData } from './form-config';
+import { Container } from './styles';
 
 interface Props extends StackScreenProps<RoutinesParamList, 'AddRoutine'> {}
 
@@ -32,8 +33,11 @@ export const AddRoutine: FC<Props> = ({ navigation }) => {
 
   return (
     <ScreenContainer>
-      <Heading title="Crear nueva rutina" flexTitleAlign="center" />
-      <View style={styles.container}>
+      <Heading
+        title={t('screens:addRoutine:heading')}
+        flexTitleAlign="center"
+      />
+      <Container>
         <ControlledTextInput
           controller={{
             control,
@@ -46,17 +50,12 @@ export const AddRoutine: FC<Props> = ({ navigation }) => {
             name: 'routineType',
           }}
         />
-      </View>
+      </Container>
       <Button
         onPress={handleSubmit(onValidSubmit)}
-        content="Seleccionar ejercicios"
+        content={t('screens:addRoutine:selectExercises')}
+        themeColor="secondary"
       />
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

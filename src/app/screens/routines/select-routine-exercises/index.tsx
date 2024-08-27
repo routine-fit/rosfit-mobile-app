@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
@@ -9,10 +10,11 @@ interface Props
   extends StackScreenProps<RoutinesParamList, 'SelectRoutineExercises'> {}
 
 export const SelectRoutineExercises: FC<Props> = ({ navigation }) => {
+  const { t } = useTranslation();
   return (
     <ScreenContainer>
       <Text fontSize="xl" fontWeight="medium" textAlign="center">
-        Selecciona tus ejercicios
+        {t('screens:selectRoutineExercises.heading')}
       </Text>
       <ExerciseList />
       <Button
@@ -21,7 +23,7 @@ export const SelectRoutineExercises: FC<Props> = ({ navigation }) => {
         }}
         fullWidth={false}
         alignSelf={false}
-        content="Revision"
+        content={t('screens:selectRoutineExercises.revision')}
         themeColor="secondary"
       />
     </ScreenContainer>

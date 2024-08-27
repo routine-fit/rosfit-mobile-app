@@ -14,3 +14,11 @@ export interface Exercise {
   muscleGroup: MuscleGroup;
   userInfoId: string;
 }
+
+export type RoutineExercise = {
+  name: string;
+  series: string;
+  repetitions: string;
+  restTime: string;
+  variableWeight: boolean;
+};

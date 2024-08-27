@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { Resolver } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { RoutineExercise } from './types';
+import { RoutineExercise } from 'src/interfaces/exercises';
 
 export type FormData = {
   exercises: RoutineExercise[];
@@ -18,7 +18,7 @@ export const validationSchema = yup.object().shape({
         }),
       ),
       series: yup
-        .number()
+        .string()
         .required(
           t('inputs:error.required', {
             field: t('inputs:label.series').toLowerCase(),
@@ -32,7 +32,7 @@ export const validationSchema = yup.object().shape({
           }),
         ),
       repetitions: yup
-        .number()
+        .string()
         .required(
           t('inputs:error.required', {
             field: t('inputs:label.repetitions').toLowerCase(),
@@ -46,7 +46,7 @@ export const validationSchema = yup.object().shape({
           }),
         ),
       restTime: yup
-        .number()
+        .string()
         .required(
           t('inputs:error.required', {
             field: t('inputs:label.restTime').toLowerCase(),
