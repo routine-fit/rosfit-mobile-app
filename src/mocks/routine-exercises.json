@@ -1,44 +1,32 @@
 [
   {
     "name": "Prensa",
-    "series": "3",
     "repetitions": "10",
-    "restTime": "60",
-    "variableWeight": false
+    "restTime": "60" 
   },
   {
     "name": "Sentadilla",
-    "series": "4",
     "repetitions": "8",
-    "restTime": "90",
-    "variableWeight": true
+    "restTime": "90" 
   },
   {
     "name": "Cuadriceps",
-    "series": "4",
     "repetitions": "12",
-    "restTime": "60",
-    "variableWeight": false
+    "restTime": "60" 
   },
   {
     "name": "Biceps",
-    "series": "4",
     "repetitions": "10",
-    "restTime": "45",
-    "variableWeight": false
+    "restTime": "45" 
   },
   {
     "name": "Hombros",
-    "series": "4",
     "repetitions": "10",
-    "restTime": "90",
-    "variableWeight": false
+    "restTime": "90" 
   },
   {
     "name": "Vuelo lateral",
-    "series": "3",
     "repetitions": "10",
-    "restTime": "60",
-    "variableWeight": false
+    "restTime": "60" 
   }
 ]

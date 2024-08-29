@@ -1,98 +1,49 @@
 import React, { FC, useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, FlatList, Switch } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import {
   Button,
-  ControlledTextInput,
+  // ControlledTextInput,
   Heading,
   ScreenContainer,
   SharedModal,
-  Text,
 } from 'src/app/components';
-import { AccordionItem } from 'src/app/components/accordion';
+// import { AccordionItem } from 'src/app/components/accordion';
 import { RoutinesParamList } from 'src/app/navigation/types';
-import { RoutineExercise } from 'src/interfaces/exercises';
-import routineExercises from 'src/mocks/routine-exercises.json';
+import { Exercise } from 'src/interfaces/exercises';
+// import { RoutineExercise } from 'src/interfaces/exercises';
+import mockedExercises from 'src/mocks/weekly-exercises-data.json';
 
+import { ExerciseItem } from './components/exercise-item';
 import { createFormConfig, FormData } from './form-config';
-import { ExerciseContainer, SwitchContainer } from './styles';
 
-interface Props extends StackScreenProps<RoutinesParamList, 'AddRoutine'> {}
+interface Props
+  extends StackScreenProps<RoutinesParamList, 'ExercisesRevision'> {}
 
-export const ExerciseRevision: FC<Props> = ({ navigation }) => {
+export const ExercisesRevision: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const formConfig = createFormConfig(routineExercises);
+  const formConfig = createFormConfig(mockedExercises as Exercise[]);
   const { control, handleSubmit } = useForm<FormData>(formConfig);
+  // const { fields } = useFieldArray({
+  //   name: 'exercises',
+  //   control,
+  // });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
       // TODO: dispatch thunks
+      console.log(data);
+
       setShowModal(true);
     } catch (error: any) {
       Alert.alert(t('screens:addRoutine:error'), error.message);
     }
   };
-
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: RoutineExercise;
-    index: number;
-  }) => (
-    <AccordionItem
-      title={item.name}
-      body={
-        <ExerciseContainer>
-          <ControlledTextInput
-            label="Series"
-            controller={{
-              control,
-              name: `exercises.${index}.series`,
-            }}
-            placeholder=""
-            keyboardType="numeric"
-          />
-          <ControlledTextInput
-            label="Repeticiones"
-            controller={{
-              control,
-              name: `exercises.${index}.repetitions`,
-            }}
-            placeholder=""
-            keyboardType="numeric"
-          />
-          <ControlledTextInput
-            label="Tiempo de descanso"
-            controller={{
-              control,
-              name: `exercises.${index}.restTime`,
-            }}
-            placeholder=""
-            keyboardType="numeric"
-          />
-          <Controller
-            control={control}
-            name={`exercises.${index}.variableWeight`}
-            render={({ field: { onChange, value } }) => (
-              <SwitchContainer>
-                <Text fontSize="xs" fontWeight="bold">
-                  Peso Variable
-                </Text>
-                <Switch onValueChange={onChange} value={value} />
-              </SwitchContainer>
-            )}
-          />
-        </ExerciseContainer>
-      }
-    />
-  );
 
   return (
     <ScreenContainer>
@@ -102,8 +53,10 @@ export const ExerciseRevision: FC<Props> = ({ navigation }) => {
         flexTitleAlign="center"
       />
       <FlatList
-        data={routineExercises}
-        renderItem={renderItem}
+        data={mockedExercises}
+        renderItem={({ item, index }) => (
+          <ExerciseItem item={item} control={control} index={index} />
+        )}
         keyExtractor={item => item.name.toString()}
         showsVerticalScrollIndicator={false}
       />

@@ -50,11 +50,11 @@ export const BottomTab = () => {
 
   const RoutineHeaderOptions = useMemo(
     () => ({
-      headerTitle: t('navigation:headers.routines'),
+      headerShown: false,
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<RoutineIcon />, focused),
     }),
-    [renderIcon, t],
+    [renderIcon],
   );
 
   const HomeHeaderOptions = useMemo(

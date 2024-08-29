@@ -3,34 +3,15 @@ import * as yup from 'yup';
 import { Resolver } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { RoutineExercise } from 'src/interfaces/exercises';
+import { Exercise, RoutineExerciseFormData } from 'src/interfaces/exercises';
 
 export type FormData = {
-  exercises: RoutineExercise[];
+  exercises: RoutineExerciseFormData[];
 };
 
 export const validationSchema = yup.object().shape({
   exercises: yup.array().of(
     yup.object().shape({
-      name: yup.string().required(
-        t('inputs:error.required', {
-          field: t('inputs:label.exerciseName').toLowerCase(),
-        }),
-      ),
-      series: yup
-        .string()
-        .required(
-          t('inputs:error.required', {
-            field: t('inputs:label.series').toLowerCase(),
-          }),
-        )
-        .min(
-          1,
-          t('inputs:error.minValue', {
-            field: t('inputs:label.series'),
-            min: 1,
-          }),
-        ),
       repetitions: yup
         .string()
         .required(
@@ -38,43 +19,83 @@ export const validationSchema = yup.object().shape({
             field: t('inputs:label.repetitions').toLowerCase(),
           }),
         )
-        .min(
-          1,
+        .test(
+          'is-valid-number',
           t('inputs:error.minValue', {
             field: t('inputs:label.repetitions'),
             min: 1,
           }),
+          value => !isNaN(Number(value)) && Number(value) > 1,
         ),
-      restTime: yup
+      restTimeSecs: yup
         .string()
         .required(
           t('inputs:error.required', {
             field: t('inputs:label.restTime').toLowerCase(),
           }),
         )
-        .min(
-          0,
+        .test(
+          'is-valid-number',
           t('inputs:error.minValue', {
             field: t('inputs:label.restTime'),
-            min: 0,
+            min: 1,
+          }),
+          value => !isNaN(Number(value)) && Number(value) > 0,
+        ),
+      series: yup
+        .array()
+        .of(
+          yup.object().shape({
+            weight: yup
+              .string()
+              .required(
+                t('inputs:error.required', {
+                  field: t('inputs:label.weight').toLowerCase(),
+                }),
+              )
+              .test(
+                'is-valid-number',
+                t('inputs:error.minValue', {
+                  field: t('inputs:label.weight'),
+                  min: 1,
+                }),
+                value => !isNaN(Number(value)) && Number(value) > 0,
+              ),
+            weightMeasure: yup.string().required(
+              t('inputs:error.required', {
+                field: t('inputs:label.weightMeasure').toLowerCase(),
+              }),
+            ),
+          }),
+        )
+        .min(
+          1,
+          t('inputs:error.minItems', {
+            field: t('inputs:label.series'),
+            min: 1,
           }),
         ),
-      variableWeight: yup.boolean().required(
-        t('inputs:error.required', {
-          field: t('inputs:label.variableWeight').toLowerCase(),
-        }),
-      ),
     }),
   ),
 });
 
-export const createFormConfig = (exercises: RoutineExercise[] = []) => {
+export const createFormConfig = (exercises: Exercise[] = []) => {
   const defaultValues: FormData = {
-    exercises,
+    exercises: exercises.map(ex => ({
+      id: ex.id,
+      repetitions: '10',
+      restTimeSecs: '30',
+      series: [
+        {
+          weight: '10',
+          weightMeasure: 'kg',
+        },
+      ],
+    })),
   };
 
   return {
     defaultValues,
-    resolver: yupResolver(validationSchema) as Resolver<FormData>,
+    resolver: yupResolver(validationSchema) as unknown as Resolver<FormData>,
   };
 };
