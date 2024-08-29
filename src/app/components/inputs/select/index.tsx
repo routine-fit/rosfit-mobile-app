@@ -12,6 +12,7 @@ import { SelectInputProps } from './types';
 const ControlledSelectInput = <Form extends FieldValues>({
   controller,
   options,
+  label,
   ...restOfProps
 }: SelectInputProps<Form>) => {
   const {
@@ -20,7 +21,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
   } = useController(controller);
   const { t } = useTranslation();
 
-  const label = t(`inputs:label.${controller.name}`);
+  const inputLabel = label ?? t(`inputs:label.${controller.name}`);
   const placeholder = t(`inputs:placeholder.${controller.name}`);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,7 +37,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
     <>
       <TextInput
         error={error?.message}
-        label={label}
+        label={inputLabel}
         placeholder={placeholder}
         {...restOfProps}
         onBlur={onBlur}

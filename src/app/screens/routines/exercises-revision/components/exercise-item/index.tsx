@@ -3,7 +3,12 @@ import React, { FC } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { View } from 'react-native';
 
-import { Button, ControlledTextInput, IconButton } from 'src/app/components';
+import {
+  Button,
+  ControlledSelect,
+  ControlledTextInput,
+  IconButton,
+} from 'src/app/components';
 import { AccordionItem } from 'src/app/components/accordion';
 
 import { ExerciseContainer, InputContainer, Row } from './styles';
@@ -60,7 +65,15 @@ export const ExerciseItem: FC<Props> = ({ item, index, control }) => {
                     placeholder="Peso"
                     keyboardType="numeric"
                   />
-                  {/* Dropdown with Kg and Lb options */}
+                  <ControlledSelect
+                    label={'Medida de peso'}
+                    controller={{
+                      control,
+                      name: `exercises.${index}.series.${seriesIndex}.weightMeasure`,
+                    }}
+                    placeholder=" "
+                    options={[{ label: 'kg', value: 'kg' }]}
+                  />
                 </InputContainer>
                 <IconButton
                   variant="ghost"

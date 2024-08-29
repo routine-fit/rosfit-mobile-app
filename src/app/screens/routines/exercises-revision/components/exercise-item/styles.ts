@@ -8,6 +8,9 @@ export const Row = styled.View`
 
 export const InputContainer = styled.View`
   flex: 1;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: space-around;
 `;
 
 export const ExerciseContainer = styled.View`
