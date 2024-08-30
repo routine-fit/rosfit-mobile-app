@@ -3,7 +3,6 @@ import { useTheme } from 'styled-components';
 import React, { FC, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-// import { FormProvider } from 'react-hook-form';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
