@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -12,17 +12,16 @@ import {
 } from 'src/app/components';
 import { RoutinesParamList } from 'src/app/navigation/types';
 
-import { formConfig, FormData } from './form-config';
+import { FormData } from '../form-config';
 import { Container } from './styles';
 
 interface Props extends StackScreenProps<RoutinesParamList, 'AddRoutine'> {}
 
 export const AddRoutine: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
-  const { control, handleSubmit } = useForm<FormData>(formConfig);
+  const { control, handleSubmit } = useFormContext<FormData>();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onValidSubmit: SubmitHandler<FormData> = async data => {
+  const onValidSubmit: SubmitHandler<FormData> = async _data => {
     try {
       //TODO: dispatch thunks
       navigation.navigate('SelectRoutineExercises');

@@ -1,24 +1,20 @@
 import React, { FC, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, FlatList } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import {
   Button,
-  // ControlledTextInput,
   Heading,
   ScreenContainer,
   SharedModal,
 } from 'src/app/components';
-// import { AccordionItem } from 'src/app/components/accordion';
 import { RoutinesParamList } from 'src/app/navigation/types';
-import { Exercise } from 'src/interfaces/exercises';
-// import { RoutineExercise } from 'src/interfaces/exercises';
 import mockedExercises from 'src/mocks/weekly-exercises-data.json';
 
+import { FormData } from '../form-config';
 import { ExerciseItem } from './components/exercise-item';
-import { createFormConfig, FormData } from './form-config';
 
 interface Props
   extends StackScreenProps<RoutinesParamList, 'ExercisesRevision'> {}
@@ -27,18 +23,11 @@ export const ExercisesRevision: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const formConfig = createFormConfig(mockedExercises as Exercise[]);
-  const { control, handleSubmit } = useForm<FormData>(formConfig);
-  // const { fields } = useFieldArray({
-  //   name: 'exercises',
-  //   control,
-  // });
+  const { control, handleSubmit } = useFormContext<FormData>();
 
-  const onValidSubmit: SubmitHandler<FormData> = async data => {
+  const onValidSubmit: SubmitHandler<FormData> = async _data => {
     try {
       // TODO: dispatch thunks
-      console.log(data);
-
       setShowModal(true);
     } catch (error: any) {
       Alert.alert(t('screens:addRoutine:error'), error.message);

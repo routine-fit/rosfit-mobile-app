@@ -54,5 +54,6 @@ export default {
     passwordMinLength: 'el password debe contener 6 caracteres minimo',
     passwordMatch: 'el password ingresado no coincide',
     genderValue: 'genero invalido, valores: {{male}} / {{female}}',
+    minValue: '{{field}} debe ser mayor a {{min}}',
   },
 };

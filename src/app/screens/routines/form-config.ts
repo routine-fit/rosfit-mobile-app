@@ -6,10 +6,40 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Exercise, RoutineExerciseFormData } from 'src/interfaces/exercises';
 
 export type FormData = {
+  routineName: string;
+  routineType: string;
   exercises: RoutineExerciseFormData[];
 };
 
 export const validationSchema = yup.object().shape({
+  routineName: yup
+    .string()
+    .required(
+      t('inputs:error.required', {
+        field: t('inputs:label.routineName').toLowerCase(),
+      }),
+    )
+    .min(
+      2,
+      t('inputs:error.nameMinLength', {
+        field: t('inputs:label.routineName').toLowerCase(),
+        min: 2,
+      }),
+    ),
+  routineType: yup
+    .string()
+    .required(
+      t('inputs:error.required', {
+        field: t('inputs:label.routineType').toLowerCase(),
+      }),
+    )
+    .min(
+      2,
+      t('inputs:error.nameMinLength', {
+        field: t('inputs:label.routineType').toLowerCase(),
+        min: 2,
+      }),
+    ),
   exercises: yup.array().of(
     yup.object().shape({
       repetitions: yup
@@ -23,7 +53,7 @@ export const validationSchema = yup.object().shape({
           'is-valid-number',
           t('inputs:error.minValue', {
             field: t('inputs:label.repetitions'),
-            min: 1,
+            min: 0,
           }),
           value => !isNaN(Number(value)) && Number(value) > 1,
         ),
@@ -38,7 +68,7 @@ export const validationSchema = yup.object().shape({
           'is-valid-number',
           t('inputs:error.minValue', {
             field: t('inputs:label.restTime'),
-            min: 1,
+            min: 0,
           }),
           value => !isNaN(Number(value)) && Number(value) > 0,
         ),
@@ -57,7 +87,7 @@ export const validationSchema = yup.object().shape({
                 'is-valid-number',
                 t('inputs:error.minValue', {
                   field: t('inputs:label.weight'),
-                  min: 1,
+                  min: 0,
                 }),
                 value => !isNaN(Number(value)) && Number(value) > 0,
               ),
@@ -81,6 +111,8 @@ export const validationSchema = yup.object().shape({
 
 export const createFormConfig = (exercises: Exercise[] = []) => {
   const defaultValues: FormData = {
+    routineName: '',
+    routineType: '',
     exercises: exercises.map(ex => ({
       id: ex.id,
       repetitions: '10',
