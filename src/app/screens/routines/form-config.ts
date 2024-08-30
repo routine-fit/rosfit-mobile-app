@@ -55,7 +55,7 @@ export const validationSchema = yup.object().shape({
             field: t('inputs:label.repetitions'),
             min: 0,
           }),
-          value => !isNaN(Number(value)) && Number(value) > 1,
+          value => !isNaN(Number(value)) && Number(value) > 0,
         ),
       restTimeSecs: yup
         .string()
@@ -100,7 +100,7 @@ export const validationSchema = yup.object().shape({
         )
         .min(
           1,
-          t('inputs:error.minItems', {
+          t('inputs:error.minValue', {
             field: t('inputs:label.series'),
             min: 1,
           }),
