@@ -10,7 +10,10 @@ import {
 
 import { Header } from 'src/app/components';
 import DrawerContent from 'src/app/components/drawer';
-import { ProfileScreen } from 'src/app/screens/index';
+import {
+  ProfileScreen,
+  WeeklyExerciseStatisticsScreen,
+} from 'src/app/screens/index';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { BackArrowIcon } from 'src/assets/svg/navigation-icons';
 import { RootState } from 'src/store';
@@ -18,6 +21,7 @@ import { RootState } from 'src/store';
 import { EditPersonalInfoScreen } from '../screens/edit-personal-info';
 import { EditTrainingPreferencesScreen } from '../screens/edit-training-preferences';
 import { WeekSummaryScreen } from '../screens/week-summary';
+import { WeeklyExercisesScreen } from '../screens/weekly-exercises';
 import { BottomTab } from './bottom-tab';
 import { MainDrawerParamList } from './types';
 
@@ -99,6 +103,32 @@ export const MainAppNavigation = () => {
           header: () => (
             <Header
               leftText={t('navigation:headers.returnProfile')}
+              headerLeft={<BackArrowIcon width={20} />}
+              onPressLeft={navigation.goBack}
+            />
+          ),
+        })}
+      />
+      <Drawer.Screen
+        name="WeeklyExercises"
+        component={WeeklyExercisesScreen}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header
+              leftText={t('navigation:headers.returnHome')}
+              headerLeft={<BackArrowIcon width={20} />}
+              onPressLeft={navigation.goBack}
+            />
+          ),
+        })}
+      />
+      <Drawer.Screen
+        name="WeeklyExerciseStatistics"
+        component={WeeklyExerciseStatisticsScreen}
+        options={({ navigation }) => ({
+          header: () => (
+            <Header
+              leftText={t('navigation:headers.returnHome')}
               headerLeft={<BackArrowIcon width={20} />}
               onPressLeft={navigation.goBack}
             />

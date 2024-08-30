@@ -73,4 +73,24 @@ export default {
     time: 'Tu tiempo:',
     loadStatistics: 'Cargar estadisticas',
   },
+  weeklyExercises: {
+    heading1: 'Ejercicios de la semana',
+    exercises: '{{count}} Ejercicios',
+  },
+  weeklyExerciseStatistics: {
+    trainingFrequencyHeader: 'Frecuencia de entrenamiento',
+    trainingVolumeHeader: 'Volumen de entrenamiento',
+    trainingIntensityHeader: 'Intensidad',
+    weightProgressionHeader: 'Progresión de peso',
+    personalRecordHeader: 'Rendimiento y fuerza (PR)',
+    personalGoalHeader: 'Objetivo personal',
+
+    trainingFrequencyDescription: 'Días esta semana',
+    trainingVolumeDescription:
+      'Numero de series de ejercicios que realizaste en una sesion promedio',
+    trainingIntensityDescription: 'Escala de percepcion de esfuerzo (RPE)',
+    weightProgressionDescription: 'Aumento de peso esta semana',
+    personalRecordDescription: 'Marcas personales',
+    personalGoalDescription: 'Avances hacia tu objetivo personal',
+  },
 };
