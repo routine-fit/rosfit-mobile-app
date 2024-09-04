@@ -12,24 +12,21 @@ import { SelectInputProps } from './types';
 const ControlledSelectInput = <Form extends FieldValues>({
   controller,
   options,
-  label,
   ...restOfProps
 }: SelectInputProps<Form>) => {
   const {
-    field: { onChange, onBlur },
+    field: { onChange, onBlur, value },
     fieldState: { error },
   } = useController(controller);
   const { t } = useTranslation();
 
-  const inputLabel = label ?? t(`inputs:label.${controller.name}`);
+  const label = t(`inputs:label.${controller.name}`);
   const placeholder = t(`inputs:placeholder.${controller.name}`);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState('');
 
-  const handleSelect = (selectedValue: string, valueLabel: string) => {
+  const handleSelect = (selectedValue: string) => {
     onChange(selectedValue);
-    setSelectedLabel(valueLabel);
     setModalVisible(false);
   };
 
@@ -37,19 +34,16 @@ const ControlledSelectInput = <Form extends FieldValues>({
     <>
       <TextInput
         error={error?.message}
-        label={inputLabel}
+        label={label}
         placeholder={placeholder}
         {...restOfProps}
         onBlur={onBlur}
-        value={selectedLabel}
+        value={value}
         readOnly
-        onChangeText={(val: string) =>
-          onChange(val.length === 1 ? val.trim() : val)
-        }
         onPress={() => setModalVisible(true)}
       />
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -61,11 +55,12 @@ const ControlledSelectInput = <Form extends FieldValues>({
             <FlatList
               data={options}
               renderItem={({ item }) => (
-                <Option onPress={() => handleSelect(item.value, item.label)}>
-                  <Text fontSize="lg">{item.label}</Text>
+                <Option onPress={() => handleSelect(item)}>
+                  <Text fontSize="lg">{item}</Text>
                 </Option>
               )}
-              keyExtractor={item => item.value.toString()}
+              keyExtractor={item => item.toString()}
+              showsVerticalScrollIndicator={false}
             />
           </BottomSheetContent>
         </Overlay>

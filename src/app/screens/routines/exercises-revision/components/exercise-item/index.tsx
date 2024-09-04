@@ -1,6 +1,6 @@
 import { Plus, Trash } from 'lucide-react-native';
 import React, { FC } from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { Control, useFieldArray } from 'react-hook-form';
 import { View } from 'react-native';
 
 import {
@@ -10,12 +10,14 @@ import {
   IconButton,
 } from 'src/app/components';
 import { AccordionItem } from 'src/app/components/accordion';
+import { FormData } from 'src/app/screens/routines/form-config';
+import { Exercise } from 'src/interfaces/exercises';
 
 import { ExerciseContainer, InputContainer, Row } from './styles';
 
 interface Props {
-  item: any;
-  control: any;
+  item: Exercise;
+  control: Control<FormData>;
   index: number;
 }
 
@@ -72,7 +74,7 @@ export const ExerciseItem: FC<Props> = ({ item, index, control }) => {
                       name: `exercises.${index}.series.${seriesIndex}.weightMeasure`,
                     }}
                     placeholder=" "
-                    options={[{ label: 'kg', value: 'kg' }]}
+                    options={['kg', 'lb']}
                   />
                 </InputContainer>
                 <IconButton

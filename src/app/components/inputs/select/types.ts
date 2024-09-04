@@ -10,5 +10,5 @@ export type SelectInputProps<Form extends FieldValues> = Omit<
 > & {
   controller: UseControllerProps<Form>;
   inputProps?: ComponentProps<typeof TextInput>;
-  options: { label: string; value: string }[];
+  options: string[];
 };

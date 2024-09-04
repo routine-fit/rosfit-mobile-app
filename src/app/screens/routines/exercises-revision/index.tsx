@@ -11,6 +11,7 @@ import {
   SharedModal,
 } from 'src/app/components';
 import { RoutinesParamList } from 'src/app/navigation/types';
+import { Exercise } from 'src/interfaces/exercises';
 import mockedExercises from 'src/mocks/weekly-exercises-data.json';
 
 import { FormData } from '../form-config';
@@ -42,7 +43,7 @@ export const ExercisesRevision: FC<Props> = ({ navigation }) => {
         flexTitleAlign="center"
       />
       <FlatList
-        data={mockedExercises}
+        data={mockedExercises as Exercise[]}
         renderItem={({ item, index }) => (
           <ExerciseItem item={item} control={control} index={index} />
         )}

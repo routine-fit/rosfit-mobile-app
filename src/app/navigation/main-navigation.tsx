@@ -6,7 +6,9 @@ import {
   createDrawerNavigator,
   DrawerContentComponentProps,
   DrawerNavigationOptions,
+  DrawerNavigationProp,
 } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
 
 import { Header } from 'src/app/components';
 import DrawerContent from 'src/app/components/drawer';
@@ -15,8 +17,8 @@ import {
   WeeklyExerciseStatisticsScreen,
 } from 'src/app/screens/index';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
-import { BackArrowIcon } from 'src/assets/svg/navigation-icons';
 import { RootState } from 'src/store';
+import { useGoBackHeaderOptions } from 'src/utils/useGoBackHeaderOptions';
 
 import { EditPersonalInfoScreen } from '../screens/edit-personal-info';
 import { EditTrainingPreferencesScreen } from '../screens/edit-training-preferences';
@@ -39,6 +41,7 @@ export const MainAppNavigation = () => {
   const { t } = useTranslation();
   const { displayName } = useSelector((state: RootState) => state.auth);
   const theme = useTheme();
+  const navigation = useNavigation<DrawerNavigationProp<MainDrawerParamList>>();
 
   const profileHeaderOptions = useMemo(
     () => ({
@@ -68,15 +71,10 @@ export const MainAppNavigation = () => {
       <Drawer.Screen
         name="WeekSummary"
         component={WeekSummaryScreen}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              leftText={t('navigation:headers.returnHome')}
-              headerLeft={<BackArrowIcon width={20} />}
-              onPressLeft={navigation.goBack}
-            />
-          ),
-        })}
+        options={useGoBackHeaderOptions(
+          navigation,
+          t('navigation:headers.returnHome'),
+        )}
       />
       <Drawer.Screen
         name="Profile"
@@ -86,54 +84,34 @@ export const MainAppNavigation = () => {
       <Drawer.Screen
         name="EditPersonalInfo"
         component={EditPersonalInfoScreen}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              leftText={t('navigation:headers.returnProfile')}
-              headerLeft={<BackArrowIcon width={20} />}
-              onPressLeft={navigation.goBack}
-            />
-          ),
-        })}
+        options={useGoBackHeaderOptions(
+          navigation,
+          t('navigation:headers.returnProfile'),
+        )}
       />
       <Drawer.Screen
         name="EditTrainingPreferences"
         component={EditTrainingPreferencesScreen}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              leftText={t('navigation:headers.returnProfile')}
-              headerLeft={<BackArrowIcon width={20} />}
-              onPressLeft={navigation.goBack}
-            />
-          ),
-        })}
+        options={useGoBackHeaderOptions(
+          navigation,
+          t('navigation:headers.returnProfile'),
+        )}
       />
       <Drawer.Screen
         name="WeeklyExercises"
         component={WeeklyExercisesScreen}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              leftText={t('navigation:headers.returnHome')}
-              headerLeft={<BackArrowIcon width={20} />}
-              onPressLeft={navigation.goBack}
-            />
-          ),
-        })}
+        options={useGoBackHeaderOptions(
+          navigation,
+          t('navigation:headers.returnHome'),
+        )}
       />
       <Drawer.Screen
         name="WeeklyExerciseStatistics"
         component={WeeklyExerciseStatisticsScreen}
-        options={({ navigation }) => ({
-          header: () => (
-            <Header
-              leftText={t('navigation:headers.returnHome')}
-              headerLeft={<BackArrowIcon width={20} />}
-              onPressLeft={navigation.goBack}
-            />
-          ),
-        })}
+        options={useGoBackHeaderOptions(
+          navigation,
+          t('navigation:headers.returnHome'),
+        )}
       />
     </Drawer.Navigator>
   );
