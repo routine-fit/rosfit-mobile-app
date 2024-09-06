@@ -1,6 +1,6 @@
 import { Plus, Trash } from 'lucide-react-native';
 import React, { FC } from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
 import { View } from 'react-native';
 
 import {
@@ -10,18 +10,15 @@ import {
   IconButton,
 } from 'src/app/components';
 import { AccordionItem } from 'src/app/components/accordion';
-import { FormData } from 'src/app/screens/routines/form-config';
-import { Exercise } from 'src/interfaces/exercises';
 
 import { ExerciseContainer, InputContainer, Row } from './styles';
+import { ExerciseItemProps } from './types';
 
-interface Props {
-  item: Exercise;
-  control: Control<FormData>;
-  index: number;
-}
-
-export const ExerciseItem: FC<Props> = ({ item, index, control }) => {
+export const ExerciseItem: FC<ExerciseItemProps> = ({
+  item,
+  index,
+  control,
+}) => {
   const {
     fields: seriesFields,
     append,

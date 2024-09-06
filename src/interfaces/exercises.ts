@@ -16,7 +16,7 @@ export interface Exercise {
 }
 
 export type RoutineExerciseFormData = {
-  id: string;
+  id?: string;
   repetitions: string;
   restTimeSecs: string;
   series: Series[];

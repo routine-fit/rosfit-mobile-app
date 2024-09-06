@@ -18,7 +18,7 @@ import {
 } from 'src/app/screens/index';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { RootState } from 'src/store';
-import { useGoBackHeaderOptions } from 'src/utils/useGoBackHeaderOptions';
+import { getGoBackHeaderOptions } from 'src/utils/getGoBackHeaderOptions';
 
 import { EditPersonalInfoScreen } from '../screens/edit-personal-info';
 import { EditTrainingPreferencesScreen } from '../screens/edit-training-preferences';
@@ -71,8 +71,9 @@ export const MainAppNavigation = () => {
       <Drawer.Screen
         name="WeekSummary"
         component={WeekSummaryScreen}
-        options={useGoBackHeaderOptions(
+        options={getGoBackHeaderOptions(
           navigation,
+          theme,
           t('navigation:headers.returnHome'),
         )}
       />
@@ -84,32 +85,36 @@ export const MainAppNavigation = () => {
       <Drawer.Screen
         name="EditPersonalInfo"
         component={EditPersonalInfoScreen}
-        options={useGoBackHeaderOptions(
+        options={getGoBackHeaderOptions(
           navigation,
+          theme,
           t('navigation:headers.returnProfile'),
         )}
       />
       <Drawer.Screen
         name="EditTrainingPreferences"
         component={EditTrainingPreferencesScreen}
-        options={useGoBackHeaderOptions(
+        options={getGoBackHeaderOptions(
           navigation,
+          theme,
           t('navigation:headers.returnProfile'),
         )}
       />
       <Drawer.Screen
         name="WeeklyExercises"
         component={WeeklyExercisesScreen}
-        options={useGoBackHeaderOptions(
+        options={getGoBackHeaderOptions(
           navigation,
+          theme,
           t('navigation:headers.returnHome'),
         )}
       />
       <Drawer.Screen
         name="WeeklyExerciseStatistics"
         component={WeeklyExerciseStatisticsScreen}
-        options={useGoBackHeaderOptions(
+        options={getGoBackHeaderOptions(
           navigation,
+          theme,
           t('navigation:headers.returnHome'),
         )}
       />

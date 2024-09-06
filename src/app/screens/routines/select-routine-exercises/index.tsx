@@ -1,15 +1,14 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
-import { RoutinesParamList } from 'src/app/navigation/types';
 import ExerciseList from 'src/app/widgets/exercises-list';
 
-interface Props
-  extends StackScreenProps<RoutinesParamList, 'SelectRoutineExercises'> {}
+import { SelectRoutineExercisesProps } from './types';
 
-export const SelectRoutineExercises: FC<Props> = ({ navigation }) => {
+export const SelectRoutineExercises: FC<SelectRoutineExercisesProps> = ({
+  navigation,
+}) => {
   const { t } = useTranslation();
   return (
     <ScreenContainer>

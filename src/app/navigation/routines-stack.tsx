@@ -1,3 +1,4 @@
+import { useTheme } from 'styled-components';
 import React, { FC, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -12,10 +13,13 @@ import {
 } from 'src/app/screens/routines';
 import { Exercise } from 'src/interfaces/exercises';
 import mockedExercises from 'src/mocks/weekly-exercises-data.json';
-import { useGoBackHeaderOptions } from 'src/utils/useGoBackHeaderOptions';
+import { getGoBackHeaderOptions } from 'src/utils/getGoBackHeaderOptions';
 
 import { Header } from '../components';
-import { createFormConfig, FormData } from '../screens/routines/form-config';
+import {
+  createFormConfig,
+  RoutineFormData,
+} from '../screens/routines/form-config';
 import { BottomTabParamList, RoutinesParamList } from './types';
 
 const Stack = createStackNavigator<RoutinesParamList>();
@@ -24,9 +28,10 @@ interface Props extends BottomTabScreenProps<BottomTabParamList> {}
 
 export const RoutineStack: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const formConfig = createFormConfig(mockedExercises as Exercise[]);
-  const methods = useForm<FormData>(formConfig);
+  const methods = useForm<RoutineFormData>(formConfig);
 
   const routineHeaderOptions = useMemo(
     () => ({
@@ -56,17 +61,17 @@ export const RoutineStack: FC<Props> = ({ navigation }) => {
         <Stack.Screen
           name="AddRoutine"
           component={AddRoutine}
-          options={useGoBackHeaderOptions(navigation)}
+          options={getGoBackHeaderOptions(navigation, theme)}
         />
         <Stack.Screen
           name="SelectRoutineExercises"
           component={SelectRoutineExercises}
-          options={useGoBackHeaderOptions(navigation)}
+          options={getGoBackHeaderOptions(navigation, theme)}
         />
         <Stack.Screen
           name="ExercisesRevision"
           component={ExercisesRevision}
-          options={useGoBackHeaderOptions(navigation)}
+          options={getGoBackHeaderOptions(navigation, theme)}
         />
       </Stack.Navigator>
     </FormProvider>

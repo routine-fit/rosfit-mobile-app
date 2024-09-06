@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import {
   Button,
@@ -10,18 +9,16 @@ import {
   Heading,
   ScreenContainer,
 } from 'src/app/components';
-import { RoutinesParamList } from 'src/app/navigation/types';
 
-import { FormData } from '../form-config';
+import { RoutineFormData } from '../form-config';
 import { Container } from './styles';
+import { AddRoutineProps } from './types';
 
-interface Props extends StackScreenProps<RoutinesParamList, 'AddRoutine'> {}
-
-export const AddRoutine: FC<Props> = ({ navigation }) => {
+export const AddRoutine: FC<AddRoutineProps> = ({ navigation }) => {
   const { t } = useTranslation();
-  const { control, handleSubmit } = useFormContext<FormData>();
+  const { control, handleSubmit } = useFormContext<RoutineFormData>();
 
-  const onValidSubmit: SubmitHandler<FormData> = async _data => {
+  const onValidSubmit: SubmitHandler<RoutineFormData> = async _data => {
     try {
       //TODO: dispatch thunks
       navigation.navigate('SelectRoutineExercises');

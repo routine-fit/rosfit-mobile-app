@@ -2,18 +2,14 @@ import { CalendarDays, Plus } from 'lucide-react-native';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import { Button, Heading, ScreenContainer } from 'src/app/components';
 import { RoutineBadge } from 'src/app/components/routine-badge';
-import { RoutinesParamList } from 'src/app/navigation/types';
 
 import { SectionContainer } from './styles';
+import { RoutineDashboardProps } from './types';
 
-interface Props
-  extends StackScreenProps<RoutinesParamList, 'RoutineDashboard'> {}
-
-export const RoutineDashboard: FC<Props> = ({ navigation }) => {
+export const RoutineDashboard: FC<RoutineDashboardProps> = ({ navigation }) => {
   const { t } = useTranslation();
   return (
     <ScreenContainer>

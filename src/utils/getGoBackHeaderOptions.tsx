@@ -1,5 +1,5 @@
 import { ArrowLeft } from 'lucide-react-native';
-import { useTheme } from 'styled-components';
+import { DefaultTheme } from 'styled-components';
 import React from 'react';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
@@ -13,12 +13,11 @@ type NavigationProp<ParamList extends ParamListBase = ParamListBase> =
   | BottomTabNavigationProp<ParamList>
   | DrawerNavigationProp<ParamList>;
 
-export const useGoBackHeaderOptions = <ParamList extends ParamListBase>(
+export const getGoBackHeaderOptions = <ParamList extends ParamListBase>(
   navigation: NavigationProp<ParamList>,
+  theme: DefaultTheme,
   leftText?: string,
 ) => {
-  const theme = useTheme();
-
   return {
     header: () => (
       <Header

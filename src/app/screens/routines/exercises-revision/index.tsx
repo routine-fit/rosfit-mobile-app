@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, FlatList } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import {
   Button,
@@ -10,23 +9,22 @@ import {
   ScreenContainer,
   SharedModal,
 } from 'src/app/components';
-import { RoutinesParamList } from 'src/app/navigation/types';
 import { Exercise } from 'src/interfaces/exercises';
 import mockedExercises from 'src/mocks/weekly-exercises-data.json';
 
-import { FormData } from '../form-config';
+import { RoutineFormData } from '../form-config';
 import { ExerciseItem } from './components/exercise-item';
+import { ExerciseRevisionProps } from './types';
 
-interface Props
-  extends StackScreenProps<RoutinesParamList, 'ExercisesRevision'> {}
-
-export const ExercisesRevision: FC<Props> = ({ navigation }) => {
+export const ExercisesRevision: FC<ExerciseRevisionProps> = ({
+  navigation,
+}) => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const { control, handleSubmit } = useFormContext<FormData>();
+  const { control, handleSubmit } = useFormContext<RoutineFormData>();
 
-  const onValidSubmit: SubmitHandler<FormData> = async _data => {
+  const onValidSubmit: SubmitHandler<RoutineFormData> = async _data => {
     try {
       // TODO: dispatch thunks
       setShowModal(true);
