@@ -20,7 +20,6 @@ export const AddExerciseScreen = () => {
     defaultValues: {
       exerciseName: '',
       muscleGroup: '',
-      links: '',
     },
     resolver: yupResolver(validationSchema) as Resolver<ExerciseFormData>,
   });
@@ -52,12 +51,6 @@ export const AddExerciseScreen = () => {
             name: 'muscleGroup',
           }}
           options={[{ label: 'ABDOMINAL', value: 'ABDOMINAL' }]}
-        />
-        <ControlledTextInput
-          controller={{
-            control,
-            name: 'links',
-          }}
         />
       </View>
       <Button content="Crear ejercicio" onPress={handleSubmit(onValidSubmit)} />

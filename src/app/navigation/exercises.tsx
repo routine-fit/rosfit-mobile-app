@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { Header } from '../components';
-import { AddExerciseScreen, MyExercisesScreen } from '../screens';
+import {
+  AddExerciseScreen,
+  ExerciseDetailsScreen,
+  MyExercisesScreen,
+} from '../screens';
 import { ExercisesParamList } from './types';
 
 const Stack = createStackNavigator<ExercisesParamList>();
@@ -36,6 +40,11 @@ export const ExerciseStack = () => {
       <Stack.Screen
         name="AddExerciseScreen"
         component={AddExerciseScreen}
+        options={exerciseHeaderOptions}
+      />
+      <Stack.Screen
+        name="ExerciseDetailsScreen"
+        component={ExerciseDetailsScreen}
         options={exerciseHeaderOptions}
       />
     </Stack.Navigator>

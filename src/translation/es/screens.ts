@@ -114,4 +114,8 @@ export default {
     successMessage: 'Rutina creada con exito',
     error: 'Error al finalizar revision',
   },
+  exerciseDetails: {
+    editExerciseSuccess: 'Ejercicio actualizado correctamente',
+    error: 'Error al actualizar ejericio',
+  },
 };

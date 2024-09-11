@@ -12,6 +12,7 @@ import { SelectInputProps } from './types';
 const ControlledSelectInput = <Form extends FieldValues>({
   controller,
   options,
+  editable = true,
   ...restOfProps
 }: SelectInputProps<Form>) => {
   const {
@@ -38,9 +39,13 @@ const ControlledSelectInput = <Form extends FieldValues>({
         placeholder={placeholder}
         {...restOfProps}
         onBlur={onBlur}
-        value={value}
-        readOnly
-        onPress={() => setModalVisible(true)}
+        value={selectedLabel}
+        editable={editable}
+        readOnly={!editable}
+        onChangeText={(val: string) =>
+          editable ? onChange(val.length === 1 ? val.trim() : val) : null
+        }
+        onPress={() => editable && setModalVisible(true)} // Open modal only if editable
       />
       <Modal
         animationType="fade"
