@@ -1,10 +1,4 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-
-export const RoutinesScreen = () => {
-  return (
-    <View>
-      <Text>RoutinesScreen</Text>
-    </View>
-  );
-};
+export * from './add-routine';
+export * from './exercises-revision';
+export * from './routine-dashboard';
+export * from './select-routine-exercises';

@@ -71,4 +71,25 @@ export default {
     personalRecordDescription: 'Marcas personales',
     personalGoalDescription: 'Avances hacia tu objetivo personal',
   },
+  routineDashboard: {
+    nextRoutine: 'Proxima rutina',
+    unscheduledRoutines: 'Rutinas sin programar',
+    scheduleRoutine: 'Agendar rutina',
+    newRoutine: 'Nueva rutina',
+  },
+  addRoutine: {
+    heading: 'Crear nueva rutina',
+    selectExercises: 'Seleccionar ejercicios',
+    error: 'Error al crear rutina',
+  },
+  selectRoutineExercises: {
+    heading: 'Selecciona tus ejercicios',
+    revision: 'Revisión de ejercicios',
+  },
+  exercisesRevision: {
+    heading: 'Detalles de ejercicios',
+    createRoutine: 'Crear Rutina',
+    successMessage: 'Rutina creada con exito',
+    error: 'Error al finalizar revision',
+  },
 };

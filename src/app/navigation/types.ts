@@ -23,3 +23,10 @@ export type RootStackParamList = {
   CreateAccount: undefined;
   CompleteData: undefined;
 };
+
+export type RoutinesParamList = {
+  RoutineDashboard: undefined;
+  AddRoutine: undefined;
+  SelectRoutineExercises: undefined;
+  ExercisesRevision: undefined;
+};

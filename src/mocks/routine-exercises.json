@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Prensa",
+    "repetitions": "10",
+    "restTime": "60" 
+  },
+  {
+    "name": "Sentadilla",
+    "repetitions": "8",
+    "restTime": "90" 
+  },
+  {
+    "name": "Cuadriceps",
+    "repetitions": "12",
+    "restTime": "60" 
+  },
+  {
+    "name": "Biceps",
+    "repetitions": "10",
+    "restTime": "45" 
+  },
+  {
+    "name": "Hombros",
+    "repetitions": "10",
+    "restTime": "90" 
+  },
+  {
+    "name": "Vuelo lateral",
+    "repetitions": "10",
+    "restTime": "60" 
+  }
+]
