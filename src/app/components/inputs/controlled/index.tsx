@@ -11,6 +11,7 @@ const ControlledTextInputInner = <Form extends FieldValues>(
     controller,
     keyboardType,
     readOnly,
+    label,
     ...restOfProps
   }: FormTextFieldProps<Form>,
   ref: React.RefObject<RNTextInput>,
@@ -22,7 +23,7 @@ const ControlledTextInputInner = <Form extends FieldValues>(
 
   const { t } = useTranslation();
 
-  const label = t(`inputs:label.${controller.name}`);
+  const inputLabel = label ?? t(`inputs:label.${controller.name}`);
   const placeholder = t(`inputs:placeholder.${controller.name}`);
 
   return (
@@ -30,7 +31,7 @@ const ControlledTextInputInner = <Form extends FieldValues>(
       keyboardType={keyboardType}
       error={error?.message}
       editable={!readOnly}
-      label={label}
+      label={inputLabel}
       placeholder={placeholder}
       {...restOfProps}
       onBlur={onBlur}

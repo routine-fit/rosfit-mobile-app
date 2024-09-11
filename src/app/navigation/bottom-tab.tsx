@@ -10,7 +10,7 @@ import {
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import { Header } from 'src/app/components';
-import { ExerciseScreen, HomeScreen, RoutinesScreen } from 'src/app/screens';
+import { ExerciseScreen, HomeScreen } from 'src/app/screens';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
   DumbbellIcon,
@@ -20,6 +20,7 @@ import {
 import { RootState } from 'src/store';
 
 import { DoRoutineStack } from './do-routine';
+import { RoutineStack } from './routines-stack';
 import { BottomTabParamList } from './types';
 
 export const Tab = createBottomTabNavigator<BottomTabParamList>();
@@ -52,11 +53,11 @@ export const BottomTab = () => {
 
   const RoutineHeaderOptions = useMemo(
     () => ({
-      headerTitle: t('navigation:headers.routines'),
+      headerShown: false,
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<RoutineIcon />, focused),
     }),
-    [renderIcon, t],
+    [renderIcon],
   );
 
   const HomeHeaderOptions = useMemo(
@@ -108,7 +109,7 @@ export const BottomTab = () => {
     >
       <Tab.Screen
         name="RoutinesScreen"
-        component={RoutinesScreen}
+        component={RoutineStack}
         options={RoutineHeaderOptions}
       />
       <Tab.Screen

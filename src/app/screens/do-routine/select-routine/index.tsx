@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
 import ControlledSelectInput from 'src/app/components/inputs/select';
 import { RoutineExercise } from 'src/interfaces/routine-exercises';
-import routineExercisesDataFile from 'src/mocks/routine-exercises.json';
+import routineExercisesDataFile from 'src/mocks/do-routine-exercises.json';
 
 import { FormData, validationSchema } from './form-config';
 import { Container, ExercisesDataContainer, FlatlistContainer } from './styles';

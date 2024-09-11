@@ -9,8 +9,20 @@ export type MuscleGroup =
   | 'TRICEPS';
 
 export interface Exercise {
-  id: number;
+  id: string;
   name: string;
   muscleGroup: MuscleGroup;
   userInfoId: string;
+}
+
+export type RoutineExerciseFormData = {
+  id?: string;
+  repetitions: string;
+  restTimeSecs: string;
+  series: Series[];
+};
+
+export interface Series {
+  weight: string;
+  weightMeasure: string;
 }

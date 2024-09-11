@@ -22,7 +22,7 @@ const SharedModal: FC<SharedModalProps> = ({
     >
       <ModalContainer>
         <ModalContent>
-          <Text fontSize="xl" fontWeight="bold">
+          <Text fontSize="xl" fontWeight="bold" textAlign="center">
             {title}
           </Text>
           {subtitle && <Text>{subtitle}</Text>}

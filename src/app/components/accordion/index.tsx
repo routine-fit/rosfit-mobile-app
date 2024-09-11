@@ -42,7 +42,9 @@ export const AccordionItem: FC<AccordionProps> = ({ title, count, body }) => {
         <Header>
           <Text>{title}</Text>
           <ChevronCell>
-            <Text>{t('screens:weeklyExercises.exercises', { count })}</Text>
+            {count && (
+              <Text>{t('screens:weeklyExercises.exercises', { count })}</Text>
+            )}
             <Animated.View
               style={{ transform: [{ rotateZ: chevronTransform }] }}
             >

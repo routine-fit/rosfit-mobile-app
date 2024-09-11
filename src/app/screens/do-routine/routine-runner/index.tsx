@@ -14,7 +14,7 @@ import { Button, ScreenContainer, Text } from 'src/app/components';
 import { ButtonColorTheme } from 'src/app/components/buttons/button/types';
 import useTimer from 'src/hooks/useTimer';
 import { RoutineExercise } from 'src/interfaces/routine-exercises';
-import routineExercisesDataFile from 'src/mocks/routine-exercises.json';
+import routineExercisesDataFile from 'src/mocks/do-routine-exercises.json';
 
 import { FlatlistContainer } from '../select-routine/styles';
 import { ExerciseBottomSheetContent } from './components/exercise-bottom-sheet';
