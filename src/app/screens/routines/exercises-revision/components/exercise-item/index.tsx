@@ -5,7 +5,7 @@ import { View } from 'react-native';
 
 import {
   Button,
-  ControlledSelect,
+  ControlledSelectInput,
   ControlledTextInput,
   IconButton,
 } from 'src/app/components';
@@ -64,7 +64,7 @@ export const ExerciseItem: FC<ExerciseItemProps> = ({
                     placeholder="Peso"
                     keyboardType="numeric"
                   />
-                  <ControlledSelect
+                  <ControlledSelectInput
                     label={'Medida de peso'}
                     controller={{
                       control,

@@ -5,7 +5,7 @@ import { Alert, ScrollView } from 'react-native';
 
 import {
   Button,
-  ControlledSelect,
+  ControlledSelectInput,
   ControlledTextInput,
   GapContainer,
   Heading,
@@ -24,10 +24,7 @@ export const EditPersonalInfoScreen = ({
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const { t } = useTranslation();
 
-  const genderOptions = [
-    { label: t('common:gender.male'), value: 'MALE' },
-    { label: t('common:gender.female'), value: 'FEMALE' },
-  ];
+  const genderOptions = ['MALE', 'FEMALE'];
 
   const { control, handleSubmit, reset } = useForm<FormData>(formConfig);
 
@@ -98,7 +95,7 @@ export const EditPersonalInfoScreen = ({
                 name: 'birthDate',
               }}
             />
-            <ControlledSelect
+            <ControlledSelectInput
               controller={{
                 control,
                 name: 'gender',

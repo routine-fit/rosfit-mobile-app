@@ -9,11 +9,13 @@ import {
   ScreenContainer,
   SharedModal,
 } from 'src/app/components';
+import { LottieAnimation } from 'src/app/components/lottie-animation';
 import { Exercise } from 'src/interfaces/exercises';
 import mockedExercises from 'src/mocks/weekly-exercises-data.json';
 
 import { RoutineFormData } from '../form-config';
 import { ExerciseItem } from './components/exercise-item';
+import { CenteredView } from './styles';
 import { ExerciseRevisionProps } from './types';
 
 export const ExercisesRevision: FC<ExerciseRevisionProps> = ({
@@ -59,8 +61,13 @@ export const ExercisesRevision: FC<ExerciseRevisionProps> = ({
         onClose={() => {}}
         title={t('screens:exercisesRevision.successMessage')}
         body={
-          <>
-            {/* TODO: ADD LOTTIE? */}
+          <CenteredView>
+            <LottieAnimation
+              source={require('src/assets/lottie/success.json')}
+              width={200}
+              height={200}
+              loop={false}
+            />
             <Button
               variant="outlined"
               content={t('common:button.confirm')}
@@ -68,7 +75,7 @@ export const ExercisesRevision: FC<ExerciseRevisionProps> = ({
                 navigation.navigate('RoutineDashboard');
               }}
             />
-          </>
+          </CenteredView>
         }
       />
     </ScreenContainer>

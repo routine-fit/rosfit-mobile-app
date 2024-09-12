@@ -9,7 +9,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import {
   Button,
   ControlledDatePicker,
-  ControlledSelect,
+  ControlledSelectInput,
   ControlledTextInput,
   GapContainer,
   Heading,
@@ -29,10 +29,7 @@ export const CompleteDataScreen = ({
   const dispatch = useAppDispatch();
   const { uid } = useSelector((state: RootState) => state.auth);
 
-  const genderOptions = [
-    { label: t('common:gender.male'), value: 'MALE' },
-    { label: t('common:gender.female'), value: 'FEMALE' },
-  ];
+  const genderOptions = ['MALE', 'FEMALE'];
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
@@ -96,7 +93,7 @@ export const CompleteDataScreen = ({
               name: 'birthDate',
             }}
           />
-          <ControlledSelect
+          <ControlledSelectInput
             controller={{
               control,
               name: 'gender',

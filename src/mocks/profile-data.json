@@ -2,7 +2,7 @@
   "displayName": "John Doe",
   "name": "John",
   "lastName": "Doe",
-  "gender": "Masculino",
+  "gender": "MALE",
   "email": "john.doe@example.com",
   "birthDate": "01/01/1990",
   "weight": "75kg",

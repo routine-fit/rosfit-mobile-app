@@ -2371,6 +2371,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gorhom/bottom-sheet@npm:^4":
+  version: 4.6.4
+  resolution: "@gorhom/bottom-sheet@npm:4.6.4"
+  dependencies:
+    "@gorhom/portal": 1.0.14
+    invariant: ^2.2.4
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=1.10.1"
+    react-native-reanimated: ">=2.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-native":
+      optional: true
+  checksum: 2cea033c4f321b93fdbf61470b507b5efd51425a8ab927b49d7aaa1d9f0568cbcfb188e385311389dbffbafe47b941dbd3e60f74b1d663a1a2d73262e2719f85
+  languageName: node
+  linkType: hard
+
+"@gorhom/portal@npm:1.0.14":
+  version: 1.0.14
+  resolution: "@gorhom/portal@npm:1.0.14"
+  dependencies:
+    nanoid: ^3.3.1
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 227bb96a2db854ab29bb9da8d4f3823c7f7448358de459709dd1b78522110da564c9a8734c6bc7d7153ed7c99320e0fb5d60b420c2ebb75ecaf2f0d757f410f9
+  languageName: node
+  linkType: hard
+
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -9259,6 +9293,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-react-native@npm:^6.7.2":
+  version: 6.7.2
+  resolution: "lottie-react-native@npm:6.7.2"
+  peerDependencies:
+    "@dotlottie/react-player": ^1.6.1
+    "@lottiefiles/react-lottie-player": ^3.5.3
+    react: "*"
+    react-native: ">=0.46"
+    react-native-windows: ">=0.63.x"
+  peerDependenciesMeta:
+    "@dotlottie/react-player":
+      optional: true
+    "@lottiefiles/react-lottie-player":
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 8b14ca10f4f0e75505ee5485b47c31db2146baea1634e66f0d485abb8a44ba2019930239970015cedaad627e306828be977b4797256aa2cc143b476ed31585fa
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.2.2
   resolution: "lru-cache@npm:10.2.2"
@@ -9839,7 +9893,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.1.23, nanoid@npm:^3.3.7":
+"nanoid@npm:^3.1.23, nanoid@npm:^3.3.1, nanoid@npm:^3.3.7":
   version: 3.3.7
   resolution: "nanoid@npm:3.3.7"
   bin:
@@ -10700,6 +10754,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-countdown-circle-timer@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "react-native-countdown-circle-timer@npm:3.2.1"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-native: ">=0.50.0"
+    react-native-svg: ">=6.2.1"
+  checksum: 05509e4ff20748952dfc409ac2bb92be8c3e8f5d9fb44457f99f6557ec51bd43043d11aa9082b809e424c442048c4da71edcf27461b4ce9ffd509d18999113de
+  languageName: node
+  linkType: hard
+
 "react-native-date-picker@npm:^4.3.5":
   version: 4.4.2
   resolution: "react-native-date-picker@npm:4.4.2"
@@ -11327,6 +11392,7 @@ __metadata:
     "@gluestack-style/react": ^1.0.54
     "@gluestack-ui/config": ^1.1.18
     "@gluestack-ui/themed": ^1.1.22
+    "@gorhom/bottom-sheet": ^4
     "@hookform/resolvers": ^3.3.4
     "@react-native-async-storage/async-storage": ^1.21.0
     "@react-native-firebase/app": ^19.2.2
@@ -11356,6 +11422,7 @@ __metadata:
     husky: ^8.0.0
     i18next: ^23.7.16
     jest: ^29.6.3
+    lottie-react-native: ^6.7.2
     lucide-react-native: ^0.308.0
     polished: ^4.3.1
     prettier: 2.8.8
@@ -11364,6 +11431,7 @@ __metadata:
     react-i18next: ^14.0.0
     react-native: 0.74.0
     react-native-config: ^1.5.1
+    react-native-countdown-circle-timer: ^3.2.1
     react-native-date-picker: ^4.3.5
     react-native-gesture-handler: ^2.16.1
     react-native-localize: ^3.0.5

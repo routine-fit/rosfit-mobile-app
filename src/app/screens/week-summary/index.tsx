@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
+import { Button, Heading, ScreenContainer } from 'src/app/components';
+import { CustomActivityIndicator } from 'src/app/components/activity-indicator';
 import { SummaryCard } from 'src/app/components/summary-card';
 import { MainDrawerParamList } from 'src/app/navigation/types';
 import { WeekSummaryData } from 'src/interfaces/week-summary';
@@ -46,7 +47,12 @@ export const WeekSummaryScreen: FC<Props> = ({ navigation }) => {
   if (!weekSummaryData) {
     return (
       <ScreenContainer withoutVerticalPadding>
-        <Text>Loading...</Text>
+        <CustomActivityIndicator
+          width={150}
+          height={150}
+          isCentered
+          fullScreen
+        />
       </ScreenContainer>
     );
   }

@@ -51,6 +51,28 @@ export default {
     weightProgressionDescription: 'Variación de peso esta semana',
     exercisesBtn: 'Ejercicios Realizados',
   },
+  selectRoutine: {
+    error: 'Error al seleccionar rutina',
+    series: 'Series: {{series}}',
+    repetitions: 'Repeticiones: {{repetitions}}',
+    restTime: 'Tiempo de descanso: {{restTime}}"',
+    withVariableWeight: 'Con peso variable',
+    withoutVariableWeight: 'Sin peso variable',
+  },
+  routineRunner: {
+    completeRoutine: 'Completar rutina',
+    completeExercise: 'Completar ejercicio',
+    continue: 'Continuar',
+    pause: 'Pausar',
+    routineInProgress: 'Rutina en curso',
+    startSeries: 'Iniciar serie',
+    finishSeries: 'Terminar serie',
+  },
+  routineResults: {
+    heading1: 'Rutina finalizada',
+    time: 'Tu tiempo:',
+    loadStatistics: 'Cargar estadisticas',
+  },
   weeklyExercises: {
     heading1: 'Ejercicios de la semana',
     exercises: '{{count}} Ejercicios',

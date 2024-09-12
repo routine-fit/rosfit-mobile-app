@@ -5,7 +5,7 @@ import { Alert, ScrollView } from 'react-native';
 
 import {
   Button,
-  ControlledSelect,
+  ControlledSelectInput,
   ControlledTextInput,
   GapContainer,
   Heading,
@@ -101,7 +101,7 @@ export const EditTrainingPreferencesScreen = ({
                 name: 'trainingTime',
               }}
             />
-            <ControlledSelect
+            <ControlledSelectInput
               controller={{
                 control,
                 name: 'trainingIntensity',
