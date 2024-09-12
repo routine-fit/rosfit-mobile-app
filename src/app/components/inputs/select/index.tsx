@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Modal } from 'react-native';
@@ -26,7 +26,14 @@ const ControlledSelectInput = <Form extends FieldValues>({
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleSelect = (selectedValue: string) => {
+  useEffect(() => {
+    const selectedOption = options.find(option => option.value === value);
+    if (selectedOption) {
+      setSelectedLabel(selectedOption.label);
+    }
+  }, [value, options]);
+
+  const handleSelect = (selectedValue: string, valueLabel: string) => {
     onChange(selectedValue);
     setModalVisible(false);
   };
@@ -45,7 +52,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
         onChangeText={(val: string) =>
           editable ? onChange(val.length === 1 ? val.trim() : val) : null
         }
-        onPress={() => editable && setModalVisible(true)} // Open modal only if editable
+        onPress={() => editable && setModalVisible(true)}
       />
       <Modal
         animationType="fade"

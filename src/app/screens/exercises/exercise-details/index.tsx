@@ -1,7 +1,7 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
@@ -12,8 +12,10 @@ import {
   SharedModal,
   Text,
 } from 'src/app/components';
+import { muscleGroups } from 'src/constants/muscleGroups';
 
 import { ExerciseFormData, validationSchema } from './form-config';
+import { InputContainer } from './styles';
 import { ExerciseDetailsScreenProps } from './types';
 
 export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({
@@ -24,6 +26,16 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({
   const { exercise } = route.params;
   const [isEditable, setisEditable] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const muscleGroupsOptions = useMemo(
+    () =>
+      muscleGroups.map(muscleGroup => ({
+        label: t(`common:muscleGroups.${muscleGroup}`),
+        value: muscleGroup,
+      })),
+    [t],
+  );
+
   const { control, handleSubmit } = useForm<ExerciseFormData>({
     defaultValues: {
       exerciseName: exercise.name,
@@ -46,7 +58,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({
       <Text fontSize="xl" fontWeight="medium">
         {exercise.name}
       </Text>
-      <View style={styles.inputContainer}>
+      <InputContainer>
         <ControlledTextInput
           editable={isEditable}
           controller={{
@@ -60,20 +72,19 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({
             control,
             name: 'muscleGroup',
           }}
-          // TODO UPDATE SELECT TO HANDLE VALUE
-          options={[{ label: 'ABDOMINAL', value: 'ABDOMINAL' }]}
+          options={muscleGroupsOptions}
         />
-      </View>
+      </InputContainer>
       {isEditable ? (
         <Button
           themeColor="primary"
-          content="Actualizar ejercicio"
+          content={t('screens:exerciseDetails:updateExercise')}
           onPress={handleSubmit(onValidSubmit)}
         />
       ) : (
         <Button
           themeColor="secondary"
-          content="Editar ejercicio"
+          content={t('screens:exerciseDetails:editExercise')}
           onPress={() => setisEditable(true)}
         />
       )}
@@ -94,10 +105,3 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    flex: 1,
-    paddingVertical: 8,
-  },
-});

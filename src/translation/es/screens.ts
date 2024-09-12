@@ -117,5 +117,13 @@ export default {
   exerciseDetails: {
     editExerciseSuccess: 'Ejercicio actualizado correctamente',
     error: 'Error al actualizar ejericio',
+    updateExercise: 'Actualizar ejercicio',
+    editExercise: 'Editar ejercicio',
+  },
+  addExercise: {
+    newExercise: 'Nuevo Ejercicio',
+    createExercise: 'Crear ejercicio',
+    createExerciseSuccess: 'Ejercicio creado correctamente',
+    error: 'Error al crear ejericio',
   },
 };
