@@ -7,6 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
 import ControlledSelectInput from 'src/app/components/inputs/select';
+import { weekDays } from 'src/constants/weekdays';
+import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { RoutineExercise } from 'src/interfaces/routine-exercises';
 import routineExercisesDataFile from 'src/mocks/do-routine-exercises.json';
 
@@ -18,7 +20,7 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const routineOptions = useMemo(() => ['Lunes', 'Miercoles', 'Viernes'], []);
+  const routineOptions = useTranslatedOptions(weekDays, 'common:weekDay');
 
   const [routineExercisesData, setRoutineExercisesData] = useState<
     RoutineExercise[] | []

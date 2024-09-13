@@ -15,6 +15,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
   editable = true,
   ...restOfProps
 }: SelectInputProps<Form>) => {
+  const [selectedLabel, setSelectedLabel] = useState('');
   const {
     field: { onChange, onBlur, value },
     fieldState: { error },
@@ -33,8 +34,9 @@ const ControlledSelectInput = <Form extends FieldValues>({
     }
   }, [value, options]);
 
-  const handleSelect = (selectedValue: string, valueLabel: string) => {
+  const handleSelect = (selectedValue: string, selectedLabe: string) => {
     onChange(selectedValue);
+    setSelectedLabel(selectedLabe);
     setModalVisible(false);
   };
 
@@ -52,7 +54,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
         onChangeText={(val: string) =>
           editable ? onChange(val.length === 1 ? val.trim() : val) : null
         }
-        onPress={() => editable && setModalVisible(true)}
+        onPress={() => editable && setModalVisible(true)} // Open modal only if editable
       />
       <Modal
         animationType="fade"
@@ -67,11 +69,11 @@ const ControlledSelectInput = <Form extends FieldValues>({
             <FlatList
               data={options}
               renderItem={({ item }) => (
-                <Option onPress={() => handleSelect(item)}>
-                  <Text fontSize="lg">{item}</Text>
+                <Option onPress={() => handleSelect(item.value, item.label)}>
+                  <Text fontSize="lg">{item.label}</Text>
                 </Option>
               )}
-              keyExtractor={item => item.toString()}
+              keyExtractor={item => item.value.toString()}
               showsVerticalScrollIndicator={false}
             />
           </BottomSheetContent>

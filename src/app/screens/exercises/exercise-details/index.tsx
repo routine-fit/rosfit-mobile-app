@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   Button,
-  ControlledSelect,
+  ControlledSelectInput,
   ControlledTextInput,
   ScreenContainer,
   SharedModal,
@@ -66,7 +66,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({
             name: 'exerciseName',
           }}
         />
-        <ControlledSelect
+        <ControlledSelectInput
           editable={isEditable}
           controller={{
             control,

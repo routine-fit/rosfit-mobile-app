@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView } from 'react-native';
@@ -11,6 +11,7 @@ import {
   Heading,
   ScreenContainer,
 } from 'src/app/components';
+import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 
@@ -24,13 +25,9 @@ export const EditTrainingPreferencesScreen = ({
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const { t } = useTranslation();
 
-  const trainingIntensityOptions = useMemo(
-    () => [
-      { label: t('common:trainingIntensity.low'), value: 'LOW' },
-      { label: t('common:trainingIntensity.medium'), value: 'MEDIUM' },
-      { label: t('common:trainingIntensity.high'), value: 'HIGH' },
-    ],
-    [t],
+  const trainingIntensityOptions = useTranslatedOptions(
+    ['LOW', 'MEDIUM', 'HIGH'],
+    'common:trainingIntensity',
   );
 
   const { control, handleSubmit, reset } = useForm<FormData>(formConfig);

@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
@@ -6,13 +6,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   Button,
-  ControlledSelect,
+  ControlledSelectInput,
   ControlledTextInput,
   ScreenContainer,
   SharedModal,
   Text,
 } from 'src/app/components';
 import { muscleGroups } from 'src/constants/muscleGroups';
+import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 
 import { ExerciseFormData, validationSchema } from './form-config';
 import { InputContainer } from './styles';
@@ -24,13 +25,9 @@ export const AddExerciseScreen: FC<AddExerciseScreenProps> = ({
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const muscleGroupsOptions = useMemo(
-    () =>
-      muscleGroups.map(muscleGroup => ({
-        label: t(`common:muscleGroups.${muscleGroup}`),
-        value: muscleGroup,
-      })),
-    [t],
+  const muscleGroupsOptions = useTranslatedOptions(
+    muscleGroups,
+    'common:muscleGroups',
   );
 
   const { control, handleSubmit } = useForm<ExerciseFormData>({
@@ -62,7 +59,7 @@ export const AddExerciseScreen: FC<AddExerciseScreenProps> = ({
             name: 'exerciseName',
           }}
         />
-        <ControlledSelect
+        <ControlledSelectInput
           controller={{
             control,
             name: 'muscleGroup',

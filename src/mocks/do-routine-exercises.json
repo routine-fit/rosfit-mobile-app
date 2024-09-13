@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "routine": "Lunes",
+    "routine": "monday",
     "exercise": "Press de Banca",
     "series": 3,
     "repetitions": 12,
@@ -11,7 +11,7 @@
   },
   {
     "id": 2,
-    "routine": "Lunes",
+    "routine": "monday",
     "exercise": "Sentadillas",
     "series": 4,
     "repetitions": 10,
@@ -21,7 +21,7 @@
   },
   {
     "id": 3,
-    "routine": "Lunes",
+    "routine": "monday",
     "exercise": "Flexiones",
     "series": 3,
     "repetitions": 15,
@@ -31,7 +31,7 @@
   },
   {
     "id": 4,
-    "routine": "Lunes",
+    "routine": "monday",
     "exercise": "Dominadas",
     "series": 4,
     "repetitions": 8,
@@ -41,7 +41,7 @@
   },
   {
     "id": 5,
-    "routine": "Viernes",
+    "routine": "friday",
     "exercise": "Peso Muerto",
     "series": 4,
     "repetitions": 10,
@@ -51,7 +51,7 @@
   },
   {
     "id": 6,
-    "routine": "Viernes",
+    "routine": "friday",
     "exercise": "Prensa de Piernas",
     "series": 3,
     "repetitions": 12,
@@ -61,7 +61,7 @@
   },
   {
     "id": 7,
-    "routine": "Viernes",
+    "routine": "friday",
     "exercise": "Elevaciones Laterales",
     "series": 3,
     "repetitions": 15,
@@ -71,7 +71,7 @@
   },
   {
     "id": 8,
-    "routine": "Viernes",
+    "routine": "friday",
     "exercise": "Remo con Mancuerna",
     "series": 4,
     "repetitions": 8,

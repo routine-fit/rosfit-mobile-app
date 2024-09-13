@@ -11,6 +11,8 @@ import {
   Heading,
   ScreenContainer,
 } from 'src/app/components';
+import { genderOptions } from 'src/constants/genders';
+import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
 
@@ -24,7 +26,10 @@ export const EditPersonalInfoScreen = ({
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const { t } = useTranslation();
 
-  const genderOptions = ['MALE', 'FEMALE'];
+  const genderOptionsTranslate = useTranslatedOptions(
+    genderOptions,
+    'common:gender',
+  );
 
   const { control, handleSubmit, reset } = useForm<FormData>(formConfig);
 
@@ -100,7 +105,7 @@ export const EditPersonalInfoScreen = ({
                 control,
                 name: 'gender',
               }}
-              options={genderOptions}
+              options={genderOptionsTranslate}
             />
             <GapContainer space={15}>
               <Button
