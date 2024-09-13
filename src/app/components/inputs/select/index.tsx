@@ -54,7 +54,7 @@ const ControlledSelectInput = <Form extends FieldValues>({
         onChangeText={(val: string) =>
           editable ? onChange(val.length === 1 ? val.trim() : val) : null
         }
-        onPress={() => editable && setModalVisible(true)} // Open modal only if editable
+        onPress={() => editable && setModalVisible(true)}
       />
       <Modal
         animationType="fade"
