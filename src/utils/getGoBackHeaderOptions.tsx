@@ -13,6 +13,12 @@ type NavigationProp<ParamList extends ParamListBase = ParamListBase> =
   | BottomTabNavigationProp<ParamList>
   | DrawerNavigationProp<ParamList>;
 
+function isStackNavigationProp<ParamList extends ParamListBase>(
+  navigation: NavigationProp<ParamList>,
+): navigation is StackNavigationProp<ParamList> {
+  return 'pop' in navigation;
+}
+
 export const getGoBackHeaderOptions = <ParamList extends ParamListBase>(
   navigation: NavigationProp<ParamList>,
   theme: DefaultTheme,
@@ -26,7 +32,11 @@ export const getGoBackHeaderOptions = <ParamList extends ParamListBase>(
           <ArrowLeft
             color={theme.colors.background}
             onPress={() => {
-              navigation.goBack();
+              if (isStackNavigationProp(navigation)) {
+                navigation.pop();
+              } else {
+                navigation.goBack();
+              }
             }}
           />
         }

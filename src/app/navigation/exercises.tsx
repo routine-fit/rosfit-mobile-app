@@ -1,6 +1,10 @@
+import { useTheme } from 'styled-components';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import { getGoBackHeaderOptions } from 'src/utils/getGoBackHeaderOptions';
 
 import { Header } from '../components';
 import {
@@ -8,12 +12,21 @@ import {
   ExerciseDetailsScreen,
   MyExercisesScreen,
 } from '../screens';
-import { ExercisesParamList } from './types';
+import { BottomTabParamList, ExercisesParamList } from './types';
 
 const Stack = createStackNavigator<ExercisesParamList>();
 
-export const ExerciseStack = () => {
+type ExerciseStackProps = BottomTabScreenProps<
+  BottomTabParamList,
+  'ExerciseStack'
+>;
+
+export const ExerciseStack = ({
+  navigation,
+}: ExerciseStackProps): JSX.Element => {
   const { t } = useTranslation();
+  const theme = useTheme();
+
   const exerciseHeaderOptions = useMemo(
     () => ({
       header: () => (
@@ -25,6 +38,7 @@ export const ExerciseStack = () => {
     }),
     [t],
   );
+
   return (
     <Stack.Navigator
       initialRouteName="MyExercisesScreen"
@@ -40,12 +54,12 @@ export const ExerciseStack = () => {
       <Stack.Screen
         name="AddExerciseScreen"
         component={AddExerciseScreen}
-        options={exerciseHeaderOptions}
+        options={getGoBackHeaderOptions(navigation, theme)}
       />
       <Stack.Screen
         name="ExerciseDetailsScreen"
         component={ExerciseDetailsScreen}
-        options={exerciseHeaderOptions}
+        options={getGoBackHeaderOptions(navigation, theme)}
       />
     </Stack.Navigator>
   );
