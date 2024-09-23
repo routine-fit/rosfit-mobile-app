@@ -16,6 +16,8 @@ import {
   ScreenContainer,
 } from 'src/app/components';
 import { RootStackParamList } from 'src/app/navigation/types';
+import { genderOptions } from 'src/constants/genders';
+import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { RootState, useAppDispatch } from 'src/store';
 import { startCreateUserInfo } from 'src/store/auth/thunks';
 
@@ -29,7 +31,10 @@ export const CompleteDataScreen = ({
   const dispatch = useAppDispatch();
   const { uid } = useSelector((state: RootState) => state.auth);
 
-  const genderOptions = ['MALE', 'FEMALE'];
+  const genderOptionsTranslate = useTranslatedOptions(
+    genderOptions,
+    'common:gender',
+  );
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
@@ -98,7 +103,7 @@ export const CompleteDataScreen = ({
               control,
               name: 'gender',
             }}
-            options={genderOptions}
+            options={genderOptionsTranslate}
           />
           <Button
             onPress={handleSubmit(onValidSubmit)}

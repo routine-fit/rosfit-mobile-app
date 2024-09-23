@@ -71,7 +71,10 @@ export const ExerciseItem: FC<ExerciseItemProps> = ({
                       name: `exercises.${index}.series.${seriesIndex}.weightMeasure`,
                     }}
                     placeholder=" "
-                    options={['kg', 'lb']}
+                    options={[
+                      { label: 'kg', value: 'kg' },
+                      { label: 'lb', value: 'lb' },
+                    ]}
                   />
                 </InputContainer>
                 <IconButton

@@ -9,13 +9,13 @@ export default {
     cancel: 'Cancelar',
   },
   gender: {
-    male: 'Masculino',
-    female: 'Femenino',
+    MALE: 'Masculino',
+    FEMALE: 'Femenino',
   },
   trainingIntensity: {
-    low: 'Baja',
-    medium: 'Medio',
-    high: 'Alta',
+    LOW: 'Baja',
+    MEDIUM: 'Medio',
+    HIGH: 'Alta',
   },
   muscleGroups: {
     ABDOMINAL: 'Abdominal',
@@ -26,5 +26,14 @@ export default {
     PECTORAL: 'Pectoral',
     TRAPEZIUS: 'Trapecio',
     TRICEPS: 'Triceps',
+  },
+  weekDay: {
+    monday: 'Lunes',
+    tuesday: 'Martes',
+    wednesday: 'Miercoles',
+    thursday: 'Jueves',
+    friday: 'Viernes',
+    saturday: 'Sabado',
+    sunday: 'Domingo',
   },
 };

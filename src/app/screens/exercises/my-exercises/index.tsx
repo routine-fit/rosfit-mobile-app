@@ -1,13 +1,16 @@
 import { PlusIcon } from 'lucide-react-native';
-import React from 'react';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
 import ExerciseList from 'src/app/widgets/exercises-list';
 
 import { BottomContainer } from './styles';
+import { MyExercisesScreenProps } from './types';
 
-export const ExerciseScreen = () => {
+export const MyExercisesScreen: FC<MyExercisesScreenProps> = ({
+  navigation,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -18,7 +21,7 @@ export const ExerciseScreen = () => {
       <ExerciseList />
       <BottomContainer>
         <Button
-          onPress={() => {}}
+          onPress={() => navigation.navigate('AddExerciseScreen')}
           fullWidth={false}
           alignSelf={false}
           content={t('screens:exercises.newExercise')}

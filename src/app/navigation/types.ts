@@ -1,10 +1,12 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 
+import { Exercise } from 'src/interfaces/exercises';
+
 export type BottomTabParamList = {
   RoutinesScreen: undefined;
   HomeScreen: undefined;
-  ExerciseScreen: undefined;
   DoRoutineStack: undefined;
+  ExerciseStack: undefined;
 };
 
 export type MainDrawerParamList = {
@@ -36,4 +38,10 @@ export type RoutinesParamList = {
   AddRoutine: undefined;
   SelectRoutineExercises: undefined;
   ExercisesRevision: undefined;
+};
+
+export type ExercisesParamList = {
+  MyExercisesScreen: undefined;
+  AddExerciseScreen: undefined;
+  ExerciseDetailsScreen: { exercise: Exercise };
 };

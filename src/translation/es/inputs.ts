@@ -27,6 +27,9 @@ export default {
     repetitions: 'Repeticiones',
     restTime: 'Tiempo de descanso',
     weight: '',
+    exerciseName: 'Nombre de ejercicio',
+    muscleGroup: 'Grupo muscular',
+    links: 'Link de ejercicio',
   },
   placeholder: {
     email: 'john.doe@example.com',
@@ -48,6 +51,9 @@ export default {
     repeatPassword: '',
     routine: 'Selecciona tu rutina',
     searchOnList: 'Buscar en la lista',
+    exerciseName: '',
+    muscleGroup: '',
+    links: 'Link de ejemplo',
   },
   error: {
     required: '{{field}} es requerido',
@@ -57,5 +63,7 @@ export default {
     passwordMatch: 'el password ingresado no coincide',
     genderValue: 'genero invalido, valores: {{male}} / {{female}}',
     minValue: '{{field}} debe ser mayor a {{min}}',
+    invalidMuscleGroup: 'El grupo muscular seleccionado no es valido',
+    invalidUrl: 'La url ingresada no es valida',
   },
 };
