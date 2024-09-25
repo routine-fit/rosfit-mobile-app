@@ -1,6 +1,6 @@
 import { SearchIcon } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 
@@ -23,20 +23,14 @@ const ExerciseList = () => {
   const dispatch = useAppDispatch();
 
   const fetchGetExercises = useCallback(() => {
-    dispatch(getExercises(searchByName));
+    if (searchByName.length > 2 || searchByName.length === 0) {
+      dispatch(getExercises({ name: searchByName }));
+    }
   }, [dispatch, searchByName]);
 
   useEffect(() => {
     fetchGetExercises();
   }, [fetchGetExercises]);
-
-  const filtered = useMemo(
-    () =>
-      exerciseList.filter(exercise =>
-        exercise.name.toLowerCase().includes(searchByName.toLowerCase()),
-      ),
-    [exerciseList, searchByName],
-  );
 
   return (
     <>
@@ -57,12 +51,12 @@ const ExerciseList = () => {
         />
       </SearchWrapper>
       <FlatList<Exercise>
-        data={filtered}
+        data={exerciseList}
         renderItem={({ item }) => <ExerciseItem item={item} />}
         contentContainerStyle={styles.flatListContent}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          exerciseList.length === 0 && status !== 'idle' ? (
+          status !== 'loading' ? (
             <Text>{t('screens:exercises.emptyExerciseList')}</Text>
           ) : (
             <></>

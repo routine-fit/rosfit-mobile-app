@@ -30,6 +30,7 @@ export const exerciseSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(getExercises.rejected, (state, action) => {
+        state.exerciseList = [];
         state.errorMessage =
           action.error.message || 'An error occurred during login';
         state.status = 'failed';
