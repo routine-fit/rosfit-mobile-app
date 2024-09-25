@@ -9,11 +9,13 @@ import {
 
 import reactotron from '../../ReactotronConfig';
 import { authSlice } from './auth/auth.slice';
+import { profileSlice } from './profile/profile.slice';
 
 export const store = configureStore({
   reducer: {
     // reducers
     auth: authSlice.reducer,
+    profile: profileSlice.reducer,
   },
   enhancers: __DEV__ ? [reactotron.createEnhancer!()] : [],
 });

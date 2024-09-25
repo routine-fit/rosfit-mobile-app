@@ -126,4 +126,9 @@ export default {
     createExerciseSuccess: 'Ejercicio creado correctamente',
     error: 'Error al crear ejericio',
   },
+  profileScreen: {
+    profileInfo: 'Informacion de perfil',
+    measurements: 'Medidas corporales',
+    trainingPreferences: 'Preferencias de entrenamiento',
+  },
 };

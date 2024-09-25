@@ -8,7 +8,7 @@ const rosFitApi = axios.create({ baseURL });
 rosFitApi.interceptors.request.use(async config => {
   const token = await AsyncStorage.getItem('token');
   if (token) {
-    config.headers.token = token;
+    config.headers.authorization = token;
   }
   return config;
 });

@@ -28,6 +28,10 @@ export const startLoginWithEmailPassword = createAsyncThunk(
       );
       const { uid, displayName } = resp.user;
 
+      const firebaseToken = await resp.user.getIdToken();
+
+      await AsyncStorage.setItem('token', firebaseToken);
+
       const idToken = await resp.user.getIdToken();
       await AsyncStorage.setItem('token', idToken);
       return {
@@ -68,11 +72,16 @@ export const startCreateFirebaseUser = createAsyncThunk(
   async (credentials: SignUpCredentials, { rejectWithValue }) => {
     try {
       const { email, password } = credentials;
+
       const resp = await firebaseAuth.createUserWithEmailAndPassword(
         email,
         password,
       );
       const { uid, displayName } = resp.user;
+
+      const firebaseToken = await resp.user.getIdToken();
+
+      await AsyncStorage.setItem('token', firebaseToken);
 
       return {
         uid,
@@ -92,7 +101,7 @@ export const startCreateUserInfo = createAsyncThunk(
   async (userInfo: userInfoData, { rejectWithValue }) => {
     try {
       const response = await rosFitApi.post<UserInfoResponse>(
-        '/user-info',
+        '/me/onboarding',
         userInfo,
       );
       return response.data.data;
