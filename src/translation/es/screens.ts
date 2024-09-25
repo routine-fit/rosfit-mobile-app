@@ -25,6 +25,7 @@ export default {
   exercises: {
     heading1: 'Ejercicios',
     newExercise: 'Nuevo ejercicio',
+    emptyExerciseList: 'No se encontraron ejercicios.',
   },
   dashboard: {
     heading1: 'Rutina de hoy',

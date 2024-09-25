@@ -1,59 +1,41 @@
 import { SearchIcon } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 
-import { TextInput } from 'src/app/components';
+import { Text, TextInput } from 'src/app/components';
 import { Exercise } from 'src/interfaces/exercises';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import { getExercises } from 'src/store/exercise/exercise.thunks';
 
 import ExerciseItem from './components/exercise-item';
 import { SearchWrapper, styles } from './styles';
-
-const exercises: Exercise[] = [
-  {
-    id: 1,
-    name: 'Abdominales',
-    muscleGroup: 'ABDOMINAL',
-    userInfoId: '1',
-  },
-  {
-    id: 2,
-    name: 'Triceps',
-    muscleGroup: 'TRICEPS',
-    userInfoId: '1',
-  },
-  {
-    id: 3,
-    name: 'Sentadillas',
-    muscleGroup: 'LATISSIMUS_DORSI',
-    userInfoId: '1',
-  },
-  {
-    id: 4,
-    name: 'Sentadillas',
-    muscleGroup: 'LATISSIMUS_DORSI',
-    userInfoId: '1',
-  },
-  {
-    id: 5,
-    name: 'Sentadillas',
-    muscleGroup: 'LATISSIMUS_DORSI',
-    userInfoId: '1',
-  },
-];
 
 const ExerciseList = () => {
   const [searchByName, setSearchByName] = useState('');
   const theme = useTheme();
   const { t } = useTranslation();
 
+  // TODO: Handle error case
+  const { exerciseList, status } = useAppSelector(state => state.exercise);
+  const isLoading = status === 'loading';
+  const dispatch = useAppDispatch();
+
+  const fetchGetExercises = useCallback(() => {
+    dispatch(getExercises(searchByName));
+  }, [dispatch, searchByName]);
+
+  useEffect(() => {
+    fetchGetExercises();
+  }, [fetchGetExercises]);
+
   const filtered = useMemo(
     () =>
-      exercises.filter(exercise =>
+      exerciseList.filter(exercise =>
         exercise.name.toLowerCase().includes(searchByName.toLowerCase()),
       ),
-    [searchByName],
+    [exerciseList, searchByName],
   );
 
   return (
@@ -79,6 +61,15 @@ const ExerciseList = () => {
         renderItem={({ item }) => <ExerciseItem item={item} />}
         contentContainerStyle={styles.flatListContent}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          exerciseList.length === 0 && status !== 'idle' ? (
+            <Text>{t('screens:exercises.emptyExerciseList')}</Text>
+          ) : (
+            <></>
+          )
+        }
+        onRefresh={fetchGetExercises}
+        refreshing={isLoading}
         style={styles.flatListContainer}
       />
     </>
