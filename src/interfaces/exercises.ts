@@ -12,7 +12,7 @@ export interface Exercise {
   id: string;
   name: string;
   muscleGroup: MuscleGroup;
-  userInfoId: string;
+  links: { id: string; url: string }[];
 }
 
 export type RoutineExerciseFormData = {

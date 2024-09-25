@@ -6,7 +6,7 @@ import {
   startGoogleSignIn,
   startLoginWithEmailPassword,
   startLogoutUser,
-} from './thunks';
+} from './auth.thunks';
 
 interface AuthState {
   uid: string | null;

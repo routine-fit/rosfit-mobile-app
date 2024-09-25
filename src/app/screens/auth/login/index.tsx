@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import {
   Button,
@@ -14,11 +13,11 @@ import {
   ScreenContainer,
 } from 'src/app/components';
 import { GoogleIcon } from 'src/assets/svg/social-media/google';
-import { RootState, useAppDispatch } from 'src/store';
+import { useAppDispatch, useAppSelector } from 'src/store';
 import {
   startGoogleSignIn,
   startLoginWithEmailPassword,
-} from 'src/store/auth/thunks';
+} from 'src/store/auth/auth.thunks';
 
 import { Container } from './styles';
 import { LoginForm, LoginProps } from './types';
@@ -26,7 +25,7 @@ import { LoginForm, LoginProps } from './types';
 export const LoginScreen = ({ navigation }: LoginProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { status } = useSelector((state: RootState) => state.auth);
+  const { status } = useAppSelector(state => state.auth);
   const isLoading = status === 'loading';
 
   const { control, handleSubmit } = useForm<LoginForm>({

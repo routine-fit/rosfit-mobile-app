@@ -1,7 +1,6 @@
 import { useTheme } from 'styled-components';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
@@ -17,7 +16,7 @@ import {
   WeeklyExerciseStatisticsScreen,
 } from 'src/app/screens/index';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
-import { RootState } from 'src/store';
+import { useAppSelector } from 'src/store';
 import { getGoBackHeaderOptions } from 'src/utils/getGoBackHeaderOptions';
 
 import { EditPersonalInfoScreen } from '../screens/edit-personal-info';
@@ -39,7 +38,7 @@ const Drawer = createDrawerNavigator<MainDrawerParamList>();
 
 export const MainAppNavigation = () => {
   const { t } = useTranslation();
-  const { displayName } = useSelector((state: RootState) => state.auth);
+  const { displayName } = useAppSelector(state => state.auth);
   const theme = useTheme();
   const navigation = useNavigation<DrawerNavigationProp<MainDrawerParamList>>();
 

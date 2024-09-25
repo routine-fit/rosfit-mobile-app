@@ -1,13 +1,12 @@
 import { useTheme } from 'styled-components/';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
-import { useSelector } from 'react-redux';
 
 import { Divider, SharedModal, Text } from 'src/app/components';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { ProfileData } from 'src/interfaces/profile-data';
 import profileDataFile from 'src/mocks/profile-data.json';
-import { RootState } from 'src/store';
+import { useAppSelector } from 'src/store';
 import { commonStyles } from 'src/utils/styles';
 
 import { InfoBox } from './components/info-box';
@@ -46,7 +45,7 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     fetchData();
   }, [profileData]);
 
-  const { displayName } = useSelector((state: RootState) => state.auth);
+  const { displayName } = useAppSelector(state => state.auth);
   return (
     <SafeAreaView style={commonStyles.safeAreaViewStyle}>
       <ScrollView>

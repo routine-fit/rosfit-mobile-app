@@ -15,7 +15,7 @@ import {
 } from 'src/app/components';
 import { RootStackParamList } from 'src/app/navigation/types';
 import { useAppDispatch } from 'src/store';
-import { startCreateFirebaseUser } from 'src/store/auth/thunks';
+import { startCreateFirebaseUser } from 'src/store/auth/auth.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { Container } from './styles';

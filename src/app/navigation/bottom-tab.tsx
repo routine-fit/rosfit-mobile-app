@@ -2,7 +2,6 @@ import { Timer } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -17,7 +16,7 @@ import {
   HomeIcon,
   RoutineIcon,
 } from 'src/assets/svg/navigation-icons';
-import { RootState } from 'src/store';
+import { useAppSelector } from 'src/store';
 
 import { DoRoutineStack } from './do-routine';
 import { ExerciseStack } from './exercises';
@@ -29,7 +28,7 @@ export const Tab = createBottomTabNavigator<BottomTabParamList>();
 export const BottomTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { displayName } = useSelector((state: RootState) => state.auth);
+  const { displayName } = useAppSelector(state => state.auth);
 
   const renderIcon = useMemo(
     () => (icon: JSX.Element, focused: boolean) =>

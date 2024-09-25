@@ -2,7 +2,6 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StackScreenProps } from '@react-navigation/stack';
 
@@ -18,8 +17,8 @@ import {
 import { RootStackParamList } from 'src/app/navigation/types';
 import { genderOptions } from 'src/constants/genders';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
-import { RootState, useAppDispatch } from 'src/store';
-import { startCreateUserInfo } from 'src/store/auth/thunks';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import { startCreateUserInfo } from 'src/store/auth/auth.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { Container } from './styles';
@@ -29,7 +28,7 @@ export const CompleteDataScreen = ({
 }: StackScreenProps<RootStackParamList, 'CompleteData'>) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { uid } = useSelector((state: RootState) => state.auth);
+  const { uid } = useAppSelector(state => state.auth);
 
   const genderOptionsTranslate = useTranslatedOptions(
     genderOptions,
