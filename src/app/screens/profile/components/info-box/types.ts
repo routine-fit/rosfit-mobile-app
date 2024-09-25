@@ -1,4 +1,4 @@
 export interface InfoBoxProps {
-  value?: string;
-  label: string;
+  value?: string | null;
+  label: string | null;
 }

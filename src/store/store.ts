@@ -10,12 +10,14 @@ import {
 import reactotron from '../../ReactotronConfig';
 import { authSlice } from './auth/auth.slice';
 import { exerciseSlice } from './exercise/exercise.slice';
+import { profileSlice } from './profile/profile.slice';
 
 export const store = configureStore({
   reducer: {
     // reducers
     auth: authSlice.reducer,
     exercise: exerciseSlice.reducer,
+    profile: profileSlice.reducer,
   },
   enhancers: __DEV__ ? [reactotron.createEnhancer!()] : [],
 });
