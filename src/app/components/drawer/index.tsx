@@ -1,6 +1,5 @@
 import { useTheme } from 'styled-components';
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 
 import Text from 'src/app/components/text';
@@ -11,8 +10,8 @@ import {
   ProfileIcon,
   SettingsIcon,
 } from 'src/assets/svg/navigation-icons/';
-import { RootState, useAppDispatch } from 'src/store';
-import { startLogoutUser } from 'src/store/auth/thunks';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import { startLogoutUser } from 'src/store/auth/auth.thunks';
 
 import { MenuItem } from './components/menu-item';
 import {
@@ -25,7 +24,7 @@ import {
 const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const { displayName } = useSelector((state: RootState) => state.auth);
+  const { displayName } = useAppSelector(state => state.auth);
 
   const handleLogout = async () => {
     await dispatch(startLogoutUser());

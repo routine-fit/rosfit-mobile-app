@@ -26,6 +26,8 @@ export const startLoginWithEmailPassword = createAsyncThunk(
         email,
         password,
       );
+      console.log({ resp });
+
       const { uid, displayName } = resp.user;
 
       const idToken = await resp.user.getIdToken();
@@ -36,6 +38,8 @@ export const startLoginWithEmailPassword = createAsyncThunk(
         email,
       };
     } catch (error: any) {
+      console.log({ error });
+
       return rejectWithValue(error.message || 'An error occurred during login');
     }
   },
