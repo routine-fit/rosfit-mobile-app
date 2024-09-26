@@ -114,15 +114,11 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
           />
           <InfoContainer>
             <InfoBox
-              value={
-                growRecords?.[growRecords.length - 1]?.weight?.toString() || ''
-              }
+              value={growRecords?.[0]?.weight?.toString() || ''}
               label={t('inputs:label.weight')}
             />
             <InfoBox
-              value={
-                growRecords?.[growRecords.length - 1]?.height?.toString() || ''
-              }
+              value={growRecords?.[0]?.height?.toString() || ''}
               label={t('inputs:label.height')}
             />
           </InfoContainer>

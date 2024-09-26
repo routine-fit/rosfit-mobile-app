@@ -6,7 +6,11 @@ import {
   TrainingPreference,
 } from 'src/interfaces/profile-data';
 
-import { startGetMyInformarion } from './thunks';
+import {
+  startCreateGrowRecord,
+  startGetMyInformarion,
+  startUpdateTrainingPreferences,
+} from './thunks';
 
 interface ProfileState {
   personalInformation: PersonalInformation | null;
@@ -28,6 +32,7 @@ const initialState: ProfileState = {
     id: '',
     type: '',
     intensity: '',
+    time: 0,
   },
   growRecords: [],
   errorMessage: null,
@@ -58,6 +63,31 @@ export const profileSlice = createSlice({
         state.growRecords = [];
         state.errorMessage =
           action.error.message || 'An error occurred when retrieving info';
+        state.status = 'failed';
+      })
+      .addCase(startCreateGrowRecord.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(startCreateGrowRecord.fulfilled, (state, action) => {
+        state.growRecords.push(action.payload);
+        state.status = 'succeeded';
+      })
+      .addCase(startCreateGrowRecord.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message || 'An error occurred when creating grow record';
+        state.status = 'failed';
+      })
+      .addCase(startUpdateTrainingPreferences.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(startUpdateTrainingPreferences.fulfilled, (state, action) => {
+        state.trainingPreference = action.payload;
+        state.status = 'succeeded';
+      })
+      .addCase(startUpdateTrainingPreferences.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message ||
+          'An error occurred when updating training preferences';
         state.status = 'failed';
       });
   },

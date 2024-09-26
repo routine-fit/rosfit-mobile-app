@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   Button,
@@ -12,61 +14,47 @@ import {
   ScreenContainer,
 } from 'src/app/components';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
-import { ProfileData } from 'src/interfaces/profile-data';
-import profileDataFile from 'src/mocks/profile-data.json';
+import { RootState, useAppDispatch } from 'src/store';
+import { startUpdateTrainingPreferences } from 'src/store/profile/thunks';
 
-import { formConfig, FormData } from './form-config';
+import { FormData, validationSchema } from './form-config';
 import { Container } from './styles';
 import { EditTrainingPreferencesProps } from './types';
 
 export const EditTrainingPreferencesScreen = ({
   navigation,
 }: EditTrainingPreferencesProps) => {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const { trainingPreference } = useSelector(
+    (state: RootState) => state.profile,
+  );
 
   const trainingIntensityOptions = useTranslatedOptions(
     ['LOW', 'MEDIUM', 'HIGH'],
     'common:trainingIntensity',
   );
 
-  const { control, handleSubmit, reset } = useForm<FormData>(formConfig);
+  const trainingTypeOptions = useTranslatedOptions(
+    ['AGILITY', 'STRENGTH', 'ENDURANCE', 'FLEXIBILITY', 'BALANCE', 'CARDIO'],
+    'common:trainingType',
+  );
 
-  const fetchProfileData = (): Promise<ProfileData> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          resolve(profileDataFile);
-        } catch (error) {
-          reject(error);
-        }
-      }, 1000);
-    });
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchProfileData();
-        setProfileData(data);
-        reset({
-          trainingType: data?.trainingType || '',
-          trainingTime: data?.trainingTime || '',
-          trainingIntensity: data?.trainingIntensity || '',
-          trainingGoals: data?.trainingGoals || '',
-        });
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-      }
-    };
-
-    fetchData();
-  }, [profileData, reset]);
+  const { control, handleSubmit } = useForm<FormData>({
+    defaultValues: {
+      id: trainingPreference?.id,
+      type: trainingPreference?.type,
+      intensity: trainingPreference?.intensity,
+      time: trainingPreference?.time,
+    },
+    resolver: yupResolver(validationSchema),
+  });
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
-      //TODO: dispatch thunks
-      console.log(data);
+      await dispatch(startUpdateTrainingPreferences(data));
+      // onClose();
     } catch (error: any) {
       Alert.alert(t('screens:editTrainingPreferences:error'), error.message);
     }
@@ -86,31 +74,29 @@ export const EditTrainingPreferencesScreen = ({
             flexTitleAlign="center"
           />
           <GapContainer>
-            <ControlledTextInput
-              controller={{
-                control,
-                name: 'trainingType',
-              }}
-            />
-            <ControlledTextInput
-              controller={{
-                control,
-                name: 'trainingTime',
-              }}
-            />
             <ControlledSelectInput
               controller={{
                 control,
-                name: 'trainingIntensity',
+                name: 'type',
+              }}
+              options={trainingTypeOptions}
+            />
+
+            <ControlledSelectInput
+              controller={{
+                control,
+                name: 'intensity',
               }}
               options={trainingIntensityOptions}
             />
+
             <ControlledTextInput
               controller={{
                 control,
-                name: 'trainingGoals',
+                name: 'time',
               }}
             />
+
             <GapContainer space={15}>
               <Button
                 onPress={handleSubmit(onValidSubmit)}
