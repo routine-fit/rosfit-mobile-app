@@ -31,11 +31,9 @@ export const ButtonContainer = styled.Pressable<{
   fullWidth?: boolean;
   withTrailingIcon?: boolean;
   marginTop?: number;
-  alignSelf?: boolean;
 }>`
   ${({ stringStyles }) => stringStyles || ''}
   width: ${props => (props.fullWidth ? '100%' : 'auto')};
-  ${props => (props.alignSelf ? 'align-self: flex-start;' : '')}
   border-radius: ${props => radius[props.radius]}px;
   height: ${props => sizes[props.size]}px;
   margin-top: ${props => props.marginTop || 0}px;
@@ -46,6 +44,7 @@ export const ButtonContainer = styled.Pressable<{
     withTrailingIcon ? 'space-between' : 'center'};
   align-items: center;
 `;
+
 export const getThemeVariantMap = (theme: ExtendedTheme) => {
   return {
     neutral: {
