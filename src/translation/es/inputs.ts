@@ -19,7 +19,7 @@ export default {
     routine: 'Rutina',
     trainingGoals: '',
     trainingIntensity: 'Intensidad de entrenamiento',
-    trainingTime: '',
+    trainingTime: 'Tiempo de entrenamiento',
     trainingType: 'Tipo de entrenamiento',
     routineName: 'Nombre',
     routineType: 'Tipo',

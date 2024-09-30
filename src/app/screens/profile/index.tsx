@@ -117,7 +117,12 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
               label={t('inputs:label.weight')}
             />
             <InfoBox
-              value={growRecords?.[0]?.height?.toString() || ''}
+              value={
+                growRecords?.[0]?.height?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }) || ''
+              }
               label={t('inputs:label.height')}
             />
           </InfoContainer>
@@ -142,7 +147,7 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
         <SharedModal
           open={showModal}
           onClose={() => setShowModal(false)}
-          title="Medidas corporales"
+          title={t('screens:profileScreen.measures')}
           body={<ModalContent onClose={() => setShowModal(false)} />}
         />
       </ScrollView>

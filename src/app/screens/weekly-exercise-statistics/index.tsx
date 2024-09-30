@@ -43,16 +43,17 @@ export const WeeklyExerciseStatisticsScreen: FC<Props> = ({ route }) => {
   }, []);
 
   const statisticsData = useMemo<StatisticsItem[]>(() => {
-    return Object.keys(weeklyExerciseStatistics!).map(key => ({
+    return Object.keys(weeklyExerciseStatistics ?? {}).map(key => ({
       key,
       header: `screens:weeklyExerciseStatistics.${key}Header`,
       value:
-        weeklyExerciseStatistics![key as keyof WeeklyExerciseStatisticsData],
+        weeklyExerciseStatistics?.[key as keyof WeeklyExerciseStatisticsData] ??
+        '',
       description: `screens:weeklyExerciseStatistics.${key}Description`,
     }));
   }, [weeklyExerciseStatistics]);
 
-  if (!weeklyExerciseStatistics) {
+  if (!weeklyExerciseStatistics || !statisticsData) {
     return (
       <ScreenContainer withoutVerticalPadding>
         <Text>Loading...</Text>

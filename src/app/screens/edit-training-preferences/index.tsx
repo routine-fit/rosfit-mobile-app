@@ -2,7 +2,6 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView } from 'react-native';
-import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
@@ -14,7 +13,7 @@ import {
   ScreenContainer,
 } from 'src/app/components';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
-import { RootState, useAppDispatch } from 'src/store';
+import { useAppDispatch, useAppSelector } from 'src/store';
 import { startUpdateTrainingPreferences } from 'src/store/profile/thunks';
 
 import { FormData, validationSchema } from './form-config';
@@ -27,9 +26,7 @@ export const EditTrainingPreferencesScreen = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const { trainingPreference } = useSelector(
-    (state: RootState) => state.profile,
-  );
+  const { trainingPreference } = useAppSelector(state => state.profile);
 
   const trainingIntensityOptions = useTranslatedOptions(
     ['LOW', 'MEDIUM', 'HIGH'],
@@ -54,7 +51,7 @@ export const EditTrainingPreferencesScreen = ({
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
       await dispatch(startUpdateTrainingPreferences(data));
-      // onClose();
+      navigation.navigate('Profile');
     } catch (error: any) {
       Alert.alert(t('screens:editTrainingPreferences:error'), error.message);
     }
@@ -79,6 +76,7 @@ export const EditTrainingPreferencesScreen = ({
                 control,
                 name: 'type',
               }}
+              label={t('inputs:label.trainingType')}
               options={trainingTypeOptions}
             />
 
@@ -87,6 +85,7 @@ export const EditTrainingPreferencesScreen = ({
                 control,
                 name: 'intensity',
               }}
+              label={t('inputs:label.trainingIntensity')}
               options={trainingIntensityOptions}
             />
 
@@ -95,6 +94,7 @@ export const EditTrainingPreferencesScreen = ({
                 control,
                 name: 'time',
               }}
+              label={t('inputs:label.trainingTime')}
             />
 
             <GapContainer space={15}>

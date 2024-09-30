@@ -131,5 +131,6 @@ export default {
     profileInfo: 'Informacion de perfil',
     measurements: 'Medidas corporales',
     trainingPreferences: 'Preferencias de entrenamiento',
+    measures: 'Medidas corporales',
   },
 };

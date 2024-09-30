@@ -2,11 +2,10 @@ import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button, ControlledTextInput, GapContainer } from 'src/app/components';
-import { RootState, useAppDispatch } from 'src/store';
+import { useAppDispatch, useAppSelector } from 'src/store';
 import { startCreateGrowRecord } from 'src/store/profile/thunks';
 
 import { FormData, validationSchema } from './form-config';
@@ -17,7 +16,7 @@ export const ModalContent: FC<ModalContentProps> = ({ onClose }) => {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
-  const { growRecords } = useSelector((state: RootState) => state.profile);
+  const { growRecords } = useAppSelector(state => state.profile);
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
