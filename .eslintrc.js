@@ -4,6 +4,7 @@ module.exports = {
     '@react-native',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
+    'plugin:jest/recommended',
   ],
   plugins: ['simple-import-sort'],
   rules: {
