@@ -47,6 +47,7 @@ export default {
     trainingGoals: '',
     weight: 'Peso',
     height: 'Estatura',
+    time: '',
     lastName: '',
     password: '',
     repeatPassword: '',
