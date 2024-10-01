@@ -36,4 +36,16 @@ export default {
     saturday: 'Sabado',
     sunday: 'Domingo',
   },
+  boolean: {
+    enabled: 'Habilitado',
+    disabled: 'Desabilitado',
+  },
+  trainingType: {
+    AGILITY: 'Agilidad',
+    STRENGTH: 'Fuerza',
+    ENDURANCE: 'Resistencia',
+    FLEXIBILITY: 'Flexibilidad',
+    BALANCE: 'Equilibrio',
+    CARDIO: 'Cardio',
+  },
 };
