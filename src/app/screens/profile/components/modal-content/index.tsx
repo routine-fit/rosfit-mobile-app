@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button, ControlledTextInput, GapContainer } from 'src/app/components';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startCreateGrowRecord } from 'src/store/profile/thunks';
+import { startCreateGrowRecord } from 'src/store/profile/profile.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { ButtonContainer } from './styles';

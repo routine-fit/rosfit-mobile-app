@@ -14,7 +14,7 @@ import {
 } from 'src/app/components';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startUpdateTrainingPreferences } from 'src/store/profile/thunks';
+import { startUpdateTrainingPreferences } from 'src/store/profile/profile.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { Container } from './styles';

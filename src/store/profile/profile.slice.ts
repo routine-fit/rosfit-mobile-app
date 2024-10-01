@@ -10,7 +10,7 @@ import {
   startCreateGrowRecord,
   startGetMyInformarion,
   startUpdateTrainingPreferences,
-} from './thunks';
+} from './profile.thunks';
 
 interface ProfileState {
   personalInformation: PersonalInformation | null;

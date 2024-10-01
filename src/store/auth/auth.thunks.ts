@@ -30,10 +30,6 @@ export const startLoginWithEmailPassword = createAsyncThunk(
 
       const { uid, displayName } = resp.user;
 
-      const firebaseToken = await resp.user.getIdToken();
-
-      await AsyncStorage.setItem('token', firebaseToken);
-
       const idToken = await resp.user.getIdToken();
       await AsyncStorage.setItem('token', idToken);
       return {
