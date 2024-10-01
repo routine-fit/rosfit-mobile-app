@@ -1,11 +1,5 @@
-import { AppState } from 'react-native';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import {
-  AnyAction,
-  configureStore,
-  Dispatch,
-  ThunkDispatch,
-} from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 import reactotron from '../../ReactotronConfig';
 import { authSlice } from './auth/auth.slice';
@@ -19,14 +13,12 @@ export const store = configureStore({
     exercise: exerciseSlice.reducer,
     profile: profileSlice.reducer,
   },
-  enhancers: __DEV__ ? [reactotron.createEnhancer!()] : [],
+  enhancers: getDefaultEnhancers =>
+    getDefaultEnhancers().concat(reactotron.createEnhancer()),
 });
 
-export const useAppDispatch: () => AppDispatch = useDispatch;
-
-export type AppDispatch = ThunkDispatch<AppState, null | undefined, AnyAction> &
-  Dispatch<AnyAction>;
-
+export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();
