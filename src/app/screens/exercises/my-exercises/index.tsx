@@ -23,7 +23,6 @@ export const MyExercisesScreen: FC<MyExercisesScreenProps> = ({
         <Button
           onPress={() => navigation.navigate('AddExerciseScreen')}
           fullWidth={false}
-          alignSelf={false}
           content={t('screens:exercises.newExercise')}
           trailingIcon={<PlusIcon />}
           themeColor="secondary"

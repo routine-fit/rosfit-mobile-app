@@ -24,7 +24,6 @@ const Button: FC<ButtonProps> = ({
   fullWidth = true,
   marginTop,
   radius = 'rounded',
-  alignSelf = true,
 }) => {
   const theme = useTheme();
   const [status, setStatus] = useState<ButtonStatus>('default');
@@ -51,7 +50,6 @@ const Button: FC<ButtonProps> = ({
       disabled={disabled || loading}
       withTrailingIcon={!!trailingIcon}
       radius={radius}
-      alignSelf={alignSelf}
       onFocus={() => setStatus('focus')}
       onPressOut={() => setStatus('default')}
       onBlur={() => setStatus('default')}

@@ -3,84 +3,84 @@
         "id": "1",
         "name": "Remo con maquina",
         "muscleGroup": "PECTORAL",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN10"
+        "links": []
     },
     {
         "id": "2",
         "name": "Subida al cajon c/mancuernas",
         "muscleGroup": "ABDOMINAL",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN10"
+        "links": []
     },
     {
         "id": "3",
         "name": "Movilidad Escapular",
         "muscleGroup": "ERECTOR_SPINAE",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN10"
+        "links": []
     },
     {
         "id": "4",
         "name": "Plancha Alta Toco Kettlebell",
         "muscleGroup": "ERECTOR_SPINAE",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN11"
+        "links": []
     },
     {
         "id": "5",
         "name": "Lumbar alternado",
         "muscleGroup": "LATISSIMUS_DORSI",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN11"
+        "links": []
     },
     {
         "id": "6",
         "name": "Puente de glúteo",
         "muscleGroup": "ABDOMINAL",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN11"
+        "links": []
     },
     {
         "id": "7",
         "name": "Plancha lateral + Remo",
         "muscleGroup": "TRICEPS",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN12"
+        "links": []
     },
     {
         "id": "8",
         "name": "Serrucho mancuerna",
         "muscleGroup": "BICEPS",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN12"
+        "links": []
     },
     {
         "id": "9",
         "name": "Sentadillas atrás",
         "muscleGroup": "ERECTOR_SPINAE",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN12"
+        "links": []
     },
     {
         "id": "10",
         "name": "Peso muerto c/mancuernas",
         "muscleGroup": "PECTORAL",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN13"
+        "links": []
     },
     {
         "id": "11",
         "name": "Press inclinado con mancuernas",
         "muscleGroup": "PECTORAL",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN13"
+        "links": []
     },
     {
         "id": "12",
         "name": "Vuelo lateral",
         "muscleGroup": "BICEPS",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN13"
+        "links": []
     },
     {
         "id": "13",
         "name": "Flexion-extension diamante",
         "muscleGroup": "ABDOMINAL",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN14"
+        "links": []
     },
     {
         "id": "14",
         "name": "Búlgara c/press",
         "muscleGroup": "LATISSIMUS_DORSI",
-        "userInfoId": "M5MCzG5aCKpf0B7qpNNsi8RyjN14"
+        "links": []
     }
 ]

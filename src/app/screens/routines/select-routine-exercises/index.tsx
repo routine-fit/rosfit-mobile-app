@@ -21,7 +21,6 @@ export const SelectRoutineExercises: FC<SelectRoutineExercisesProps> = ({
           navigation.navigate('ExercisesRevision');
         }}
         fullWidth={false}
-        alignSelf={false}
         content={t('screens:selectRoutineExercises.revision')}
         themeColor="secondary"
       />

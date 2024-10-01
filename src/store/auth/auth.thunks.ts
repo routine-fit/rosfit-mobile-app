@@ -50,8 +50,10 @@ export const startGoogleSignIn = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await GoogleSignin.hasPlayServices();
-      const { idToken } = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const responseGoogle = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(
+        responseGoogle.data?.idToken!,
+      );
       const { user } = await firebaseAuth.signInWithCredential(
         googleCredential,
       );
