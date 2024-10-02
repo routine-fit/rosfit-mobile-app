@@ -18,7 +18,7 @@ import { ExerciseItem } from './components/exercise-item';
 import { CenteredView } from './styles';
 import { ExerciseRevisionProps } from './types';
 
-export const ExercisesRevision: FC<ExerciseRevisionProps> = ({
+export const ExercisesRevisionScreen: FC<ExerciseRevisionProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();

@@ -6,10 +6,11 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import {
-  AddRoutine,
-  ExercisesRevision,
-  RoutineDashboard,
-  SelectRoutineExercises,
+  AddRoutineScreen,
+  ExercisesRevisionScreen,
+  RoutineDashboardScreen,
+  ScheduleRoutineScreen,
+  SelectRoutineExercisesScreen,
 } from 'src/app/screens/routines';
 import { Exercise } from 'src/interfaces/exercises';
 import mockedExercises from 'src/mocks/weekly-exercises-data.json';
@@ -55,22 +56,27 @@ export const RoutineStack: FC<Props> = ({ navigation }) => {
       >
         <Stack.Screen
           name="RoutineDashboard"
-          component={RoutineDashboard}
+          component={RoutineDashboardScreen}
           options={routineHeaderOptions}
         />
         <Stack.Screen
+          name="ScheduleRoutine"
+          component={ScheduleRoutineScreen}
+          options={getGoBackHeaderOptions(navigation, theme)}
+        />
+        <Stack.Screen
           name="AddRoutine"
-          component={AddRoutine}
+          component={AddRoutineScreen}
           options={getGoBackHeaderOptions(navigation, theme)}
         />
         <Stack.Screen
           name="SelectRoutineExercises"
-          component={SelectRoutineExercises}
+          component={SelectRoutineExercisesScreen}
           options={getGoBackHeaderOptions(navigation, theme)}
         />
         <Stack.Screen
           name="ExercisesRevision"
-          component={ExercisesRevision}
+          component={ExercisesRevisionScreen}
           options={getGoBackHeaderOptions(navigation, theme)}
         />
       </Stack.Navigator>

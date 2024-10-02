@@ -6,7 +6,7 @@ import ExerciseList from 'src/app/widgets/exercises-list';
 
 import { SelectRoutineExercisesProps } from './types';
 
-export const SelectRoutineExercises: FC<SelectRoutineExercisesProps> = ({
+export const SelectRoutineExercisesScreen: FC<SelectRoutineExercisesProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();

@@ -9,7 +9,9 @@ import { RoutineBadge } from 'src/app/components/routine-badge';
 import { SectionContainer } from './styles';
 import { RoutineDashboardProps } from './types';
 
-export const RoutineDashboard: FC<RoutineDashboardProps> = ({ navigation }) => {
+export const RoutineDashboardScreen: FC<RoutineDashboardProps> = ({
+  navigation,
+}) => {
   const { t } = useTranslation();
   return (
     <ScreenContainer>
@@ -34,7 +36,7 @@ export const RoutineDashboard: FC<RoutineDashboardProps> = ({ navigation }) => {
         variant="outlined"
         content={t('screens:routineDashboard.scheduleRoutine')}
         trailingIcon={<CalendarDays />}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('ScheduleRoutine')}
       />
       <Button
         variant="outlined"

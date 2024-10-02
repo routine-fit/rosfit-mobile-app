@@ -31,6 +31,8 @@ export default {
     muscleGroup: 'Grupo muscular',
     links: 'Link de ejercicio',
     pushNotifications: 'Push notifications',
+    routineId: 'Rutina',
+    day: 'Día',
   },
   placeholder: {
     email: 'john.doe@example.com',
@@ -56,6 +58,8 @@ export default {
     exerciseName: '',
     muscleGroup: '',
     links: 'Link de ejemplo',
+    routineId: '',
+    day: 'Día a agendar',
   },
   error: {
     required: '{{field}} es requerido',
