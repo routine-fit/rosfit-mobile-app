@@ -1,23 +1,15 @@
 import { t } from 'i18next';
 import * as yup from 'yup';
+import { UseFormProps } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
+import { muscleGroups } from 'src/constants/muscle-groups';
 import { MuscleGroup } from 'src/interfaces/exercises';
 
 export type ExerciseFormData = {
   exerciseName: string;
-  muscleGroup: MuscleGroup | '';
+  muscleGroup: MuscleGroup;
 };
-
-const muscleGroupValues: MuscleGroup[] = [
-  'ABDOMINAL',
-  'BICEPS',
-  'DELTOID',
-  'ERECTOR_SPINAE',
-  'LATISSIMUS_DORSI',
-  'PECTORAL',
-  'TRAPEZIUS',
-  'TRICEPS',
-];
 
 export const validationSchema = yup.object<ExerciseFormData>().shape({
   exerciseName: yup
@@ -37,7 +29,7 @@ export const validationSchema = yup.object<ExerciseFormData>().shape({
   muscleGroup: yup
     .string()
     .oneOf(
-      muscleGroupValues,
+      muscleGroups,
       t('inputs:error.invalidMuscleGroup', {
         field: t('inputs:label.muscleGroup').toLowerCase(),
       }),
@@ -46,12 +38,13 @@ export const validationSchema = yup.object<ExerciseFormData>().shape({
       t('inputs:error.required', {
         field: t('inputs:label.muscleGroup').toLowerCase(),
       }),
-    )
-    .min(
-      2,
-      t('inputs:error.nameMinLength', {
-        field: t('inputs:label.muscleGroup').toLowerCase(),
-        min: 2,
-      }),
     ),
 });
+
+export const addExerciseFormConfig: UseFormProps<ExerciseFormData> = {
+  defaultValues: {
+    exerciseName: '',
+    muscleGroup: '' as MuscleGroup,
+  },
+  resolver: yupResolver(validationSchema),
+};

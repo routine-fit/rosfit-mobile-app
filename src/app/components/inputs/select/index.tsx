@@ -49,8 +49,8 @@ const ControlledSelectInput = <Form extends FieldValues>({
         {...restOfProps}
         onBlur={onBlur}
         value={selectedLabel}
-        editable={editable}
-        readOnly={!editable}
+        editable={false}
+        readOnly
         onChangeText={(val: string) =>
           editable ? onChange(val.length === 1 ? val.trim() : val) : null
         }

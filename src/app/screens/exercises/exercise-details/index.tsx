@@ -12,7 +12,7 @@ import {
   SharedModal,
   Text,
 } from 'src/app/components';
-import { muscleGroups } from 'src/constants/muscleGroups';
+import { muscleGroups } from 'src/constants/muscle-groups';
 
 import { ExerciseFormData, validationSchema } from './form-config';
 import { InputContainer } from './styles';

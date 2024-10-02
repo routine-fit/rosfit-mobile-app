@@ -1,21 +1,24 @@
-import React, { FC, useState } from 'react';
-import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
+import React, { FC } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   Button,
   ControlledSelectInput,
   ControlledTextInput,
   ScreenContainer,
-  SharedModal,
   Text,
 } from 'src/app/components';
-import { muscleGroups } from 'src/constants/muscleGroups';
+import { muscleGroups } from 'src/constants/muscle-groups';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import {
+  createExercise,
+  getExercises,
+} from 'src/store/exercise/exercise.thunks';
 
-import { ExerciseFormData, validationSchema } from './form-config';
+import { addExerciseFormConfig, ExerciseFormData } from './form-config';
 import { InputContainer } from './styles';
 import { AddExerciseScreenProps } from './types';
 
@@ -23,25 +26,30 @@ export const AddExerciseScreen: FC<AddExerciseScreenProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const { status } = useAppSelector(state => state.exercise);
+  const isLoading = status === 'loading';
+  const dispatch = useAppDispatch();
 
   const muscleGroupsOptions = useTranslatedOptions(
     muscleGroups,
     'common:muscleGroups',
   );
 
-  const { control, handleSubmit } = useForm<ExerciseFormData>({
-    defaultValues: {
-      exerciseName: '',
-      muscleGroup: '',
-    },
-    resolver: yupResolver(validationSchema) as Resolver<ExerciseFormData>,
-  });
+  const { control, handleSubmit } = useForm<ExerciseFormData>(
+    addExerciseFormConfig,
+  );
 
-  const onValidSubmit: SubmitHandler<ExerciseFormData> = async () => {
+  const onValidSubmit: SubmitHandler<ExerciseFormData> = async exercise => {
     try {
-      setShowModal(true);
-      //TODO: dispatch thunks
+      await dispatch(
+        createExercise({
+          name: exercise.exerciseName,
+          muscleGroup: exercise.muscleGroup,
+          links: [],
+        }),
+      );
+      await dispatch(getExercises());
+      navigation.goBack();
     } catch (error: any) {
       Alert.alert(t('screens:addExercise:error'), error.message);
     }
@@ -58,6 +66,7 @@ export const AddExerciseScreen: FC<AddExerciseScreenProps> = ({
             control,
             name: 'exerciseName',
           }}
+          editable={!isLoading}
         />
         <ControlledSelectInput
           controller={{
@@ -65,25 +74,12 @@ export const AddExerciseScreen: FC<AddExerciseScreenProps> = ({
             name: 'muscleGroup',
           }}
           options={muscleGroupsOptions}
+          editable={!isLoading}
         />
       </InputContainer>
       <Button
         content={t('screens:addExercise:createExercise')}
         onPress={handleSubmit(onValidSubmit)}
-      />
-      <SharedModal
-        open={showModal}
-        onClose={() => {}}
-        title={t('screens:addExercise.createExerciseSuccess')}
-        body={
-          <Button
-            variant="outlined"
-            content={t('common:button.confirm')}
-            onPress={() => {
-              navigation.pop();
-            }}
-          />
-        }
       />
     </ScreenContainer>
   );

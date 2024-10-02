@@ -2,7 +2,7 @@ import { SearchIcon } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 
 import { Text, TextInput } from 'src/app/components';
 import { Exercise } from 'src/interfaces/exercises';
@@ -39,12 +39,19 @@ const ExerciseList = () => {
           onChangeText={setSearchByName}
           value={searchByName}
           trailingIcon={
-            <SearchIcon
-              color={theme.colors.stroke.default}
-              fillOpacity={0}
-              height={16}
-              width={16}
-            />
+            isLoading ? (
+              <ActivityIndicator
+                color={theme.colors.primary.default}
+                size={16}
+              />
+            ) : (
+              <SearchIcon
+                color={theme.colors.stroke.default}
+                fillOpacity={0}
+                height={16}
+                width={16}
+              />
+            )
           }
           placeholder={t('inputs:placeholder.searchOnList')}
           variant="rounded"
@@ -63,7 +70,7 @@ const ExerciseList = () => {
           )
         }
         onRefresh={fetchGetExercises}
-        refreshing={isLoading}
+        refreshing={isLoading && exerciseList.length > 0}
         style={styles.flatListContainer}
       />
     </>

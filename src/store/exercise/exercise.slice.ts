@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { Exercise } from 'src/interfaces/exercises';
 
-import { getExercises } from './exercise.thunks';
+import { createExercise, getExercises } from './exercise.thunks';
 
 interface ExerciseState {
   exerciseList: Exercise[];
@@ -32,7 +32,20 @@ export const exerciseSlice = createSlice({
       .addCase(getExercises.rejected, (state, action) => {
         state.exerciseList = [];
         state.errorMessage =
-          action.error.message || 'An error occurred during login';
+          action.error.message ||
+          'An error occurred during while getting the exercises';
+        state.status = 'failed';
+      })
+      .addCase(createExercise.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(createExercise.fulfilled, state => {
+        state.status = 'succeeded';
+      })
+      .addCase(createExercise.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message ||
+          'An error occurred during while creating the exercise';
         state.status = 'failed';
       });
   },
