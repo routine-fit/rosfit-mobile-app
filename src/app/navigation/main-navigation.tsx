@@ -38,7 +38,7 @@ const Drawer = createDrawerNavigator<MainDrawerParamList>();
 
 export const MainAppNavigation = () => {
   const { t } = useTranslation();
-  const { displayName } = useAppSelector(state => state.auth);
+  const { name } = useAppSelector(state => state.profile.personalInformation);
   const theme = useTheme();
   const navigation = useNavigation<DrawerNavigationProp<MainDrawerParamList>>();
 
@@ -47,13 +47,13 @@ export const MainAppNavigation = () => {
       header: () => (
         <Header
           leftText={t('navigation:headers.profile', {
-            user: displayName,
+            user: name,
           })}
           headerLeft={<UserAvatar color={theme.colors.background} width={20} />}
         />
       ),
     }),
-    [displayName, t, theme.colors.background],
+    [name, t, theme.colors.background],
   );
 
   return (

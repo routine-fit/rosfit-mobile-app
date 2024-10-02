@@ -26,15 +26,13 @@ export const startLoginWithEmailPassword = createAsyncThunk(
         email,
         password,
       );
-      console.log({ resp });
 
-      const { uid, displayName } = resp.user;
+      const { uid } = resp.user;
 
       const idToken = await resp.user.getIdToken();
       await AsyncStorage.setItem('token', idToken);
       return {
         uid,
-        displayName,
         email,
       };
     } catch (error: any) {
@@ -61,8 +59,8 @@ export const startGoogleSignIn = createAsyncThunk(
       const firebaseToken = await user.getIdToken();
       await AsyncStorage.setItem('token', firebaseToken);
 
-      const { uid, displayName, email } = user;
-      return { uid, displayName, email };
+      const { uid, email } = user;
+      return { uid, email };
     } catch (error: any) {
       return rejectWithValue(error.message || 'An error occurred during login');
     }
@@ -79,17 +77,13 @@ export const startCreateFirebaseUser = createAsyncThunk(
         email,
         password,
       );
-      const { uid, displayName } = resp.user;
+      const { uid } = resp.user;
 
       const firebaseToken = await resp.user.getIdToken();
 
       await AsyncStorage.setItem('token', firebaseToken);
 
-      return {
-        uid,
-        displayName,
-        email,
-      };
+      return { uid, email };
     } catch (error: any) {
       return rejectWithValue(
         error.message || 'An error occurred during signup',

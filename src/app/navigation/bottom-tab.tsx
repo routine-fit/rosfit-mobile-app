@@ -28,7 +28,7 @@ export const Tab = createBottomTabNavigator<BottomTabParamList>();
 export const BottomTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { displayName } = useAppSelector(state => state.auth);
+  const { name } = useAppSelector(state => state.profile.personalInformation);
 
   const renderIcon = useMemo(
     () => (icon: JSX.Element, focused: boolean) =>
@@ -65,7 +65,7 @@ export const BottomTab = () => {
       header: () => (
         <Header
           leftText={t('navigation:headers.profile', {
-            user: displayName,
+            user: name,
           })}
           headerLeft={<UserAvatar color={theme.colors.background} width={20} />}
         />
@@ -73,7 +73,7 @@ export const BottomTab = () => {
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<HomeIcon />, focused),
     }),
-    [t, displayName, theme, renderIcon],
+    [t, name, theme, renderIcon],
   );
 
   const DoRoutineHeaderOptions = useMemo(

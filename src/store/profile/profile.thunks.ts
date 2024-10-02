@@ -9,7 +9,7 @@ import {
   TrainingPreferenceResponse,
 } from 'src/interfaces/profile-data';
 
-export const startGetMyInformarion = createAsyncThunk(
+export const startGetMyInformation = createAsyncThunk(
   'auth/get-my-info',
   async (_, { rejectWithValue }) => {
     try {

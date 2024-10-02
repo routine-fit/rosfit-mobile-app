@@ -8,13 +8,13 @@ import {
 
 import {
   startCreateGrowRecord,
-  startGetMyInformarion,
+  startGetMyInformation,
   startUpdateTrainingPreferences,
 } from './profile.thunks';
 
 interface ProfileState {
-  personalInformation: PersonalInformation | null;
-  trainingPreference: TrainingPreference | null;
+  personalInformation: PersonalInformation;
+  trainingPreference: TrainingPreference;
   growRecords: GrowRecord[];
   errorMessage: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -45,22 +45,19 @@ export const profileSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(startGetMyInformarion.pending, state => {
-        state.personalInformation = null;
-        state.trainingPreference = null;
-        state.growRecords = [];
+      .addCase(startGetMyInformation.pending, state => {
+        state.personalInformation = initialState.personalInformation;
+        state.trainingPreference = initialState.trainingPreference;
+        state.growRecords = initialState.growRecords;
         state.status = 'loading';
       })
-      .addCase(startGetMyInformarion.fulfilled, (state, action) => {
+      .addCase(startGetMyInformation.fulfilled, (state, action) => {
         state.personalInformation = action.payload.personalInformation;
         state.trainingPreference = action.payload.trainingPreference;
         state.growRecords = action.payload.growRecords;
         state.status = 'succeeded';
       })
-      .addCase(startGetMyInformarion.rejected, (state, action) => {
-        state.personalInformation = null;
-        state.trainingPreference = null;
-        state.growRecords = [];
+      .addCase(startGetMyInformation.rejected, (state, action) => {
         state.errorMessage =
           action.error.message || 'An error occurred when retrieving info';
         state.status = 'failed';
