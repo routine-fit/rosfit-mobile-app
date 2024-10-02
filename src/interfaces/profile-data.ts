@@ -1,3 +1,9 @@
+export type Gender =
+  | 'MALE'
+  | 'FEMALE'
+  | 'NON_BINARY'
+  | 'PREFER_NOT_SPECIFY'
+  | '';
 export interface ProfileData {
   displayName: string;
   name: string;
@@ -38,7 +44,7 @@ export interface PersonalInformation {
   name: string;
   lastName: string;
   birthDate: Date | '';
-  gender: string;
+  gender: Gender;
   pushNotification: boolean;
 }
 

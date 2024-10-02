@@ -16,12 +16,12 @@ export const ModalContent: FC<ModalContentProps> = ({ onClose }) => {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
-  const { growRecords } = useAppSelector(state => state.profile);
+  const growRecords = useAppSelector(state => state.profile.growRecords);
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
-      weight: growRecords?.[0]?.weight?.toString(),
-      height: growRecords?.[0]?.height?.toString(),
+      weight: growRecords[0]?.weight?.toString(),
+      height: growRecords[0]?.height?.toString(),
     },
     resolver: yupResolver(validationSchema),
   });

@@ -24,7 +24,9 @@ import {
 const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const { displayName } = useAppSelector(state => state.auth);
+  const { name, lastName } = useAppSelector(
+    state => state.profile.personalInformation,
+  );
 
   const handleLogout = async () => {
     await dispatch(startLogoutUser());
@@ -61,7 +63,7 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
           height={70}
           color={theme.colors.feedback.info.default}
         />
-        <Text fontSize="xl">{displayName}</Text>
+        <Text fontSize="xl">{`${name} ${lastName}`}</Text>
       </ProfileInfoContainer>
 
       <MenuContainer>

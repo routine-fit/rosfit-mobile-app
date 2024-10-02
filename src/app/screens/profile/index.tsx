@@ -13,7 +13,7 @@ import {
 import { CustomActivityIndicator } from 'src/app/components/activity-indicator';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startGetMyInformarion } from 'src/store/profile/profile.thunks';
+import { startGetMyInformation } from 'src/store/profile/profile.thunks';
 import { commonStyles } from 'src/utils/styles';
 
 import { InfoBox } from './components/info-box';
@@ -38,7 +38,7 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const theme = useTheme();
 
   useEffect(() => {
-    dispatch(startGetMyInformarion());
+    dispatch(startGetMyInformation());
   }, [dispatch]);
 
   if (profileStatus === 'loading') {

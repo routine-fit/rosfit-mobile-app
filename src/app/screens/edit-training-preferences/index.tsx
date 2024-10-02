@@ -26,7 +26,9 @@ export const EditTrainingPreferencesScreen = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const { trainingPreference } = useAppSelector(state => state.profile);
+  const trainingPreference = useAppSelector(
+    state => state.profile.trainingPreference,
+  );
 
   const trainingIntensityOptions = useTranslatedOptions(
     ['LOW', 'MEDIUM', 'HIGH'],
@@ -40,10 +42,10 @@ export const EditTrainingPreferencesScreen = ({
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
-      id: trainingPreference?.id,
-      type: trainingPreference?.type,
-      intensity: trainingPreference?.intensity,
-      time: trainingPreference?.time,
+      id: trainingPreference?.id || '',
+      type: trainingPreference?.type || '',
+      intensity: trainingPreference?.intensity || '',
+      time: trainingPreference?.time || 0,
     },
     resolver: yupResolver(validationSchema),
   });

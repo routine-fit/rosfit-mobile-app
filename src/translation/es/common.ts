@@ -11,6 +11,8 @@ export default {
   gender: {
     MALE: 'Masculino',
     FEMALE: 'Femenino',
+    NON_BINARY: 'No binario',
+    PREFER_NOT_SPECIFY: 'Prefiero no especificar',
   },
   trainingIntensity: {
     LOW: 'Baja',
