@@ -5,6 +5,7 @@ import reactotron from '../../ReactotronConfig';
 import { authSlice } from './auth/auth.slice';
 import { exerciseSlice } from './exercise/exercise.slice';
 import { profileSlice } from './profile/profile.slice';
+import { routineSlice } from './routine/routine.slice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     exercise: exerciseSlice.reducer,
     profile: profileSlice.reducer,
+    routine: routineSlice.reducer,
   },
   enhancers: getDefaultEnhancers =>
     getDefaultEnhancers().concat(reactotron.createEnhancer()),

@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Button, ControlledTextInput, GapContainer } from 'src/app/components';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startCreateGrowRecord } from 'src/store/profile/profile.thunks';
+import { createGrowRecord } from 'src/store/profile/profile.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { ButtonContainer } from './styles';
@@ -32,7 +32,7 @@ export const ModalContent: FC<ModalContentProps> = ({ onClose }) => {
         weight: parseFloat(data.weight),
         height: parseFloat(data.height),
       };
-      await dispatch(startCreateGrowRecord(parsedData));
+      await dispatch(createGrowRecord(parsedData));
       onClose();
     } catch (error: any) {
       Alert.alert(t('screens:editTrainingPreferences:error'), error.message);

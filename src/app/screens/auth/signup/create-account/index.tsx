@@ -15,7 +15,7 @@ import {
 } from 'src/app/components';
 import { RootStackParamList } from 'src/app/navigation/types';
 import { useAppDispatch } from 'src/store';
-import { startCreateFirebaseUser } from 'src/store/auth/auth.thunks';
+import { createFirebaseUser } from 'src/store/auth/auth.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { Container } from './styles';
@@ -38,7 +38,7 @@ export const CreateAccountScreen = ({
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
       const { email, password } = data;
-      await dispatch(startCreateFirebaseUser({ email, password }));
+      await dispatch(createFirebaseUser({ email, password }));
       navigation.navigate('CompleteData');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);

@@ -10,7 +10,7 @@ import { MainDrawerParamList } from 'src/app/navigation/types';
 import { DashboardData } from 'src/interfaces/dashboard';
 import dashboardDataFile from 'src/mocks/dashboard-data.json';
 import { useAppDispatch } from 'src/store';
-import { startGetMyInformation } from 'src/store/profile/profile.thunks';
+import { getMyInformation } from 'src/store/profile/profile.thunks';
 
 import ExerciseInfoRow from './components/exercise-info-row';
 import PersonalRecordCard from './components/personal-record-card';
@@ -54,7 +54,7 @@ export const HomeScreen = () => {
     };
 
     fetchData();
-    dispatch(startGetMyInformation());
+    dispatch(getMyInformation());
   }, [dispatch]);
 
   if (!dashboardData) {

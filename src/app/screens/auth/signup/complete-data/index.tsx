@@ -18,7 +18,7 @@ import { RootStackParamList } from 'src/app/navigation/types';
 import { genderOptions } from 'src/constants/genders';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startCreateUserInfo } from 'src/store/auth/auth.thunks';
+import { createUserInfo } from 'src/store/auth/auth.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { Container } from './styles';
@@ -57,7 +57,7 @@ export const CompleteDataScreen = ({
         gender,
         pushNotification: false,
       };
-      await dispatch(startCreateUserInfo(userInfo));
+      await dispatch(createUserInfo(userInfo));
       navigation.navigate('Login');
     } catch (error: any) {
       Alert.alert(t('screens:signUp:error'), error.message);

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
@@ -12,21 +12,18 @@ import {
 } from 'src/app/components';
 import { weekDays } from 'src/constants/weekdays';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
+import { getMyRoutines } from 'src/store/routine/routine.thunks';
 
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { ScheduleRoutineFormData, validationSchema } from './form-config';
 import { ScheduleRoutineScreenProps } from './types';
-
-const mockedRoutines = [
-  { label: 'Adaptación', value: '123abc' },
-  { label: 'Fuerza Máxima', value: '456def' },
-  { label: 'Hipertrofia', value: '789ghi' },
-  { label: 'Resistencia', value: '101jkl' },
-];
 
 export const ScheduleRoutineScreen: FC<ScheduleRoutineScreenProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();
+  const { routines } = useAppSelector(state => state.routine);
+  const dispatch = useAppDispatch();
   const { control, handleSubmit } = useForm<ScheduleRoutineFormData>({
     defaultValues: {
       routineId: '',
@@ -37,6 +34,15 @@ export const ScheduleRoutineScreen: FC<ScheduleRoutineScreenProps> = ({
 
   const daysOptions = useTranslatedOptions(weekDays, 'common:weekDay');
 
+  const routineOptions = useMemo(
+    () =>
+      routines.map(routine => ({
+        label: routine.name,
+        value: routine.id,
+      })),
+    [routines],
+  );
+
   const onValidSubmit: SubmitHandler<ScheduleRoutineFormData> = async _data => {
     try {
       //TODO: dispatch thunks
@@ -45,6 +51,10 @@ export const ScheduleRoutineScreen: FC<ScheduleRoutineScreenProps> = ({
       Alert.alert(t('screens:scheduleRoutine:error'), error.message);
     }
   };
+
+  useEffect(() => {
+    dispatch(getMyRoutines());
+  }, [dispatch]);
 
   return (
     <ScreenContainer>
@@ -57,7 +67,7 @@ export const ScheduleRoutineScreen: FC<ScheduleRoutineScreenProps> = ({
           control,
           name: 'routineId',
         }}
-        options={mockedRoutines}
+        options={routineOptions}
       />
       <ControlledSelectInput
         controller={{

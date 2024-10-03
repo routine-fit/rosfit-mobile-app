@@ -15,8 +15,8 @@ import {
 import { GoogleIcon } from 'src/assets/svg/social-media/google';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import {
-  startGoogleSignIn,
-  startLoginWithEmailPassword,
+  googleSignIn,
+  loginWithEmailPassword,
 } from 'src/store/auth/auth.thunks';
 
 import { Container } from './styles';
@@ -38,7 +38,7 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
   const onValidSubmit: SubmitHandler<LoginForm> = async data => {
     try {
       const { email, password } = data;
-      await dispatch(startLoginWithEmailPassword({ email, password }));
+      await dispatch(loginWithEmailPassword({ email, password }));
     } catch (error: any) {
       Alert.alert(t('screens:login:error'), error.message);
     }
@@ -46,7 +46,7 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await dispatch(startGoogleSignIn());
+      await dispatch(googleSignIn());
     } catch (error: any) {
       Alert.alert(
         'Google Sign-In Failed',

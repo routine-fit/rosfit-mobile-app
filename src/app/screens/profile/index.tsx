@@ -13,7 +13,7 @@ import {
 import { CustomActivityIndicator } from 'src/app/components/activity-indicator';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startGetMyInformation } from 'src/store/profile/profile.thunks';
+import { getMyInformation } from 'src/store/profile/profile.thunks';
 import { commonStyles } from 'src/utils/styles';
 
 import { InfoBox } from './components/info-box';
@@ -38,7 +38,7 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const theme = useTheme();
 
   useEffect(() => {
-    dispatch(startGetMyInformation());
+    dispatch(getMyInformation());
   }, [dispatch]);
 
   if (profileStatus === 'loading') {
@@ -141,6 +141,10 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
                 `common:trainingIntensity.${trainingPreference?.intensity}`,
               )}
               label={t('inputs:label.trainingIntensity')}
+            />
+            <InfoBox
+              value={`${trainingPreference.time}'`}
+              label={t('inputs:label.trainingTime')}
             />
           </InfoContainer>
         </SectionBox>

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
-  startCreateFirebaseUser,
-  startCreateUserInfo,
-  startGoogleSignIn,
-  startLoginWithEmailPassword,
-  startLogoutUser,
+  createFirebaseUser,
+  createUserInfo,
+  googleSignIn,
+  loginWithEmailPassword,
+  logoutUser,
 } from './auth.thunks';
 
 interface AuthState {
@@ -28,66 +28,66 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(startLoginWithEmailPassword.pending, state => {
+      .addCase(loginWithEmailPassword.pending, state => {
         state.uid = null;
         state.email = null;
         state.status = 'loading';
       })
-      .addCase(startLoginWithEmailPassword.fulfilled, (state, action) => {
+      .addCase(loginWithEmailPassword.fulfilled, (state, action) => {
         state.uid = action.payload.uid;
         state.email = action.payload.email;
         state.status = 'succeeded';
       })
-      .addCase(startLoginWithEmailPassword.rejected, (state, action) => {
+      .addCase(loginWithEmailPassword.rejected, (state, action) => {
         state.uid = null;
         state.email = null;
         state.errorMessage =
           action.error.message || 'An error occurred during login';
         state.status = 'failed';
       })
-      .addCase(startCreateFirebaseUser.pending, state => {
+      .addCase(createFirebaseUser.pending, state => {
         state.uid = null;
         state.email = null;
         state.errorMessage = null;
       })
-      .addCase(startCreateFirebaseUser.fulfilled, (state, action) => {
+      .addCase(createFirebaseUser.fulfilled, (state, action) => {
         state.uid = action.payload.uid;
         state.email = action.payload.email;
         state.errorMessage = null;
       })
-      .addCase(startCreateFirebaseUser.rejected, (state, action) => {
+      .addCase(createFirebaseUser.rejected, (state, action) => {
         state.uid = null;
         state.email = null;
         state.errorMessage =
           action.error.message || 'An error occurred during signup';
       })
-      .addCase(startGoogleSignIn.pending, state => {
+      .addCase(googleSignIn.pending, state => {
         state.uid = null;
         state.email = null;
         state.status = 'loading';
       })
-      .addCase(startGoogleSignIn.fulfilled, (state, action) => {
+      .addCase(googleSignIn.fulfilled, (state, action) => {
         state.uid = action.payload.uid;
         state.email = action.payload.email;
         state.status = 'succeeded';
       })
-      .addCase(startGoogleSignIn.rejected, (state, action) => {
+      .addCase(googleSignIn.rejected, (state, action) => {
         state.uid = null;
         state.email = null;
         state.errorMessage =
           action.error.message || 'An error occurred during signin';
         state.status = 'failed';
       })
-      .addCase(startCreateUserInfo.pending, () => {})
-      .addCase(startCreateUserInfo.fulfilled, () => {})
-      .addCase(startCreateUserInfo.rejected, (state, action) => {
+      .addCase(createUserInfo.pending, () => {})
+      .addCase(createUserInfo.fulfilled, () => {})
+      .addCase(createUserInfo.rejected, (state, action) => {
         state.errorMessage =
           action.error.message || 'An error occurred during user info creation';
       })
-      .addCase(startLogoutUser.pending, state => {
+      .addCase(logoutUser.pending, state => {
         state.status = 'loading';
       })
-      .addCase(startLogoutUser.fulfilled, state => {
+      .addCase(logoutUser.fulfilled, state => {
         state.uid = null;
         state.email = null;
         state.status = 'idle';
