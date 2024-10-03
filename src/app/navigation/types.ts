@@ -1,21 +1,26 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 
 export type BottomTabParamList = {
   RoutinesScreen: undefined;
   HomeScreen: undefined;
   DoRoutineStack: undefined;
-  ExerciseStack: undefined;
+  MyExercisesScreen: undefined;
 };
 
 export type MainDrawerParamList = {
-  Home: undefined;
+  Home: NavigatorScreenParams<BottomTabParamList>;
   Profile: undefined;
   EditPersonalInfo: undefined;
   EditTrainingPreferences: undefined;
   WeekSummary: undefined;
   WeeklyExercises: undefined;
   WeeklyExerciseStatistics: { exerciseName: string };
-};
+} & ExercisesParamList;
 
 export type RootStackParamList = {
   // TODO : onboarding , auth, etc
@@ -40,6 +45,12 @@ export type RoutinesParamList = {
 };
 
 export type ExercisesParamList = {
-  MyExercisesScreen: undefined;
   FormExerciseScreen?: { id: string };
 };
+
+export interface TabScreenPropsWithDrawerParamList<
+  TabScreen extends keyof BottomTabParamList,
+> extends CompositeScreenProps<
+    BottomTabScreenProps<BottomTabParamList, TabScreen>,
+    StackScreenProps<MainDrawerParamList>
+  > {}

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { useTheme } from 'styled-components';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Header } from 'src/app/components';
 import DrawerContent from 'src/app/components/drawer';
 import {
+  FormExerciseScreen,
   ProfileScreen,
   WeeklyExerciseStatisticsScreen,
 } from 'src/app/screens/index';
@@ -115,6 +117,15 @@ export const MainAppNavigation = () => {
           navigation,
           theme,
           t('navigation:headers.returnHome'),
+        )}
+      />
+      <Drawer.Screen
+        name="FormExerciseScreen"
+        component={FormExerciseScreen}
+        options={getGoBackHeaderOptions(
+          navigation,
+          theme,
+          t('navigation:headers.exercises'),
         )}
       />
     </Drawer.Navigator>
