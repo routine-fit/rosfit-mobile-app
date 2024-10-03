@@ -133,4 +133,9 @@ export default {
     trainingPreferences: 'Preferencias de entrenamiento',
     measures: 'Medidas corporales',
   },
+  scheduleRoutine: {
+    heading: 'Agenda tu rutina',
+    createSchedule: 'Confirmar rutina',
+    error: 'Error al agendar rutina',
+  },
 };

@@ -14,7 +14,7 @@ import { RoutineFormData } from '../form-config';
 import { Container } from './styles';
 import { AddRoutineProps } from './types';
 
-export const AddRoutine: FC<AddRoutineProps> = ({ navigation }) => {
+export const AddRoutineScreen: FC<AddRoutineProps> = ({ navigation }) => {
   const { t } = useTranslation();
   const { control, handleSubmit } = useFormContext<RoutineFormData>();
 

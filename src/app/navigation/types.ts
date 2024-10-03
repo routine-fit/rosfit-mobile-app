@@ -35,6 +35,7 @@ export type DoRoutineStackParamList = {
 
 export type RoutinesParamList = {
   RoutineDashboard: undefined;
+  ScheduleRoutine: undefined;
   AddRoutine: undefined;
   SelectRoutineExercises: undefined;
   ExercisesRevision: undefined;
