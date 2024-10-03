@@ -11,7 +11,7 @@ import {
   SettingsIcon,
 } from 'src/assets/svg/navigation-icons/';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startLogoutUser } from 'src/store/auth/auth.thunks';
+import { logoutUser } from 'src/store/auth/auth.thunks';
 
 import { MenuItem } from './components/menu-item';
 import {
@@ -29,7 +29,7 @@ const DrawerContent: FC<DrawerContentComponentProps> = ({ navigation }) => {
   );
 
   const handleLogout = async () => {
-    await dispatch(startLogoutUser());
+    await dispatch(logoutUser());
     navigation.navigate('Login');
   };
 

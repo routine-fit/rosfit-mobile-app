@@ -9,7 +9,7 @@ import {
   TrainingPreferenceResponse,
 } from 'src/interfaces/profile-data';
 
-export const startGetMyInformation = createAsyncThunk(
+export const getMyInformation = createAsyncThunk(
   'auth/get-my-info',
   async (_, { rejectWithValue }) => {
     try {
@@ -23,7 +23,7 @@ export const startGetMyInformation = createAsyncThunk(
   },
 );
 
-export const startCreateGrowRecord = createAsyncThunk(
+export const createGrowRecord = createAsyncThunk(
   'auth/create-grow-record',
   async (growRecordData: GrowRecordRequest, { rejectWithValue }) => {
     try {
@@ -40,7 +40,7 @@ export const startCreateGrowRecord = createAsyncThunk(
   },
 );
 
-export const startUpdateTrainingPreferences = createAsyncThunk(
+export const updateTrainingPreferences = createAsyncThunk(
   'auth/update-training-type',
   async (trainingPreferences: TrainingPreferenceData, { rejectWithValue }) => {
     try {

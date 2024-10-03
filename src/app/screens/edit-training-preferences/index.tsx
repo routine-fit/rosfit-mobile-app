@@ -14,7 +14,7 @@ import {
 } from 'src/app/components';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { startUpdateTrainingPreferences } from 'src/store/profile/profile.thunks';
+import { updateTrainingPreferences } from 'src/store/profile/profile.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { Container } from './styles';
@@ -45,14 +45,18 @@ export const EditTrainingPreferencesScreen = ({
       id: trainingPreference?.id || '',
       type: trainingPreference?.type || '',
       intensity: trainingPreference?.intensity || '',
-      time: trainingPreference?.time || 0,
+      time: trainingPreference?.time.toString() || '',
     },
     resolver: yupResolver(validationSchema),
   });
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
-      await dispatch(startUpdateTrainingPreferences(data));
+      const trainingData = {
+        ...data,
+        time: Number(data.time),
+      };
+      await dispatch(updateTrainingPreferences(trainingData));
       navigation.navigate('Profile');
     } catch (error: any) {
       Alert.alert(t('screens:editTrainingPreferences:error'), error.message);

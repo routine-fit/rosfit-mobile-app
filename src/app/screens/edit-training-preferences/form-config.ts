@@ -4,7 +4,7 @@ import * as yup from 'yup';
 export type FormData = {
   id: string;
   type: string;
-  time: number;
+  time: string;
   intensity: string;
 };
 
@@ -19,7 +19,7 @@ export const validationSchema = yup.object().shape({
       field: t('inputs:name.trainingType').toLowerCase(),
     }),
   ),
-  time: yup.number().required(
+  time: yup.string().required(
     t('inputs:error.required', {
       field: t('inputs:name.trainingTime').toLowerCase(),
     }),

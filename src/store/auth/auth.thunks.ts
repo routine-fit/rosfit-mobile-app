@@ -17,7 +17,7 @@ interface SignUpCredentials {
   password: string;
 }
 
-export const startLoginWithEmailPassword = createAsyncThunk(
+export const loginWithEmailPassword = createAsyncThunk(
   'auth/login',
   async (credentials: LoginCredentials, { rejectWithValue }) => {
     try {
@@ -43,7 +43,7 @@ export const startLoginWithEmailPassword = createAsyncThunk(
   },
 );
 
-export const startGoogleSignIn = createAsyncThunk(
+export const googleSignIn = createAsyncThunk(
   'auth/google-signin',
   async (_, { rejectWithValue }) => {
     try {
@@ -67,7 +67,7 @@ export const startGoogleSignIn = createAsyncThunk(
   },
 );
 
-export const startCreateFirebaseUser = createAsyncThunk(
+export const createFirebaseUser = createAsyncThunk(
   'auth/signup',
   async (credentials: SignUpCredentials, { rejectWithValue }) => {
     try {
@@ -92,7 +92,7 @@ export const startCreateFirebaseUser = createAsyncThunk(
   },
 );
 
-export const startCreateUserInfo = createAsyncThunk(
+export const createUserInfo = createAsyncThunk(
   'auth/create-user-info',
   async (userInfo: userInfoData, { rejectWithValue }) => {
     try {
@@ -109,7 +109,7 @@ export const startCreateUserInfo = createAsyncThunk(
   },
 );
 
-export const startLogoutUser = createAsyncThunk(
+export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
