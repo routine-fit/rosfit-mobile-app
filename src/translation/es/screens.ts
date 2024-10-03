@@ -115,17 +115,14 @@ export default {
     successMessage: 'Rutina creada con exito',
     error: 'Error al finalizar revision',
   },
-  exerciseDetails: {
-    editExerciseSuccess: 'Ejercicio actualizado correctamente',
-    error: 'Error al actualizar ejericio',
-    updateExercise: 'Actualizar ejercicio',
-    editExercise: 'Editar ejercicio',
-  },
-  addExercise: {
+  formExercise: {
+    createExercise: 'Crear',
     newExercise: 'Nuevo Ejercicio',
-    createExercise: 'Crear ejercicio',
-    createExerciseSuccess: 'Ejercicio creado correctamente',
-    error: 'Error al crear ejericio',
+    exerciseDetails: 'Detalles del ejercicio',
+    editExercise: 'Editar',
+    deleteExercise: 'Eliminar',
+    error: 'Error al crear ejercicio',
+    deleteModalExercise: 'Estas seguro que deseas eliminar este ejercicio?',
   },
   profileScreen: {
     profileInfo: 'Informacion de perfil',

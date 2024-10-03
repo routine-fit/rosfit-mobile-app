@@ -41,7 +41,7 @@ export const validationSchema = yup.object<ExerciseFormData>().shape({
     ),
 });
 
-export const addExerciseFormConfig: UseFormProps<ExerciseFormData> = {
+export const formExerciseFormConfig: UseFormProps<ExerciseFormData> = {
   defaultValues: {
     exerciseName: '',
     muscleGroup: '' as MuscleGroup,

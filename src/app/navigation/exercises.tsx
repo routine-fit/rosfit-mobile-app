@@ -7,11 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { getGoBackHeaderOptions } from 'src/utils/getGoBackHeaderOptions';
 
 import { Header } from '../components';
-import {
-  AddExerciseScreen,
-  ExerciseDetailsScreen,
-  MyExercisesScreen,
-} from '../screens';
+import { FormExerciseScreen, MyExercisesScreen } from '../screens';
 import { BottomTabParamList, ExercisesParamList } from './types';
 
 const Stack = createStackNavigator<ExercisesParamList>();
@@ -52,13 +48,8 @@ export const ExerciseStack = ({
         options={exerciseHeaderOptions}
       />
       <Stack.Screen
-        name="AddExerciseScreen"
-        component={AddExerciseScreen}
-        options={getGoBackHeaderOptions(navigation, theme)}
-      />
-      <Stack.Screen
-        name="ExerciseDetailsScreen"
-        component={ExerciseDetailsScreen}
+        name="FormExerciseScreen"
+        component={FormExerciseScreen}
         options={getGoBackHeaderOptions(navigation, theme)}
       />
     </Stack.Navigator>

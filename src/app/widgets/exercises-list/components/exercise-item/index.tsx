@@ -25,9 +25,7 @@ const ExerciseItem = ({ item }: ExerciseItemProps) => {
 
   return (
     <ExerciseContainer
-      onPress={() =>
-        navigation.navigate('ExerciseDetailsScreen', { exercise: item })
-      }
+      onPress={() => navigation.navigate('FormExerciseScreen', { id: item.id })}
     >
       <TextWrapper>
         <Text>{item.name}</Text>

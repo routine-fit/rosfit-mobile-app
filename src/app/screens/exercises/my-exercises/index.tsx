@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
 import ExerciseList from 'src/app/widgets/exercises-list';
+import { useAppDispatch } from 'src/store';
+import { clearExercise } from 'src/store/exercise/exercise.actions';
 
 import { BottomContainer } from './styles';
 import { MyExercisesScreenProps } from './types';
@@ -12,6 +14,7 @@ export const MyExercisesScreen: FC<MyExercisesScreenProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   return (
     <ScreenContainer>
@@ -21,7 +24,10 @@ export const MyExercisesScreen: FC<MyExercisesScreenProps> = ({
       <ExerciseList />
       <BottomContainer>
         <Button
-          onPress={() => navigation.navigate('AddExerciseScreen')}
+          onPress={() => {
+            dispatch(clearExercise());
+            navigation.navigate('FormExerciseScreen');
+          }}
           fullWidth={false}
           content={t('screens:exercises.newExercise')}
           trailingIcon={<PlusIcon />}

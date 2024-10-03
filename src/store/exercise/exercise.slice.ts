@@ -1,17 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Exercise } from 'src/interfaces/exercises';
+import { Exercise, MuscleGroup } from 'src/interfaces/exercises';
 
-import { createExercise, getExercises } from './exercise.thunks';
+import { clearExercise } from './exercise.actions';
+import {
+  createExercise,
+  editExercise,
+  getExerciseById,
+  getExercises,
+} from './exercise.thunks';
 
 interface ExerciseState {
   exerciseList: Exercise[];
+  exercise: Exercise;
   errorMessage: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
 const initialState: ExerciseState = {
   exerciseList: [],
+  exercise: {
+    id: '',
+    muscleGroup: '' as MuscleGroup,
+    name: '',
+    links: [],
+  },
   errorMessage: null,
   status: 'idle',
 };
@@ -30,7 +43,6 @@ export const exerciseSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(getExercises.rejected, (state, action) => {
-        state.exerciseList = [];
         state.errorMessage =
           action.error.message ||
           'An error occurred during while getting the exercises';
@@ -47,6 +59,34 @@ export const exerciseSlice = createSlice({
           action.error.message ||
           'An error occurred during while creating the exercise';
         state.status = 'failed';
+      })
+      .addCase(getExerciseById.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(getExerciseById.fulfilled, (state, action) => {
+        state.exercise = action.payload.exercise;
+        state.status = 'succeeded';
+      })
+      .addCase(getExerciseById.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message ||
+          'An error occurred during while updating the exercise';
+        state.status = 'failed';
+      })
+      .addCase(editExercise.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(editExercise.fulfilled, state => {
+        state.status = 'succeeded';
+      })
+      .addCase(editExercise.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message ||
+          'An error occurred during while updating the exercise';
+        state.status = 'failed';
+      })
+      .addCase(clearExercise, state => {
+        state.exercise = initialState.exercise;
       });
   },
 });
