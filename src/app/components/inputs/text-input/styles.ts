@@ -57,6 +57,7 @@ export const InputContainer = styled.View<InputContainerProps>`
   align-items: center;
   overflow: hidden;
   height: 48px;
+  margin-top: 6px;
   margin-bottom: 4px;
   ${props => inputVariantsMap(props)[props.variant ?? 'outlined']}
 

@@ -1,3 +1,2 @@
-export * from './add-exercise';
-export * from './exercise-details';
+export * from './form-exercise';
 export * from './my-exercises';

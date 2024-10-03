@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { Timer } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { useMemo } from 'react';
@@ -9,7 +10,7 @@ import {
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import { Header } from 'src/app/components';
-import { HomeScreen } from 'src/app/screens';
+import { HomeScreen, MyExercisesScreen } from 'src/app/screens';
 import { UserAvatar } from 'src/assets/svg/avatar/user-avatar';
 import {
   DumbbellIcon,
@@ -19,7 +20,6 @@ import {
 import { useAppSelector } from 'src/store';
 
 import { DoRoutineStack } from './do-routine';
-import { ExerciseStack } from './exercises';
 import { RoutineStack } from './routines-stack';
 import { BottomTabParamList } from './types';
 
@@ -87,11 +87,11 @@ export const BottomTab = () => {
 
   const ExerciseHeaderOptions = useMemo(
     () => ({
-      headerShown: false,
+      headerTitle: t('navigation:headers.exercises'),
       tabBarIcon: ({ focused }: { focused: boolean }) =>
         renderIcon(<DumbbellIcon />, focused),
     }),
-    [renderIcon],
+    [renderIcon, t],
   );
 
   return (
@@ -123,8 +123,8 @@ export const BottomTab = () => {
         options={DoRoutineHeaderOptions}
       />
       <Tab.Screen
-        name="ExerciseStack"
-        component={ExerciseStack}
+        name="MyExercisesScreen"
+        component={MyExercisesScreen}
         options={ExerciseHeaderOptions}
       />
     </Tab.Navigator>
