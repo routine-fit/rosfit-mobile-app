@@ -122,7 +122,9 @@ export default {
     editExercise: 'Editar',
     deleteExercise: 'Eliminar',
     error: 'Error al crear ejercicio',
-    deleteModalExercise: 'Estas seguro que deseas eliminar este ejercicio?',
+    deleteModalHeader: 'Deseas eliminar este ejercicio?',
+    deleteModalContent:
+      'Al eliminar este ejercicio, perderás toda la information asociada al mismo. Estas seguro?',
   },
   profileScreen: {
     profileInfo: 'Informacion de perfil',

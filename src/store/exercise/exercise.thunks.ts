@@ -72,3 +72,18 @@ export const editExercise = createAsyncThunk(
     }
   },
 );
+
+export const deleteExercise = createAsyncThunk(
+  'exercise/delete-exercise',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await rosFitApi.delete(`/exercise/${id}`);
+      return { exercise: response.data.data };
+    } catch (error: any) {
+      console.log('error', error);
+      return rejectWithValue(
+        error.message || 'Something went wrong. Please try again.',
+      );
+    }
+  },
+);

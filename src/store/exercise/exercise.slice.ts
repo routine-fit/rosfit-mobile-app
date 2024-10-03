@@ -5,6 +5,7 @@ import { Exercise, MuscleGroup } from 'src/interfaces/exercises';
 import { clearExercise } from './exercise.actions';
 import {
   createExercise,
+  deleteExercise,
   editExercise,
   getExerciseById,
   getExercises,
@@ -87,6 +88,18 @@ export const exerciseSlice = createSlice({
       })
       .addCase(clearExercise, state => {
         state.exercise = initialState.exercise;
+      })
+      .addCase(deleteExercise.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(deleteExercise.fulfilled, state => {
+        state.status = 'succeeded';
+      })
+      .addCase(deleteExercise.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message ||
+          'An error occurred during while deleting the exercise';
+        state.status = 'failed';
       });
   },
 });

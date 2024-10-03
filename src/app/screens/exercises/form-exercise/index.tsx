@@ -8,6 +8,7 @@ import {
   Button,
   ControlledSelectInput,
   ControlledTextInput,
+  GapContainer,
   ScreenContainer,
   SharedModal,
   Text,
@@ -17,6 +18,7 @@ import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import {
   createExercise,
+  deleteExercise,
   editExercise,
   getExerciseById,
   getExercises,
@@ -90,6 +92,15 @@ export const FormExerciseScreen: FC<FormExerciseScreenProps> = ({
     }
   };
 
+  const handleDelete = async () => {
+    if (route.params?.id) {
+      await dispatch(deleteExercise(route.params?.id));
+      await dispatch(getExercises());
+      setShowModal(false);
+      navigation.goBack();
+    }
+  };
+
   return (
     <ScreenContainer>
       <Text fontSize="xl" fontWeight="medium">
@@ -147,13 +158,29 @@ export const FormExerciseScreen: FC<FormExerciseScreenProps> = ({
         onClose={() => {
           setShowModal(false);
         }}
-        title={t('screens:formExercise.deleteModalExercise')}
+        title={t('screens:formExercise.deleteModalHeader')}
         body={
-          <Button
-            variant="outlined"
-            content={t('common:button.confirm')}
-            onPress={() => {}}
-          />
+          <GapContainer space={16}>
+            <Text>{t('screens:formExercise.deleteModalContent')}</Text>
+            <ButtonsContainer>
+              <Button
+                content={t('common:button.confirm')}
+                onPress={handleDelete}
+                size="m"
+                fullWidth={false}
+              />
+              <Button
+                variant="outlined"
+                content={t('common:button.cancel')}
+                onPress={() => {
+                  setShowModal(false);
+                }}
+                size="m"
+                fullWidth={false}
+                themeColor="error"
+              />
+            </ButtonsContainer>
+          </GapContainer>
         }
       />
     </ScreenContainer>
