@@ -14,6 +14,16 @@ export const SectionContainer = styled.View`
   gap: 20px;
 `;
 
+export const NoRoutinesBadge = styled.View`
+  background-color: ${({ theme }) => theme.colors.fill.section};
+  border-radius: 8px;
+  padding-horizontal: 24px;
+  padding-vertical: 18px;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 14px;
+`;
+
 export const RowContainer = styled.View`
   gap: 20px;
   margin-bottom: 15px;

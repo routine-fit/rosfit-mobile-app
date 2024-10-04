@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -7,10 +7,12 @@ import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
 import { CustomActivityIndicator } from 'src/app/components/activity-indicator';
 import { RoutineBadge } from 'src/app/components/routine-badge';
 import { MainDrawerParamList } from 'src/app/navigation/types';
+import { weekDays } from 'src/constants/weekdays';
 import { DashboardData } from 'src/interfaces/dashboard';
 import dashboardDataFile from 'src/mocks/dashboard-data.json';
-import { useAppDispatch } from 'src/store';
+import { useAppDispatch, useAppSelector } from 'src/store';
 import { getMyInformation } from 'src/store/profile/profile.thunks';
+import { getMyScheduleRoutines } from 'src/store/routine/routine.thunks';
 
 import ExerciseInfoRow from './components/exercise-info-row';
 import PersonalRecordCard from './components/personal-record-card';
@@ -19,6 +21,7 @@ import {
   Container,
   FlexRow,
   FlexWrapView,
+  NoRoutinesBadge,
   RowContainer,
   SectionContainer,
 } from './styles';
@@ -29,6 +32,7 @@ export const HomeScreen = () => {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(
     null,
   );
+  const { scheduleRoutines } = useAppSelector(state => state.routine);
   const dispatch = useAppDispatch();
 
   const fetchDashboardData = (): Promise<DashboardData> => {
@@ -43,6 +47,8 @@ export const HomeScreen = () => {
     });
   };
 
+  const today = useMemo(() => weekDays[new Date().getDay()], []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,7 +61,8 @@ export const HomeScreen = () => {
 
     fetchData();
     dispatch(getMyInformation());
-  }, [dispatch]);
+    dispatch(getMyScheduleRoutines(today));
+  }, [dispatch, today]);
 
   if (!dashboardData) {
     return (
@@ -79,11 +86,20 @@ export const HomeScreen = () => {
             flexTitleAlign="center"
             type="h3"
           />
-          <RoutineBadge
-            title={dashboardData.routine.title}
-            subtitle={dashboardData.routine.duration}
-            onPress={() => {}}
-          />
+          {scheduleRoutines.length ? (
+            <RoutineBadge
+              title={scheduleRoutines[0]?.routine.name}
+              onPress={() => {}}
+            />
+          ) : (
+            <NoRoutinesBadge>
+              <Text>
+                {t(`screens:dashboard.noScheduleRoutines`, {
+                  today: t(`common:weekDay.${today}`),
+                })}
+              </Text>
+            </NoRoutinesBadge>
+          )}
 
           <Heading
             title={t('screens:dashboard.heading2')}

@@ -32,6 +32,7 @@ export default {
     heading2: 'Resumen de la semana',
     heading3: 'Ejercicios populares',
     heading4: 'Records personales (PR)',
+    noScheduleRoutines: '{{today}} sin rutinas agendadas',
     trainingFrequency: 'Frecuencia de entrenamiento',
     trainingDuration: 'Duración de sesiones',
     trainingType: 'Tipo de entrenamiento',
