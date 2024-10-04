@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 
-import { RoutineExercise } from 'src/interfaces/routine-exercises';
+import { RoutineExercise } from 'src/interfaces/routine';
 
 export const Container = styled.View`
   flex: 1;

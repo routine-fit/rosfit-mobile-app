@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
@@ -9,8 +9,9 @@ import { Button, Heading, ScreenContainer, Text } from 'src/app/components';
 import ControlledSelectInput from 'src/app/components/inputs/select';
 import { weekDays } from 'src/constants/weekdays';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
-import { RoutineExercise } from 'src/interfaces/routine-exercises';
-import routineExercisesDataFile from 'src/mocks/do-routine-exercises.json';
+import { RoutineExercise } from 'src/interfaces/routine';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import { getMyScheduleRoutines } from 'src/store/routine/routine.thunks';
 
 import { FormData, validationSchema } from './form-config';
 import { Container, ExercisesDataContainer, FlatlistContainer } from './styles';
@@ -19,37 +20,14 @@ import { Props } from './types';
 export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const { scheduleRoutines } = useAppSelector(state => state.routine);
 
   const routineOptions = useTranslatedOptions(weekDays, 'common:weekDay');
 
-  const [routineExercisesData, setRoutineExercisesData] = useState<
-    RoutineExercise[] | []
-  >([]);
-
-  const fetchRoutineExercisesData = (): Promise<RoutineExercise[]> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          resolve(routineExercisesDataFile as RoutineExercise[]);
-        } catch (error) {
-          reject(error);
-        }
-      }, 1000);
-    });
-  };
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchRoutineExercisesData();
-        setRoutineExercisesData(data);
-      } catch (error) {
-        console.error('Error fetching routines data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    dispatch(getMyScheduleRoutines());
+  }, [dispatch]);
 
   const { control, handleSubmit, watch } = useForm<FormData>({
     defaultValues: {
@@ -61,10 +39,10 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
   const selectedRoutine = watch('routine');
 
   const filteredExercises = useMemo(() => {
-    return routineExercisesData.filter(
-      exercise => exercise.routine === selectedRoutine,
-    );
-  }, [routineExercisesData, selectedRoutine]);
+    return scheduleRoutines
+      .filter(routine => routine.day === selectedRoutine)
+      .flatMap(routine => routine.routine.exercises);
+  }, [scheduleRoutines, selectedRoutine]);
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
@@ -81,13 +59,9 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
       backgroundColor={theme.colors.fill.section}
     >
       <Text fontSize="lg" textAlign="center">
-        {item.exercise}
+        {item.exercise.name}
       </Text>
-      <Text>
-        {t('screens:selectRoutine.series', {
-          series: item.series,
-        })}
-      </Text>
+      {/* TODO: Add series length, currently not available on server select */}
       <Text>
         {t('screens:selectRoutine.repetitions', {
           repetitions: item.repetitions,
@@ -95,13 +69,8 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
       </Text>
       <Text>
         {t('screens:selectRoutine.restTime', {
-          restTime: item.restTime,
+          restTime: item.restTimeSecs,
         })}
-      </Text>
-      <Text>
-        {item.variableWeight
-          ? t('screens:selectRoutine.withVariableWeight')
-          : t('screens:selectRoutine.withoutVariableWeight')}
       </Text>
     </ExercisesDataContainer>
   );
@@ -110,7 +79,7 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
     <ScreenContainer>
       <Container>
         <Heading
-          title={'Comenzar rutina'}
+          title={t('screens:selectRoutine.heading1')}
           flexTitleAlign="center"
           bottomSpace={false}
         />
@@ -132,7 +101,7 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
       </Container>
 
       <Button
-        content="Comenzar Rutina"
+        content={t('screens:selectRoutine.heading1')}
         disabled={!selectedRoutine}
         onPress={handleSubmit(onValidSubmit)}
       />

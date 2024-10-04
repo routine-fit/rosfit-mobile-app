@@ -53,6 +53,7 @@ export default {
     exercisesBtn: 'Ejercicios Realizados',
   },
   selectRoutine: {
+    heading1: 'Comenzar Rutina',
     error: 'Error al seleccionar rutina',
     series: 'Series: {{series}}',
     repetitions: 'Repeticiones: {{repetitions}}',

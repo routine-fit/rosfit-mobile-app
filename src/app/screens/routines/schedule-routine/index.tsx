@@ -12,7 +12,10 @@ import {
 } from 'src/app/components';
 import { weekDays } from 'src/constants/weekdays';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
-import { getMyRoutines } from 'src/store/routine/routine.thunks';
+import {
+  createScheduleRoutine,
+  getMyRoutines,
+} from 'src/store/routine/routine.thunks';
 
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
 import { ScheduleRoutineFormData, validationSchema } from './form-config';
@@ -43,9 +46,9 @@ export const ScheduleRoutineScreen: FC<ScheduleRoutineScreenProps> = ({
     [routines],
   );
 
-  const onValidSubmit: SubmitHandler<ScheduleRoutineFormData> = async _data => {
+  const onValidSubmit: SubmitHandler<ScheduleRoutineFormData> = async data => {
     try {
-      //TODO: dispatch thunks
+      dispatch(createScheduleRoutine(data));
       navigation.navigate('RoutineDashboard');
     } catch (error: any) {
       Alert.alert(t('screens:scheduleRoutine:error'), error.message);
