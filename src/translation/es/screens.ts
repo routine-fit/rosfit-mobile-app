@@ -103,7 +103,7 @@ export default {
     scheduleRoutine: 'Agendar rutina',
     newRoutine: 'Nueva rutina',
     noScheduleRoutines: 'Sin rutinas agendadas',
-    noUnscheduleRoutines: 'Todas las rutinas estan programadas',
+    noUnscheduleRoutines: 'No se encuentran rutinas sin programar',
   },
   addRoutine: {
     heading: 'Crear nueva rutina',

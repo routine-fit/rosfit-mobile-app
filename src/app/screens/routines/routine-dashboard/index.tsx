@@ -65,7 +65,7 @@ export const RoutineDashboardScreen: FC<RoutineDashboardProps> = ({
             title={t('screens:routineDashboard.unscheduledRoutines')}
             type="h3"
           />
-          {unscheduledRoutines ? (
+          {unscheduledRoutines.length ? (
             <RoutineBadge
               title={unscheduledRoutines[0]?.name}
               onPress={() => {}}
