@@ -50,7 +50,7 @@ export const RoutineDashboardScreen: FC<RoutineDashboardProps> = ({
               subtitle={
                 closestRoutine.day === today
                   ? t('common:today')
-                  : closestRoutine.day
+                  : t(`common:weekDay.${closestRoutine.day}`)
               }
               onPress={() => {}}
             />
