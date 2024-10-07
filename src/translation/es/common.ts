@@ -50,4 +50,5 @@ export default {
     BALANCE: 'Equilibrio',
     CARDIO: 'Cardio',
   },
+  today: 'Hoy',
 };

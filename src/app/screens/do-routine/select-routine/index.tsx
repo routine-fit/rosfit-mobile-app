@@ -31,7 +31,7 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
 
   const { control, handleSubmit, watch } = useForm<FormData>({
     defaultValues: {
-      routine: '',
+      routine: scheduleRoutines[0]?.day,
     },
     resolver: yupResolver(validationSchema),
   });
@@ -90,13 +90,17 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
           }}
           options={routineOptions}
         />
-        {selectedRoutine && (
+        {filteredExercises.length ? (
           <FlatlistContainer
             data={filteredExercises}
             renderItem={renderExercise}
             keyExtractor={item => item.id.toString()}
             collapsable
           />
+        ) : (
+          <Text textAlign="center" fontSize="2xl">
+            {t('screens:selectRoutine.noRoutinesAssigned')}
+          </Text>
         )}
       </Container>
 

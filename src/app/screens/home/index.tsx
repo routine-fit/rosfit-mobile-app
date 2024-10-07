@@ -93,11 +93,7 @@ export const HomeScreen = () => {
             />
           ) : (
             <NoRoutinesBadge>
-              <Text>
-                {t(`screens:dashboard.noScheduleRoutines`, {
-                  today: t(`common:weekDay.${today}`),
-                })}
-              </Text>
+              <Text>{t(`screens:dashboard.noScheduleRoutines`)}</Text>
             </NoRoutinesBadge>
           )}
 
