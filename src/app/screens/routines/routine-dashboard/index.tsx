@@ -31,8 +31,6 @@ export const RoutineDashboardScreen: FC<RoutineDashboardProps> = ({
     scheduleRoutines,
   );
 
-  console.log(unscheduledRoutines);
-
   useEffect(() => {
     dispatch(getMyRoutines());
     dispatch(getMyScheduleRoutines());
