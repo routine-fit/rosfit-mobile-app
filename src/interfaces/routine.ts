@@ -12,7 +12,6 @@ export interface RoutineExercise {
     id: string;
     name: string;
     muscleGroup: string;
-    userId: string;
   };
   repetitions: number;
   restTimeSecs: number;
