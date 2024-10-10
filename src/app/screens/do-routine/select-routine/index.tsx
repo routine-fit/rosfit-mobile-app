@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components';
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
@@ -25,24 +25,22 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
 
   const routineOptions = useTranslatedOptions(weekDays, 'common:weekDay');
 
-  useEffect(() => {
-    dispatch(getMyScheduleRoutines());
-  }, [dispatch]);
-
   const { control, handleSubmit, watch } = useForm<FormData>({
     defaultValues: {
-      routine: scheduleRoutines[0]?.day,
+      routine: weekDays[new Date().getDay()],
     },
     resolver: yupResolver(validationSchema),
   });
 
   const selectedRoutine = watch('routine');
 
-  const filteredExercises = useMemo(() => {
-    return scheduleRoutines
-      .filter(routine => routine.day === selectedRoutine)
-      .flatMap(routine => routine.routine.exercises);
-  }, [scheduleRoutines, selectedRoutine]);
+  useEffect(() => {
+    dispatch(getMyScheduleRoutines(selectedRoutine));
+  }, [dispatch, selectedRoutine]);
+
+  const formattedExercises = useMemo(() => {
+    return scheduleRoutines.flatMap(routine => routine.routine.exercises);
+  }, [scheduleRoutines]);
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
@@ -53,26 +51,33 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
     }
   };
 
-  const renderExercise = ({ item }: { item: RoutineExercise }) => (
-    <ExercisesDataContainer
-      key={item.id}
-      backgroundColor={theme.colors.fill.section}
-    >
-      <Text fontSize="lg" textAlign="center">
-        {item.exercise.name}
-      </Text>
-      {/* TODO: Add series length, currently not available on server select */}
-      <Text>
-        {t('screens:selectRoutine.repetitions', {
-          repetitions: item.repetitions,
-        })}
-      </Text>
-      <Text>
-        {t('screens:selectRoutine.restTime', {
-          restTime: item.restTimeSecs,
-        })}
-      </Text>
-    </ExercisesDataContainer>
+  const renderExercise = useCallback(
+    ({ item }: { item: RoutineExercise }) => (
+      <ExercisesDataContainer
+        key={item.id}
+        backgroundColor={theme.colors.fill.section}
+      >
+        <Text fontSize="lg" textAlign="center">
+          {item.exercise.name}
+        </Text>
+        <Text>
+          {t('screens:selectRoutine.repetitions', {
+            repetitions: item.repetitions,
+          })}
+        </Text>
+        <Text>
+          {t('screens:selectRoutine.restTime', {
+            restTime: item.restTimeSecs,
+          })}
+        </Text>
+        <Text>
+          {t('screens:selectRoutine.series', {
+            series: item.series.length,
+          })}
+        </Text>
+      </ExercisesDataContainer>
+    ),
+    [theme, t],
   );
 
   return (
@@ -90,9 +95,9 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
           }}
           options={routineOptions}
         />
-        {filteredExercises.length ? (
+        {formattedExercises.length ? (
           <FlatlistContainer
-            data={filteredExercises}
+            data={formattedExercises}
             renderItem={renderExercise}
             keyExtractor={item => item.id.toString()}
             collapsable
