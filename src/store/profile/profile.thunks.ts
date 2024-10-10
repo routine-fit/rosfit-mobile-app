@@ -10,7 +10,7 @@ import {
 } from 'src/interfaces/profile-data';
 
 export const getMyInformation = createAsyncThunk(
-  'auth/get-my-info',
+  'profile/get-my-info',
   async (_, { rejectWithValue }) => {
     try {
       const response = await rosFitApi.get<ProfileInfoResponse>('/me');
@@ -24,7 +24,7 @@ export const getMyInformation = createAsyncThunk(
 );
 
 export const createGrowRecord = createAsyncThunk(
-  'auth/create-grow-record',
+  'profile/create-grow-record',
   async (growRecordData: GrowRecordRequest, { rejectWithValue }) => {
     try {
       const response = await rosFitApi.post<GrowRecordResponse>(
@@ -41,7 +41,7 @@ export const createGrowRecord = createAsyncThunk(
 );
 
 export const updateTrainingPreferences = createAsyncThunk(
-  'auth/update-training-type',
+  'profile/update-training-type',
   async (trainingPreferences: TrainingPreferenceData, { rejectWithValue }) => {
     try {
       const { id, ...rest } = trainingPreferences;

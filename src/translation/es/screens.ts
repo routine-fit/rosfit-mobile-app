@@ -32,6 +32,7 @@ export default {
     heading2: 'Resumen de la semana',
     heading3: 'Ejercicios populares',
     heading4: 'Records personales (PR)',
+    noScheduleRoutines: 'Sin rutinas agendadas para hoy',
     trainingFrequency: 'Frecuencia de entrenamiento',
     trainingDuration: 'Duración de sesiones',
     trainingType: 'Tipo de entrenamiento',
@@ -53,12 +54,14 @@ export default {
     exercisesBtn: 'Ejercicios Realizados',
   },
   selectRoutine: {
+    heading1: 'Comenzar Rutina',
     error: 'Error al seleccionar rutina',
     series: 'Series: {{series}}',
     repetitions: 'Repeticiones: {{repetitions}}',
     restTime: 'Tiempo de descanso: {{restTime}}"',
     withVariableWeight: 'Con peso variable',
     withoutVariableWeight: 'Sin peso variable',
+    noRoutinesAssigned: 'Sin rutinas asignadas',
   },
   routineRunner: {
     completeRoutine: 'Completar rutina',
@@ -99,6 +102,8 @@ export default {
     unscheduledRoutines: 'Rutinas sin programar',
     scheduleRoutine: 'Agendar rutina',
     newRoutine: 'Nueva rutina',
+    noScheduleRoutines: 'Sin rutinas agendadas',
+    noUnscheduleRoutines: 'No se encuentran rutinas sin programar',
   },
   addRoutine: {
     heading: 'Crear nueva rutina',
