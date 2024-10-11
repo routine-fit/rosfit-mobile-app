@@ -92,7 +92,13 @@ export const ExerciseItem: FC<ExerciseItemProps> = ({
             content="Agregar Serie"
             variant="outlined"
             trailingIcon={<Plus />}
-            onPress={() => append({ weight: '', weightMeasure: 'kg' })}
+            onPress={() =>
+              append({
+                order: seriesFields.length + 1,
+                weight: '',
+                weightMeasure: 'kg',
+              })
+            }
           />
         </ExerciseContainer>
       }

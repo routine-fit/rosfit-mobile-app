@@ -46,8 +46,9 @@ const SelectExerciseList: FC<SelectExerciseListProps> = ({
         appendExercise({
           exerciseId: exercise.id,
           repetitions: '0',
+          order: fields.length + 1,
           restTimeSecs: '0',
-          series: [{ weight: '0', weightMeasure: 'kg' }],
+          series: [{ order: 1, weight: '0', weightMeasure: 'kg' }],
         });
       }
     } else {

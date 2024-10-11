@@ -12,14 +12,12 @@ export const SelectRoutineExercisesScreen: FC<SelectRoutineExercisesProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();
-  const { control, watch } = useFormContext<RoutineFormData>();
+  const { control } = useFormContext<RoutineFormData>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'exercises',
   });
 
-  const formData = watch();
-  console.log('Current form data:', JSON.stringify(formData, null, 2));
   return (
     <ScreenContainer>
       <Text fontSize="xl" fontWeight="medium" textAlign="center">
