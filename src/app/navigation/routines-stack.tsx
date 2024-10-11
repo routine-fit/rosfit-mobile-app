@@ -12,8 +12,6 @@ import {
   ScheduleRoutineScreen,
   SelectRoutineExercisesScreen,
 } from 'src/app/screens/routines';
-import { Exercise } from 'src/interfaces/exercises';
-import mockedExercises from 'src/mocks/weekly-exercises-data.json';
 import { getGoBackHeaderOptions } from 'src/utils/getGoBackHeaderOptions';
 
 import { Header } from '../components';
@@ -31,7 +29,7 @@ export const RoutineStack: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const formConfig = createFormConfig(mockedExercises as Exercise[]);
+  const formConfig = createFormConfig();
   const methods = useForm<RoutineFormData>(formConfig);
 
   const routineHeaderOptions = useMemo(

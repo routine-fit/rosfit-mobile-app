@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { UseFormProps } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Exercise, RoutineExerciseFormData } from 'src/interfaces/exercises';
+import { RoutineExerciseFormData } from 'src/interfaces/exercises';
 
 export type RoutineFormData = {
   routineName: string;
@@ -44,7 +44,7 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
     .array()
     .of(
       yup.object().shape({
-        id: yup.string().optional(),
+        exerciseId: yup.string().optional(),
         repetitions: yup
           .string()
           .required(
@@ -111,28 +111,15 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
           ),
       }),
     )
-    .required()
-    .min(1),
+    .required(),
 });
 
-export const createFormConfig = (
-  exercises: Exercise[] = [],
-): UseFormProps<RoutineFormData> => {
+export const createFormConfig = (): UseFormProps<RoutineFormData> => {
   return {
     defaultValues: {
       routineName: '',
       routineType: '',
-      exercises: exercises.map(ex => ({
-        id: ex.id,
-        repetitions: '10',
-        restTimeSecs: '30',
-        series: [
-          {
-            weight: '10',
-            weightMeasure: 'kg',
-          },
-        ],
-      })),
+      exercises: [],
     },
     resolver: yupResolver(validationSchema),
   };
