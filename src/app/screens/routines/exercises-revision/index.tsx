@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert, FlatList } from 'react-native';
@@ -11,7 +11,8 @@ import {
 } from 'src/app/components';
 import { LottieAnimation } from 'src/app/components/lottie-animation';
 import { Exercise } from 'src/interfaces/exercises';
-import mockedExercises from 'src/mocks/weekly-exercises-data.json';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import { getExercises } from 'src/store/exercise/exercise.thunks';
 
 import { RoutineFormData } from '../form-config';
 import { ExerciseItem } from './components/exercise-item';
@@ -22,18 +23,32 @@ export const ExercisesRevisionScreen: FC<ExerciseRevisionProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { exerciseList } = useAppSelector(state => state.exercise);
 
-  const { control, handleSubmit } = useFormContext<RoutineFormData>();
+  const { control, handleSubmit, watch, reset } =
+    useFormContext<RoutineFormData>();
+
+  const exercisesForm = watch('exercises');
+
+  const filteredExercises = exerciseList.filter(exercise =>
+    exercisesForm.some(formExercise => formExercise.exerciseId === exercise.id),
+  );
 
   const onValidSubmit: SubmitHandler<RoutineFormData> = async _data => {
     try {
       // TODO: dispatch thunks
       setShowModal(true);
+      reset();
     } catch (error: any) {
       Alert.alert(t('screens:addRoutine:error'), error.message);
     }
   };
+
+  useEffect(() => {
+    dispatch(getExercises());
+  }, [dispatch]);
 
   return (
     <ScreenContainer>
@@ -43,7 +58,7 @@ export const ExercisesRevisionScreen: FC<ExerciseRevisionProps> = ({
         flexTitleAlign="center"
       />
       <FlatList
-        data={mockedExercises as Exercise[]}
+        data={filteredExercises as Exercise[]}
         renderItem={({ item, index }) => (
           <ExerciseItem item={item} control={control} index={index} />
         )}

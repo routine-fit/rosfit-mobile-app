@@ -37,14 +37,18 @@ export const AddRoutineScreen: FC<AddRoutineProps> = ({ navigation }) => {
         <ControlledTextInput
           controller={{
             control,
-            name: 'routineName',
+            name: 'name',
           }}
+          label={t('inputs:label:routineName')}
+          placeholder={t('inputs:placeholder:routineName')}
         />
         <ControlledTextInput
           controller={{
             control,
-            name: 'routineType',
+            name: 'type',
           }}
+          label={t('inputs:label:routineType')}
+          placeholder={t('inputs:placeholder:routineType')}
         />
       </Container>
       <Button

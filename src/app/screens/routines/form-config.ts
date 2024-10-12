@@ -3,16 +3,16 @@ import * as yup from 'yup';
 import { UseFormProps } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Exercise, RoutineExerciseFormData } from 'src/interfaces/exercises';
+import { RoutineExerciseFormData } from 'src/interfaces/exercises';
 
 export type RoutineFormData = {
-  routineName: string;
-  routineType: string;
+  name: string;
+  type: string;
   exercises: RoutineExerciseFormData[];
 };
 
 export const validationSchema = yup.object<RoutineFormData>().shape({
-  routineName: yup
+  name: yup
     .string()
     .required(
       t('inputs:error.required', {
@@ -26,7 +26,7 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
         min: 2,
       }),
     ),
-  routineType: yup
+  type: yup
     .string()
     .required(
       t('inputs:error.required', {
@@ -44,7 +44,7 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
     .array()
     .of(
       yup.object().shape({
-        id: yup.string().optional(),
+        exerciseId: yup.string().optional(),
         repetitions: yup
           .string()
           .required(
@@ -75,10 +75,26 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
             }),
             value => !isNaN(Number(value)) && Number(value) > 0,
           ),
+        order: yup
+          .number()
+          .required(
+            t('inputs:error.required', {
+              field: t('inputs:label.order').toLowerCase(),
+            }),
+          )
+          .min(1),
         series: yup
           .array()
           .of(
             yup.object().shape({
+              order: yup
+                .number()
+                .required(
+                  t('inputs:error.required', {
+                    field: t('inputs:label.order').toLowerCase(),
+                  }),
+                )
+                .min(1),
               weight: yup
                 .string()
                 .required(
@@ -111,28 +127,15 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
           ),
       }),
     )
-    .required()
-    .min(1),
+    .required(),
 });
 
-export const createFormConfig = (
-  exercises: Exercise[] = [],
-): UseFormProps<RoutineFormData> => {
+export const createFormConfig = (): UseFormProps<RoutineFormData> => {
   return {
     defaultValues: {
-      routineName: '',
-      routineType: '',
-      exercises: exercises.map(ex => ({
-        id: ex.id,
-        repetitions: '10',
-        restTimeSecs: '30',
-        series: [
-          {
-            weight: '10',
-            weightMeasure: 'kg',
-          },
-        ],
-      })),
+      name: '',
+      type: '',
+      exercises: [],
     },
     resolver: yupResolver(validationSchema),
   };
