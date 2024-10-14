@@ -71,5 +71,6 @@ export default {
     minValue: '{{field}} debe ser mayor a {{min}}',
     invalidMuscleGroup: 'El grupo muscular seleccionado no es valido',
     invalidUrl: 'La url ingresada no es valida',
+    invalidNumber: 'El valor ingresado debe ser numerico',
   },
 };

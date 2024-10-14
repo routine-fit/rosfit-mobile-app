@@ -17,14 +17,14 @@ export interface Exercise {
 
 export type RoutineExerciseFormData = {
   exerciseId?: string;
-  repetitions: string;
+  repetitions: number;
   order: number;
-  restTimeSecs: string;
+  restTimeSecs: number;
   series: Series[];
 };
 
 export interface Series {
   order: number;
-  weight: string;
+  weight: number;
   weightMeasure: string;
 }

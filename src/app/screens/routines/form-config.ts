@@ -46,7 +46,8 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
       yup.object().shape({
         exerciseId: yup.string().optional(),
         repetitions: yup
-          .string()
+          .number()
+          .typeError(t('inputs:error.invalidNumber'))
           .required(
             t('inputs:error.required', {
               field: t('inputs:label.repetitions').toLowerCase(),
@@ -61,7 +62,8 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
             value => !isNaN(Number(value)) && Number(value) > 0,
           ),
         restTimeSecs: yup
-          .string()
+          .number()
+          .typeError(t('inputs:error.invalidNumber'))
           .required(
             t('inputs:error.required', {
               field: t('inputs:label.restTime').toLowerCase(),
@@ -96,7 +98,8 @@ export const validationSchema = yup.object<RoutineFormData>().shape({
                 )
                 .min(1),
               weight: yup
-                .string()
+                .number()
+                .typeError(t('inputs:error.invalidNumber'))
                 .required(
                   t('inputs:error.required', {
                     field: t('inputs:label.weight').toLowerCase(),

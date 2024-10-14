@@ -95,7 +95,7 @@ export const ExerciseItem: FC<ExerciseItemProps> = ({
             onPress={() =>
               append({
                 order: seriesFields.length + 1,
-                weight: '',
+                weight: 0,
                 weightMeasure: 'kg',
               })
             }
