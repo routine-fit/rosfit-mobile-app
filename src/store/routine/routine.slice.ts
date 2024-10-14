@@ -4,6 +4,7 @@ import { Routine } from 'src/interfaces/routine';
 
 import { ScheduleRoutineData } from '../../interfaces/routine';
 import {
+  createRoutine,
   createScheduleRoutine,
   deleteScheduleRoutine,
   getMyRoutines,
@@ -39,6 +40,17 @@ export const routineSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(getMyRoutines.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message || 'An error occurred when retrieving routines';
+        state.status = 'failed';
+      })
+      .addCase(createRoutine.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(createRoutine.fulfilled, state => {
+        state.status = 'succeeded';
+      })
+      .addCase(createRoutine.rejected, (state, action) => {
         state.errorMessage =
           action.error.message || 'An error occurred when retrieving routines';
         state.status = 'failed';

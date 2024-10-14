@@ -13,6 +13,7 @@ import { LottieAnimation } from 'src/app/components/lottie-animation';
 import { Exercise } from 'src/interfaces/exercises';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import { getExercises } from 'src/store/exercise/exercise.thunks';
+import { createRoutine } from 'src/store/routine/routine.thunks';
 
 import { RoutineFormData } from '../form-config';
 import { ExerciseItem } from './components/exercise-item';
@@ -36,9 +37,9 @@ export const ExercisesRevisionScreen: FC<ExerciseRevisionProps> = ({
     exercisesForm.some(formExercise => formExercise.exerciseId === exercise.id),
   );
 
-  const onValidSubmit: SubmitHandler<RoutineFormData> = async _data => {
+  const onValidSubmit: SubmitHandler<RoutineFormData> = async data => {
     try {
-      // TODO: dispatch thunks
+      dispatch(createRoutine(data));
       setShowModal(true);
       reset();
     } catch (error: any) {
