@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 import { Text } from 'src/app/components';
+import { Checkbox } from 'src/app/components/checkbox';
 
 import { ExerciseContainer, TextWrapper } from './styles';
 import { ExerciseItemProps } from './types';
@@ -21,7 +21,11 @@ const ExerciseItem = ({ item, handleExercisePress }: ExerciseItemProps) => {
         <Text>{item.name}</Text>
       </TextWrapper>
       <View>
-        <BouncyCheckbox isChecked={isChecked} onPress={handleCheckboxToggle} />
+        <Checkbox
+          fillColor="secondary"
+          isChecked={isChecked}
+          onPress={handleCheckboxToggle}
+        />
       </View>
     </ExerciseContainer>
   );
