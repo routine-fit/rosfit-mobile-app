@@ -14,7 +14,7 @@ export const CheckboxContainer = styled.View<{
 }>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
-  border-radius: 15px;
+  border-radius: 16px;
   border-width: 2px;
   border-color: ${({ theme, fillColor }) => theme.colors[fillColor].default};
   background-color: ${({ theme, checked, fillColor }) =>
@@ -27,7 +27,7 @@ export const CheckMark = styled.View<{ size: number }>`
   width: ${({ size }) => size * 0.3}px;
   height: ${({ size }) => size * 0.3}px;
   background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 3px;
+  border-radius: 4px;
 `;
 
 export const Label = styled.Text`
