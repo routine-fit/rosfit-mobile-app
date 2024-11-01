@@ -16,13 +16,15 @@ export interface Exercise {
 }
 
 export type RoutineExerciseFormData = {
-  id?: string;
-  repetitions: string;
-  restTimeSecs: string;
+  exerciseId?: string;
+  repetitions: number;
+  order: number;
+  restTimeSecs: number;
   series: Series[];
 };
 
 export interface Series {
-  weight: string;
+  order: number;
+  weight: number;
   weightMeasure: string;
 }

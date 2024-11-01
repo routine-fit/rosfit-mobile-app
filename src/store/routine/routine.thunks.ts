@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import rosFitApi from 'src/api/rosfit.api';
+import { RoutineFormData } from 'src/app/screens/routines/form-config';
 import {
   RoutineResponse,
   ScheduleRoutineData,
@@ -13,6 +14,23 @@ export const getMyRoutines = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await rosFitApi.get<RoutineResponse>('/routine');
+      return response.data.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || 'An error occurred during operation',
+      );
+    }
+  },
+);
+
+export const createRoutine = createAsyncThunk(
+  'routine/create-routines',
+  async (routineData: RoutineFormData, { rejectWithValue }) => {
+    try {
+      const response = await rosFitApi.post<RoutineResponse>(
+        '/routine',
+        routineData,
+      );
       return response.data.data;
     } catch (error: any) {
       return rejectWithValue(
