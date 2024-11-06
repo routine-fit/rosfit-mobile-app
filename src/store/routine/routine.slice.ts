@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Routine } from 'src/interfaces/routine';
+import { Routine, SummaryRoutine } from 'src/interfaces/routine';
 
 import { ScheduleRoutineData } from '../../interfaces/routine';
 import {
@@ -8,12 +8,15 @@ import {
   createScheduleRoutine,
   deleteScheduleRoutine,
   getMyRoutines,
+  getMyScheduleRoutineById,
   getMyScheduleRoutines,
+  startRoutine,
 } from './routine.thunks';
 
 interface RoutineState {
   routines: Routine[];
   scheduleRoutines: ScheduleRoutineData[];
+  summaryRoutine: SummaryRoutine | null;
   errorMessage: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
@@ -21,6 +24,7 @@ interface RoutineState {
 const initialState: RoutineState = {
   routines: [],
   scheduleRoutines: [],
+  summaryRoutine: null,
   errorMessage: null,
   status: 'idle',
 };
@@ -69,6 +73,20 @@ export const routineSlice = createSlice({
           'An error occurred when retrieving schedule routines';
         state.status = 'failed';
       })
+      .addCase(getMyScheduleRoutineById.pending, state => {
+        state.scheduleRoutines = initialState.scheduleRoutines;
+        state.status = 'loading';
+      })
+      .addCase(getMyScheduleRoutineById.fulfilled, (state, action) => {
+        state.scheduleRoutines = action.payload;
+        state.status = 'succeeded';
+      })
+      .addCase(getMyScheduleRoutineById.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message ||
+          'An error occurred when retrieving schedule routines';
+        state.status = 'failed';
+      })
       .addCase(createScheduleRoutine.pending, state => {
         state.status = 'loading';
       })
@@ -91,6 +109,19 @@ export const routineSlice = createSlice({
         state.errorMessage =
           action.error.message ||
           'An error occurred during while deleting the exercise';
+        state.status = 'failed';
+      })
+      .addCase(startRoutine.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(startRoutine.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.summaryRoutine = action.payload;
+      })
+      .addCase(startRoutine.rejected, (state, action) => {
+        state.errorMessage =
+          action.error.message ||
+          'An error occurred during while starting routine';
         state.status = 'failed';
       });
   },
