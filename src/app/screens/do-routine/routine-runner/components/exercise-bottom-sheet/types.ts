@@ -1,4 +1,4 @@
-import { RoutineExercise } from 'src/interfaces/routine-exercises';
+import { RoutineExercise } from 'src/interfaces/routine';
 
 export interface Props {
   exercise: RoutineExercise;

@@ -59,13 +59,13 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
 
   return (
     <StyledBottomSheetView>
-      <Text fontSize="lg">{exercise.exercise}</Text>
+      <Text fontSize="lg">{exercise?.exercise.name}</Text>
       {isResting ? (
         <CountdownCircleTimer
           size={100}
           strokeWidth={7}
           isPlaying={isResting}
-          duration={exercise.restTime}
+          duration={exercise.restTimeSecs}
           isSmoothColorTransition
           colors={['#004777', '#2ecc71', '#F7B801', '#A30000']}
           colorsTime={[10, 7, 4, 0]}

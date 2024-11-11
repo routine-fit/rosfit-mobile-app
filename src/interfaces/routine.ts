@@ -17,6 +17,7 @@ export interface RoutineExercise {
   restTimeSecs: number;
   order: number;
   series: Series[];
+  status?: string;
 }
 
 export interface Routine {
@@ -49,4 +50,21 @@ export interface ScheduleRoutineData {
   userId: string;
   routine: Routine;
   createdAt: string;
+}
+
+export interface RoutineStartResponse {
+  message: string;
+  data: SummaryRoutine;
+  error: boolean;
+}
+
+export interface SummaryRoutine {
+  id: string;
+  startedAt: Date;
+  finishedAt: null;
+  durationInMinutes: number;
+  userId: string;
+  scheduleRoutineId: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

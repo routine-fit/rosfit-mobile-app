@@ -4,6 +4,11 @@ import { Routine, SummaryRoutine } from 'src/interfaces/routine';
 
 import { ScheduleRoutineData } from '../../interfaces/routine';
 import {
+  markExerciseDone,
+  setActiveRoutine,
+  setExerciseInProgress,
+} from './routine.actions';
+import {
   createRoutine,
   createScheduleRoutine,
   deleteScheduleRoutine,
@@ -16,6 +21,7 @@ import {
 interface RoutineState {
   routines: Routine[];
   scheduleRoutines: ScheduleRoutineData[];
+  activeRoutine: ScheduleRoutineData | null;
   summaryRoutine: SummaryRoutine | null;
   errorMessage: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -24,6 +30,7 @@ interface RoutineState {
 const initialState: RoutineState = {
   routines: [],
   scheduleRoutines: [],
+  activeRoutine: null,
   summaryRoutine: null,
   errorMessage: null,
   status: 'idle',
@@ -123,6 +130,45 @@ export const routineSlice = createSlice({
           action.error.message ||
           'An error occurred during while starting routine';
         state.status = 'failed';
+      })
+      .addCase(setActiveRoutine, (state, action) => {
+        state.status = 'succeeded';
+        state.activeRoutine = {
+          ...action.payload,
+          routine: {
+            ...action.payload.routine,
+            exercises: action.payload.routine.exercises.map(exercise => ({
+              ...exercise,
+              status: 'pending',
+            })),
+          },
+        };
+      })
+      .addCase(setExerciseInProgress, (state, action) => {
+        state.status = 'succeeded';
+
+        if (state.activeRoutine && state.activeRoutine.id) {
+          state.activeRoutine = {
+            ...state.activeRoutine,
+            routine: {
+              ...state.activeRoutine.routine,
+              exercises: action.payload,
+            },
+          };
+        }
+      })
+      .addCase(markExerciseDone, (state, action) => {
+        state.status = 'succeeded';
+
+        if (state.activeRoutine && state.activeRoutine.id) {
+          state.activeRoutine = {
+            ...state.activeRoutine,
+            routine: {
+              ...state.activeRoutine.routine,
+              exercises: action.payload,
+            },
+          };
+        }
       });
   },
 });

@@ -11,6 +11,7 @@ import { weekDays } from 'src/constants/weekdays';
 import { useTranslatedOptions } from 'src/hooks/useTranslatedOptions';
 import { RoutineExercise } from 'src/interfaces/routine';
 import { useAppDispatch, useAppSelector } from 'src/store';
+import { setActiveRoutine } from 'src/store/routine/routine.actions';
 import { getMyScheduleRoutines } from 'src/store/routine/routine.thunks';
 
 import { FormData, validationSchema } from './form-config';
@@ -42,10 +43,12 @@ export const SelectRoutineScreen: FC<Props> = ({ navigation }) => {
     return scheduleRoutines.flatMap(routine => routine.routine.exercises);
   }, [scheduleRoutines]);
 
-  const onValidSubmit: SubmitHandler<FormData> = async data => {
+  const onValidSubmit: SubmitHandler<FormData> = async _ => {
     try {
-      const { routine } = data;
-      navigation.navigate('RoutineRunner', { routine });
+      if (scheduleRoutines.length > 0) {
+        dispatch(setActiveRoutine(scheduleRoutines[0]));
+      }
+      navigation.navigate('RoutineRunner');
     } catch (error: any) {
       Alert.alert(t('screens:selectRoutine:error'), error.message);
     }
