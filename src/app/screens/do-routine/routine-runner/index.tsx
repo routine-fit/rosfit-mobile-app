@@ -7,7 +7,7 @@ import {
   Timer,
 } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import BottomSheet from '@gorhom/bottom-sheet';
 
@@ -18,6 +18,8 @@ import { RoutineExercise } from 'src/interfaces/routine';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import {
   markExerciseDone,
+  markSerieInProgress,
+  setCurrentExercise,
   setExerciseInProgress,
 } from 'src/store/routine/routine.actions';
 
@@ -37,9 +39,8 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { isPaused, start, pause, formattedTime } = useTimer();
-  const { activeRoutine } = useAppSelector(state => state.routine);
-  const [currentExerciseId, setCurrentExerciseId] = useState<string | null>(
-    null,
+  const { activeRoutine, currentExercise } = useAppSelector(
+    state => state.routine,
   );
 
   const exercises = useMemo<RoutineExercise[]>(() => {
@@ -81,43 +82,53 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
   }, [exercises, t]);
 
   useEffect(() => {
-    if (exercises.length > 0 && !isPaused) {
-      const currentExercise = exercises.find(ex => ex.id === currentExerciseId);
-      if (!currentExercise || currentExercise.status !== 'inProgress') {
-        const nextExercise = exercises.find(ex => ex.status === 'pending');
+    if (isPaused) return;
 
-        if (nextExercise) {
-          setCurrentExerciseId(nextExercise.id);
-        }
+    const exerciseInProgress = exercises.find(
+      ex => ex.id === currentExercise?.id && ex.status === 'inProgress',
+    );
+
+    if (!exerciseInProgress) {
+      const nextExercise = exercises.find(ex => ex.status === 'pending');
+      if (nextExercise) {
+        const updatedExercises = exercises.map(ex =>
+          ex.id === nextExercise.id ? { ...ex, status: 'inProgress' } : ex,
+        );
+
+        dispatch(
+          setExerciseInProgress({
+            currentExercise: { ...nextExercise, status: 'inProgress' },
+            exercises: updatedExercises,
+          }),
+        );
+
+        dispatch(
+          markSerieInProgress({
+            exerciseId: nextExercise.id,
+            seriesIndex: 0,
+          }),
+        );
       }
     }
-  }, [isPaused, currentExerciseId, exercises]);
-
-  useEffect(() => {
-    if (currentExerciseId) {
-      const updatedData = exercises.map(ex =>
-        ex.id === currentExerciseId ? { ...ex, status: 'inProgress' } : ex,
-      );
-      dispatch(setExerciseInProgress(updatedData));
-    }
-  }, [currentExerciseId]);
+  }, [exercises, isPaused, currentExercise]);
 
   const markCurrentExerciseDone = () => {
-    if (currentExerciseId !== null) {
+    if (currentExercise?.id !== null) {
       const updatedData = exercises.map(ex =>
-        ex.id === currentExerciseId ? { ...ex, status: 'done' } : ex,
+        ex.id === currentExercise?.id ? { ...ex, status: 'done' } : ex,
       );
       dispatch(markExerciseDone(updatedData));
 
       const nextExercise = updatedData.find(ex => ex.status === 'pending');
+      //setCurrentExercise no longer used, update with setExerciseInProgress
       if (nextExercise) {
-        setCurrentExerciseId(nextExercise.id);
+        dispatch(setCurrentExercise(nextExercise));
       } else {
-        setCurrentExerciseId(null);
+        dispatch(setCurrentExercise(null));
       }
     } else {
       // TODO: Completar toda la rutina
-      // dispatch complete routine
+      // dispatch complete routine thunks
       navigation.navigate('RoutineResults', { time: formattedTime });
     }
   };
@@ -196,9 +207,9 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
         enablePanDownToClose
         ref={bottomSheetRef}
       >
-        {currentExerciseId !== null && (
+        {currentExercise?.id !== null && (
           <ExerciseBottomSheetContent
-            exercise={exercises.find(ex => ex.id === currentExerciseId)!}
+            exercise={exercises.find(ex => ex.id === currentExercise?.id)!}
           />
         )}
       </StyledBottomSheet>

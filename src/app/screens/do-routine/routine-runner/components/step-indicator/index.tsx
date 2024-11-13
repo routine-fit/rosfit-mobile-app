@@ -1,12 +1,13 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
+import { Series } from 'src/interfaces/routine';
+
 import { Step } from '../step';
 import { Container } from './styles';
-import { StepData } from './types';
 
 interface Props {
-  steps: StepData[];
+  steps: Series[];
 }
 
 export const StepIndicator: React.FC<Props> = ({ steps }) => {
@@ -16,9 +17,12 @@ export const StepIndicator: React.FC<Props> = ({ steps }) => {
         data={steps}
         renderItem={({ item }) => (
           <Step
-            title={item.title}
-            description={item.description}
-            status={item.status}
+            //serie 1
+            title={`serie ${item.order}`}
+            // peso 30kg
+            description={`peso: ${item.weight}${item.weightMeasure}`}
+            // pendiente
+            status={item.status!}
           />
         )}
         keyExtractor={item => item.id}

@@ -4,51 +4,56 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 import { Button, Text } from 'src/app/components';
 import { LottieAnimation } from 'src/app/components/lottie-animation';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import {
+  markSerieDone,
+  markSerieInProgress,
+} from 'src/store/routine/routine.actions';
 
 import { StepIndicator } from '../step-indicator';
-import { StepData } from '../step-indicator/types';
 import { StyledBottomSheetView } from './styles';
 import { Props } from './types';
 
-const initialSteps: StepData[] = [
-  {
-    id: '1',
-    title: 'Serie 1',
-    description: 'Peso: 50 Kg',
-    status: 'inProgress',
-  },
-  {
-    id: '2',
-    title: 'Serie 2',
-    description: 'Peso: 60 Kg',
-    status: 'pending',
-  },
-  { id: '3', title: 'Serie 3', description: 'Peso: 70 Kg', status: 'pending' },
-  { id: '4', title: 'Serie 4', description: 'Peso: 70 Kg', status: 'pending' },
-  { id: '5', title: 'Serie 5', description: 'Peso: 70 Kg', status: 'pending' },
-  { id: '6', title: 'Serie 6', description: 'Peso: 70 Kg', status: 'pending' },
-];
-
 export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { currentExercise } = useAppSelector(state => state.routine);
+  const series = currentExercise?.series || [];
   const [isResting, setIsResting] = useState<boolean>(false);
   const [isSeriesComplete, setIsSeriesComplete] = useState(false);
-  const [steps, setSteps] = useState<StepData[]>(initialSteps);
-
-  const currentStepIndex = steps.findIndex(
-    step => step.status === 'inProgress',
+  const [currentStepIndex, setCurrentStepIndex] = useState<number>(
+    series.findIndex(serie => serie.status === 'inProgress') !== -1
+      ? series.findIndex(serie => serie.status === 'inProgress')
+      : 0,
   );
 
   const handleFinishSeries = () => {
-    if (currentStepIndex >= 0 && currentStepIndex < steps.length - 1) {
-      const updatedSteps = [...steps];
-      updatedSteps[currentStepIndex].status = 'done';
-      updatedSteps[currentStepIndex + 1].status = 'inProgress';
-      setSteps(updatedSteps);
+    if (currentStepIndex >= 0 && currentStepIndex < series.length - 1) {
+      const updatedSeries = series.map((step, index) => ({
+        ...step,
+        status: index === currentStepIndex ? 'done' : step.status,
+      }));
+
+      const exerciseId = currentExercise?.id || '';
+      const seriesIndex = currentStepIndex;
+
+      dispatch(markSerieDone({ exerciseId, seriesIndex }));
+
+      updatedSeries[currentStepIndex + 1].status = 'inProgress';
+
+      dispatch(
+        markSerieInProgress({
+          exerciseId,
+          seriesIndex: currentStepIndex + 1,
+        }),
+      );
+
+      setCurrentStepIndex(prevIndex => prevIndex + 1);
       setIsResting(true);
       setIsSeriesComplete(true);
     } else {
-      //TODO: dispatch completar ejercicio
+      // TODO: dispatch mark exercise complete action
+      // dispatch(markExerciseDone(exercise.id));
     }
   };
 
@@ -76,7 +81,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
         <LottieAnimation source={require('src/assets/lottie/barbell.json')} />
       )}
 
-      <StepIndicator steps={steps} />
+      <StepIndicator steps={series} />
 
       {isSeriesComplete ? (
         <Button
@@ -88,7 +93,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
       ) : (
         <Button
           content={
-            currentStepIndex < steps.length - 1
+            currentStepIndex < series.length - 1
               ? t('screens:routineRunner.finishSeries')
               : t('screens:routineRunner.completeExercise')
           }

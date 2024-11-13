@@ -6,10 +6,25 @@ export const setActiveRoutine = createAction<ScheduleRoutineData>(
   'routine/set-active-routine',
 );
 
-export const setExerciseInProgress = createAction<RoutineExercise[]>(
-  'routine/set-exercise-inprogress',
-);
+export const setExerciseInProgress = createAction<{
+  currentExercise: RoutineExercise;
+  exercises: RoutineExercise[];
+}>('routine/set-exercise-inprogress');
 
 export const markExerciseDone = createAction<RoutineExercise[]>(
   'routine/mark-exercise-done',
 );
+
+export const setCurrentExercise = createAction<RoutineExercise | null>(
+  'routine/set-current-exercise',
+);
+
+export const markSerieInProgress = createAction<{
+  exerciseId: string;
+  seriesIndex: number;
+}>('routine/mark-serie-inprogress');
+
+export const markSerieDone = createAction<{
+  exerciseId: string;
+  seriesIndex: number;
+}>('routine/mark-serie-done');

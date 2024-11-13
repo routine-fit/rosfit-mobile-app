@@ -4,6 +4,7 @@ export interface Series {
   weight: number;
   weightMeasure: string;
   routineExerciseId: string;
+  status?: string;
 }
 
 export interface RoutineExercise {

@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Routine, SummaryRoutine } from 'src/interfaces/routine';
+import {
+  Routine,
+  RoutineExercise,
+  ScheduleRoutineData,
+  SummaryRoutine,
+} from 'src/interfaces/routine';
 
-import { ScheduleRoutineData } from '../../interfaces/routine';
 import {
   markExerciseDone,
+  markSerieDone,
+  markSerieInProgress,
   setActiveRoutine,
   setExerciseInProgress,
 } from './routine.actions';
@@ -22,6 +28,7 @@ interface RoutineState {
   routines: Routine[];
   scheduleRoutines: ScheduleRoutineData[];
   activeRoutine: ScheduleRoutineData | null;
+  currentExercise: RoutineExercise | null;
   summaryRoutine: SummaryRoutine | null;
   errorMessage: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -31,6 +38,7 @@ const initialState: RoutineState = {
   routines: [],
   scheduleRoutines: [],
   activeRoutine: null,
+  currentExercise: null,
   summaryRoutine: null,
   errorMessage: null,
   status: 'idle',
@@ -52,7 +60,7 @@ export const routineSlice = createSlice({
       })
       .addCase(getMyRoutines.rejected, (state, action) => {
         state.errorMessage =
-          action.error.message || 'An error occurred when retrieving routines';
+          action.error.message || 'Failed to retrieve routines';
         state.status = 'failed';
       })
       .addCase(createRoutine.pending, state => {
@@ -62,8 +70,7 @@ export const routineSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(createRoutine.rejected, (state, action) => {
-        state.errorMessage =
-          action.error.message || 'An error occurred when retrieving routines';
+        state.errorMessage = action.error.message || 'Failed to create routine';
         state.status = 'failed';
       })
       .addCase(getMyScheduleRoutines.pending, state => {
@@ -76,12 +83,10 @@ export const routineSlice = createSlice({
       })
       .addCase(getMyScheduleRoutines.rejected, (state, action) => {
         state.errorMessage =
-          action.error.message ||
-          'An error occurred when retrieving schedule routines';
+          action.error.message || 'Failed to retrieve schedule routines';
         state.status = 'failed';
       })
       .addCase(getMyScheduleRoutineById.pending, state => {
-        state.scheduleRoutines = initialState.scheduleRoutines;
         state.status = 'loading';
       })
       .addCase(getMyScheduleRoutineById.fulfilled, (state, action) => {
@@ -90,8 +95,7 @@ export const routineSlice = createSlice({
       })
       .addCase(getMyScheduleRoutineById.rejected, (state, action) => {
         state.errorMessage =
-          action.error.message ||
-          'An error occurred when retrieving schedule routines';
+          action.error.message || 'Failed to retrieve routine by ID';
         state.status = 'failed';
       })
       .addCase(createScheduleRoutine.pending, state => {
@@ -102,8 +106,7 @@ export const routineSlice = createSlice({
       })
       .addCase(createScheduleRoutine.rejected, (state, action) => {
         state.errorMessage =
-          action.error.message ||
-          'An error occurred during while scheduling routine';
+          action.error.message || 'Failed to schedule routine';
         state.status = 'failed';
       })
       .addCase(deleteScheduleRoutine.pending, state => {
@@ -114,8 +117,7 @@ export const routineSlice = createSlice({
       })
       .addCase(deleteScheduleRoutine.rejected, (state, action) => {
         state.errorMessage =
-          action.error.message ||
-          'An error occurred during while deleting the exercise';
+          action.error.message || 'Failed to delete scheduled routine';
         state.status = 'failed';
       })
       .addCase(startRoutine.pending, state => {
@@ -126,13 +128,10 @@ export const routineSlice = createSlice({
         state.summaryRoutine = action.payload;
       })
       .addCase(startRoutine.rejected, (state, action) => {
-        state.errorMessage =
-          action.error.message ||
-          'An error occurred during while starting routine';
+        state.errorMessage = action.error.message || 'Failed to start routine';
         state.status = 'failed';
       })
       .addCase(setActiveRoutine, (state, action) => {
-        state.status = 'succeeded';
         state.activeRoutine = {
           ...action.payload,
           routine: {
@@ -143,32 +142,49 @@ export const routineSlice = createSlice({
             })),
           },
         };
+        state.status = 'succeeded';
       })
       .addCase(setExerciseInProgress, (state, action) => {
-        state.status = 'succeeded';
-
-        if (state.activeRoutine && state.activeRoutine.id) {
-          state.activeRoutine = {
-            ...state.activeRoutine,
-            routine: {
-              ...state.activeRoutine.routine,
-              exercises: action.payload,
-            },
-          };
+        state.currentExercise = {
+          ...action.payload.currentExercise,
+          series: action.payload.currentExercise.series.map(serie => ({
+            ...serie,
+            status: 'pending',
+          })),
+        };
+        if (state.activeRoutine && state.activeRoutine.routine) {
+          state.activeRoutine.routine.exercises = action.payload.exercises;
         }
+        state.status = 'succeeded';
       })
       .addCase(markExerciseDone, (state, action) => {
-        state.status = 'succeeded';
-
-        if (state.activeRoutine && state.activeRoutine.id) {
-          state.activeRoutine = {
-            ...state.activeRoutine,
-            routine: {
-              ...state.activeRoutine.routine,
-              exercises: action.payload,
-            },
-          };
+        if (state.activeRoutine && state.activeRoutine.routine) {
+          state.activeRoutine.routine.exercises = action.payload;
         }
+        state.status = 'succeeded';
+      })
+      .addCase(markSerieInProgress, (state, action) => {
+        const { exerciseId, seriesIndex } = action.payload;
+        const currentExercise = state.activeRoutine?.routine.exercises.find(
+          ex => ex.id === exerciseId,
+        );
+
+        if (currentExercise && currentExercise.series[seriesIndex]) {
+          state.currentExercise!.series[seriesIndex].status = 'inProgress';
+        }
+        state.status = 'succeeded';
+      })
+      .addCase(markSerieDone, (state, action) => {
+        const { exerciseId, seriesIndex } = action.payload;
+        const currentExercise = state.activeRoutine?.routine.exercises.find(
+          ex => ex.id === exerciseId,
+        );
+        if (currentExercise && currentExercise.series[seriesIndex]) {
+          state.currentExercise!.series[seriesIndex].status = 'done';
+        }
+        state.status = 'succeeded';
       });
   },
 });
+
+export default routineSlice.reducer;
