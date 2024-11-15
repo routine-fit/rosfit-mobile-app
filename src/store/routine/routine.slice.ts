@@ -18,6 +18,7 @@ import {
   createRoutine,
   createScheduleRoutine,
   deleteScheduleRoutine,
+  finishRoutine,
   getMyRoutines,
   getMyScheduleRoutineById,
   getMyScheduleRoutines,
@@ -131,6 +132,17 @@ export const routineSlice = createSlice({
         state.errorMessage = action.error.message || 'Failed to start routine';
         state.status = 'failed';
       })
+      .addCase(finishRoutine.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(finishRoutine.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.summaryRoutine = action.payload;
+      })
+      .addCase(finishRoutine.rejected, (state, action) => {
+        state.errorMessage = action.error.message || 'Failed to finish routine';
+        state.status = 'failed';
+      })
       .addCase(setActiveRoutine, (state, action) => {
         state.activeRoutine = {
           ...action.payload,
@@ -145,22 +157,41 @@ export const routineSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(setExerciseInProgress, (state, action) => {
-        state.currentExercise = {
-          ...action.payload.currentExercise,
-          series: action.payload.currentExercise.series.map(serie => ({
-            ...serie,
-            status: 'pending',
-          })),
-        };
-        if (state.activeRoutine && state.activeRoutine.routine) {
-          state.activeRoutine.routine.exercises = action.payload.exercises;
+        if (action.payload) {
+          const { currentExercise, exercises } = action.payload;
+
+          state.currentExercise = {
+            ...currentExercise,
+            series: currentExercise.series.map(serie => ({
+              ...serie,
+              status: 'pending',
+            })),
+          };
+
+          if (state.activeRoutine && state.activeRoutine.routine) {
+            state.activeRoutine.routine.exercises = exercises;
+          }
+
+          state.status = 'succeeded';
+        } else {
+          state.currentExercise = null;
         }
-        state.status = 'succeeded';
       })
       .addCase(markExerciseDone, (state, action) => {
+        const exerciseId = action.payload;
+
         if (state.activeRoutine && state.activeRoutine.routine) {
-          state.activeRoutine.routine.exercises = action.payload;
+          const exercises = state.activeRoutine.routine.exercises;
+          const exerciseIndex = exercises.findIndex(ex => ex.id === exerciseId);
+
+          if (exerciseIndex !== -1) {
+            exercises[exerciseIndex] = {
+              ...exercises[exerciseIndex],
+              status: 'done',
+            };
+          }
         }
+
         state.status = 'succeeded';
       })
       .addCase(markSerieInProgress, (state, action) => {

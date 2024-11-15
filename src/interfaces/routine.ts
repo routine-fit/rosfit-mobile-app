@@ -61,11 +61,10 @@ export interface RoutineStartResponse {
 
 export interface SummaryRoutine {
   id: string;
-  startedAt: Date;
-  finishedAt: null;
+  startedAt: string;
+  finishedAt: string | null;
   durationInMinutes: number;
-  userId: string;
-  scheduleRoutineId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  scheduleRoutine: {
+    routine: Routine;
+  };
 }

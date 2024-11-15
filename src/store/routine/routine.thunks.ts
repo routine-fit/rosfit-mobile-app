@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import rosFitApi from 'src/api/rosfit.api';
 import { RoutineFormData } from 'src/app/screens/routines/form-config';
 import {
+  RoutineExercise,
   RoutineResponse,
   RoutineStartResponse,
   ScheduleRoutineData,
@@ -116,6 +117,32 @@ export const startRoutine = createAsyncThunk(
         '/routine/start',
         {
           scheduleRoutineId,
+        },
+      );
+      return response.data.data;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || 'An error occurred during operation',
+      );
+    }
+  },
+);
+
+export const finishRoutine = createAsyncThunk(
+  'routine/finish-routine',
+  async (
+    {
+      summaryRoutineId,
+      routineExercises,
+    }: { summaryRoutineId: string; routineExercises: RoutineExercise[] },
+    { rejectWithValue },
+  ) => {
+    try {
+      console.log(JSON.stringify(routineExercises, null, 2));
+      const response = await rosFitApi.post<RoutineStartResponse>(
+        `/routine/finish/${summaryRoutineId}`,
+        {
+          exercises: routineExercises,
         },
       );
       return response.data.data;

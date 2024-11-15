@@ -6,6 +6,7 @@ import { Button, Text } from 'src/app/components';
 import { LottieAnimation } from 'src/app/components/lottie-animation';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import {
+  markExerciseDone,
   markSerieDone,
   markSerieInProgress,
 } from 'src/store/routine/routine.actions';
@@ -52,8 +53,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
       setIsResting(true);
       setIsSeriesComplete(true);
     } else {
-      // TODO: dispatch mark exercise complete action
-      // dispatch(markExerciseDone(exercise.id));
+      dispatch(markExerciseDone(exercise.id));
     }
   };
 
@@ -90,7 +90,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
           marginTop={8}
           themeColor="primary"
         />
-      ) : (
+      ) : exercise?.status !== 'done' ? (
         <Button
           content={
             currentStepIndex < series.length - 1
@@ -98,6 +98,14 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
               : t('screens:routineRunner.completeExercise')
           }
           onPress={handleFinishSeries}
+          marginTop={8}
+          themeColor="secondary"
+        />
+      ) : (
+        <Button
+          content="Completar rutina"
+          // TODO : DISPATCH COMPLETE ROUTINE
+          onPress={() => {}}
           marginTop={8}
           themeColor="secondary"
         />

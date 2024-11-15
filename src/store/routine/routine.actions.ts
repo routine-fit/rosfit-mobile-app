@@ -9,9 +9,9 @@ export const setActiveRoutine = createAction<ScheduleRoutineData>(
 export const setExerciseInProgress = createAction<{
   currentExercise: RoutineExercise;
   exercises: RoutineExercise[];
-}>('routine/set-exercise-inprogress');
+} | null>('routine/set-exercise-inprogress');
 
-export const markExerciseDone = createAction<RoutineExercise[]>(
+export const markExerciseDone = createAction<string>(
   'routine/mark-exercise-done',
 );
 

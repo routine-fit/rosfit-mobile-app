@@ -19,9 +19,9 @@ import { useAppDispatch, useAppSelector } from 'src/store';
 import {
   markExerciseDone,
   markSerieInProgress,
-  setCurrentExercise,
   setExerciseInProgress,
 } from 'src/store/routine/routine.actions';
+import { finishRoutine, startRoutine } from 'src/store/routine/routine.thunks';
 
 import { FlatlistContainer } from '../select-routine/styles';
 import { ExerciseBottomSheetContent } from './components/exercise-bottom-sheet';
@@ -39,7 +39,7 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { isPaused, start, pause, formattedTime } = useTimer();
-  const { activeRoutine, currentExercise } = useAppSelector(
+  const { activeRoutine, currentExercise, summaryRoutine } = useAppSelector(
     state => state.routine,
   );
 
@@ -112,23 +112,40 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
     }
   }, [exercises, isPaused, currentExercise]);
 
+  const handleStart = () => {
+    start();
+    if (activeRoutine) {
+      dispatch(startRoutine(activeRoutine.id));
+    }
+  };
+
   const markCurrentExerciseDone = () => {
-    if (currentExercise?.id !== null) {
+    if (currentExercise && currentExercise.id) {
       const updatedData = exercises.map(ex =>
         ex.id === currentExercise?.id ? { ...ex, status: 'done' } : ex,
       );
-      dispatch(markExerciseDone(updatedData));
+      dispatch(markExerciseDone(currentExercise.id));
 
       const nextExercise = updatedData.find(ex => ex.status === 'pending');
-      //setCurrentExercise no longer used, update with setExerciseInProgress
       if (nextExercise) {
-        dispatch(setCurrentExercise(nextExercise));
+        dispatch(
+          setExerciseInProgress({
+            currentExercise: { ...nextExercise, status: 'inProgress' },
+            exercises: updatedData,
+          }),
+        );
       } else {
-        dispatch(setCurrentExercise(null));
+        dispatch(setExerciseInProgress(null));
       }
     } else {
-      // TODO: Completar toda la rutina
-      // dispatch complete routine thunks
+      if (summaryRoutine) {
+        dispatch(
+          finishRoutine({
+            summaryRoutineId: summaryRoutine?.id,
+            routineExercises: summaryRoutine?.scheduleRoutine.routine.exercises,
+          }),
+        );
+      }
       navigation.navigate('RoutineResults', { time: formattedTime });
     }
   };
@@ -140,7 +157,7 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
   return (
     <ScreenContainer>
       {formattedTime === '00:00:00' ? (
-        <StartBadge onPress={start}>
+        <StartBadge onPress={handleStart}>
           <Text color={theme.colors.background} fontSize="3xl">
             Comenzar rutina
           </Text>
