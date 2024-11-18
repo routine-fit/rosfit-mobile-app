@@ -73,6 +73,8 @@ export default {
     startSeries: 'Iniciar serie',
     finishSeries: 'Terminar serie',
     seriesCompleted: 'Series completadas',
+    serie: 'Serie: {{serie}}',
+    weight: 'Peso: {{weight}}{{measure}}',
   },
   routineResults: {
     heading1: 'Rutina finalizada',

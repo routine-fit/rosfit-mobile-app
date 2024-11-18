@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 
 import { Series } from 'src/interfaces/routine';
@@ -11,17 +12,18 @@ interface Props {
 }
 
 export const StepIndicator: React.FC<Props> = ({ steps }) => {
+  const { t } = useTranslation();
   return (
     <Container>
       <FlatList
         data={steps}
         renderItem={({ item }) => (
           <Step
-            //serie 1
-            title={`serie ${item.order}`}
-            // peso 30kg
-            description={`peso: ${item.weight}${item.weightMeasure}`}
-            // pendiente
+            title={t('screens:routineRunner.serie', { serie: item.order })}
+            description={t('screens:routineRunner.weight', {
+              weight: item.weight,
+              measure: item.weightMeasure,
+            })}
             status={item.status!}
           />
         )}
