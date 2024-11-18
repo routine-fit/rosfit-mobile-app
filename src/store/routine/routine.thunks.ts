@@ -138,11 +138,20 @@ export const finishRoutine = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      console.log(JSON.stringify(routineExercises, null, 2));
-      const response = await rosFitApi.post<RoutineStartResponse>(
+      const formattedExercises = routineExercises.map(exercise => ({
+        id: exercise.id,
+        repetitions: exercise.repetitions,
+        restTimeSecs: exercise.restTimeSecs,
+        series: exercise.series.map(serie => ({
+          id: serie.id,
+          weight: serie.weight,
+          weightMeasure: serie.weightMeasure,
+        })),
+      }));
+      const response = await rosFitApi.put<RoutineStartResponse>(
         `/routine/finish/${summaryRoutineId}`,
         {
-          exercises: routineExercises,
+          exercises: formattedExercises,
         },
       );
       return response.data.data;

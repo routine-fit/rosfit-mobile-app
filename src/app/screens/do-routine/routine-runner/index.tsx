@@ -159,7 +159,7 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
       {formattedTime === '00:00:00' ? (
         <StartBadge onPress={handleStart}>
           <Text color={theme.colors.background} fontSize="3xl">
-            Comenzar rutina
+            {t('screens:routineRunner.startRoutine')}
           </Text>
           <Text color={theme.colors.background} fontSize="3xl">
             {activeRoutine?.routine.name}

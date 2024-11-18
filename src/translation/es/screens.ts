@@ -64,6 +64,7 @@ export default {
     noRoutinesAssigned: 'Sin rutinas asignadas',
   },
   routineRunner: {
+    startRoutine: 'Comenzar rutina',
     completeRoutine: 'Completar rutina',
     completeExercise: 'Completar ejercicio',
     continue: 'Continuar',
@@ -71,6 +72,7 @@ export default {
     routineInProgress: 'Rutina en curso',
     startSeries: 'Iniciar serie',
     finishSeries: 'Terminar serie',
+    seriesCompleted: 'Series completadas',
   },
   routineResults: {
     heading1: 'Rutina finalizada',

@@ -103,8 +103,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
         />
       ) : (
         <Button
-          content="Completar rutina"
-          // TODO : DISPATCH COMPLETE ROUTINE
+          content={t('screens:routineRunner.seriesCompleted')}
           onPress={() => {}}
           marginTop={8}
           themeColor="secondary"
