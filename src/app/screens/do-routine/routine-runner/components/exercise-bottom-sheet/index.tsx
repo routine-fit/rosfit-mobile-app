@@ -54,6 +54,8 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
       setIsSeriesComplete(true);
     } else {
       dispatch(markExerciseDone(exercise.id));
+      setIsSeriesComplete(false);
+      setCurrentStepIndex(0);
     }
   };
 
@@ -70,7 +72,7 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
           size={100}
           strokeWidth={7}
           isPlaying={isResting}
-          duration={exercise.restTimeSecs}
+          duration={exercise?.restTimeSecs}
           isSmoothColorTransition
           colors={['#004777', '#2ecc71', '#F7B801', '#A30000']}
           colorsTime={[10, 7, 4, 0]}
@@ -106,7 +108,8 @@ export const ExerciseBottomSheetContent: FC<Props> = ({ exercise }) => {
           content={t('screens:routineRunner.seriesCompleted')}
           onPress={() => {}}
           marginTop={8}
-          themeColor="secondary"
+          disabled
+          themeColor="primary"
         />
       )}
     </StyledBottomSheetView>
