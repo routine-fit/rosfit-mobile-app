@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Check,
   CircleEllipsis,
@@ -43,9 +42,10 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
     state => state.routine,
   );
 
-  const exercises = useMemo<RoutineExercise[]>(() => {
-    return activeRoutine?.routine.exercises || [];
-  }, [activeRoutine?.routine.exercises]);
+  const exercises = useMemo<RoutineExercise[]>(
+    () => activeRoutine?.routine.exercises || [],
+    [activeRoutine?.routine.exercises],
+  );
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -110,6 +110,7 @@ export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
         );
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [exercises, isPaused, currentExercise]);
 
   const handleStart = () => {
