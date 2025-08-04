@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import BottomSheet from '@gorhom/bottom-sheet';
 
-import { RoutineExercise } from 'src/interfaces/routine-exercises';
+import { RoutineExercise } from 'src/interfaces/routine';
 
 export const MainRoutineBadge = styled.View`
   height: 26%;
@@ -20,6 +20,11 @@ export const StartBadge = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.primary.default};
+  elevation: 4;
+  shadow-color: #000;
+  shadow-offset: 0px 4px;
+  shadow-opacity: 0.4;
+  shadow-radius: 4px;
 `;
 
 export const ButtonContainer = styled.View`

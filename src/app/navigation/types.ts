@@ -32,7 +32,7 @@ export type RootStackParamList = {
 
 export type DoRoutineStackParamList = {
   SelectRoutine: undefined;
-  RoutineRunner: { routine: string };
+  RoutineRunner: undefined;
   RoutineResults: { time: string };
 };
 

@@ -4,6 +4,7 @@ export interface Series {
   weight: number;
   weightMeasure: string;
   routineExerciseId: string;
+  status?: string;
 }
 
 export interface RoutineExercise {
@@ -17,6 +18,7 @@ export interface RoutineExercise {
   restTimeSecs: number;
   order: number;
   series: Series[];
+  status?: string;
 }
 
 export interface Routine {
@@ -49,4 +51,20 @@ export interface ScheduleRoutineData {
   userId: string;
   routine: Routine;
   createdAt: string;
+}
+
+export interface RoutineStartResponse {
+  message: string;
+  data: SummaryRoutine;
+  error: boolean;
+}
+
+export interface SummaryRoutine {
+  id: string;
+  startedAt: string;
+  finishedAt: string | null;
+  durationInMinutes: number;
+  scheduleRoutine: {
+    routine: Routine;
+  };
 }

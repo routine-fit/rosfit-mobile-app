@@ -6,15 +6,21 @@ import {
   Timer,
 } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import BottomSheet from '@gorhom/bottom-sheet';
 
 import { Button, ScreenContainer, Text } from 'src/app/components';
 import { ButtonColorTheme } from 'src/app/components/buttons/button/types';
 import useTimer from 'src/hooks/useTimer';
-import { RoutineExercise } from 'src/interfaces/routine-exercises';
-import routineExercisesDataFile from 'src/mocks/do-routine-exercises.json';
+import { RoutineExercise } from 'src/interfaces/routine';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import {
+  markExerciseDone,
+  markSerieInProgress,
+  setExerciseInProgress,
+} from 'src/store/routine/routine.actions';
+import { finishRoutine, startRoutine } from 'src/store/routine/routine.thunks';
 
 import { FlatlistContainer } from '../select-routine/styles';
 import { ExerciseBottomSheetContent } from './components/exercise-bottom-sheet';
@@ -25,23 +31,27 @@ import {
   StartBadge,
   StyledBottomSheet,
 } from './styles';
-import { Props } from './types';
+import { ExerciseStatus, Props } from './types';
 
-export const RoutineRunnerScreen: FC<Props> = ({ route, navigation }) => {
-  const { routine } = route.params;
+export const RoutineRunnerScreen: FC<Props> = ({ navigation }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const dispatch = useAppDispatch();
   const { isPaused, start, pause, formattedTime } = useTimer();
-  const [routineExercisesData, setRoutineExercisesData] = useState<
-    RoutineExercise[] | []
-  >([]);
-  const [currentExerciseId, setCurrentExerciseId] = useState<number | null>(
-    null,
+  const { activeRoutine, currentExercise, summaryRoutine } = useAppSelector(
+    state => state.routine,
+  );
+
+  const exercises = useMemo<RoutineExercise[]>(
+    () => activeRoutine?.routine.exercises || [],
+    [activeRoutine?.routine.exercises],
   );
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const statusMapping = useMemo(
+  const statusMapping = useMemo<
+    Record<ExerciseStatus, { themeColor: string; icon: React.JSX.Element }>
+  >(
     () => ({
       done: {
         themeColor: 'primary',
@@ -60,12 +70,8 @@ export const RoutineRunnerScreen: FC<Props> = ({ route, navigation }) => {
   );
 
   const buttonProperties = useMemo(() => {
-    const isRoutineCompleted = routineExercisesData.every(
-      ex => ex.status === 'done',
-    );
-    const isRoutinePending = routineExercisesData.every(
-      ex => ex.status === 'pending',
-    );
+    const isRoutineCompleted = exercises.every(ex => ex.status === 'done');
+    const isRoutinePending = exercises.every(ex => ex.status === 'pending');
     return {
       content: isRoutineCompleted
         ? t('screens:routineRunner.completeRoutine')
@@ -73,76 +79,74 @@ export const RoutineRunnerScreen: FC<Props> = ({ route, navigation }) => {
       themeColor: isRoutineCompleted ? 'secondary' : 'primary',
       disabled: isRoutinePending,
     };
-  }, [routineExercisesData, t]);
-
-  const fetchRoutineExercisesData = (): Promise<RoutineExercise[]> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          resolve(routineExercisesDataFile as RoutineExercise[]);
-        } catch (error) {
-          reject(error);
-        }
-      }, 1000);
-    });
-  };
+  }, [exercises, t]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchRoutineExercisesData();
-        setRoutineExercisesData(data);
-      } catch (error) {
-        console.error('Error fetching routine data:', error);
-      }
-    };
+    if (isPaused) return;
 
-    fetchData();
-  }, []);
+    const exerciseInProgress = exercises.find(
+      ex => ex.id === currentExercise?.id && ex.status === 'inProgress',
+    );
 
-  useEffect(() => {
-    if (routineExercisesData.length > 0 && !isPaused) {
-      const currentExercise = routineExercisesData.find(
-        ex => ex.id === currentExerciseId,
-      );
-      if (!currentExercise || currentExercise.status !== 'inProgress') {
-        const nextExercise = routineExercisesData.find(
-          ex => ex.status === 'pending',
+    if (!exerciseInProgress) {
+      const nextExercise = exercises.find(ex => ex.status === 'pending');
+      if (nextExercise) {
+        const updatedExercises = exercises.map(ex =>
+          ex.id === nextExercise.id ? { ...ex, status: 'inProgress' } : ex,
         );
 
-        if (nextExercise) {
-          setCurrentExerciseId(nextExercise.id);
-        }
+        dispatch(
+          setExerciseInProgress({
+            currentExercise: { ...nextExercise, status: 'inProgress' },
+            exercises: updatedExercises,
+          }),
+        );
+
+        dispatch(
+          markSerieInProgress({
+            exerciseId: nextExercise.id,
+            seriesIndex: 0,
+          }),
+        );
       }
     }
-  }, [isPaused, routineExercisesData, currentExerciseId]);
-
-  useEffect(() => {
-    if (currentExerciseId) {
-      const updatedData = routineExercisesData.map(ex =>
-        ex.id === currentExerciseId ? { ...ex, status: 'inProgress' } : ex,
-      );
-      setRoutineExercisesData(updatedData as RoutineExercise[]);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentExerciseId]);
+  }, [exercises, isPaused, currentExercise]);
+
+  const handleStart = () => {
+    start();
+    if (activeRoutine) {
+      dispatch(startRoutine(activeRoutine.id));
+    }
+  };
 
   const markCurrentExerciseDone = () => {
-    if (currentExerciseId !== null) {
-      const updatedData = routineExercisesData.map(ex =>
-        ex.id === currentExerciseId ? { ...ex, status: 'done' } : ex,
+    if (currentExercise && currentExercise.id) {
+      const updatedData = exercises.map(ex =>
+        ex.id === currentExercise?.id ? { ...ex, status: 'done' } : ex,
       );
-      setRoutineExercisesData(updatedData as RoutineExercise[]);
+      dispatch(markExerciseDone(currentExercise.id));
 
       const nextExercise = updatedData.find(ex => ex.status === 'pending');
       if (nextExercise) {
-        setCurrentExerciseId(nextExercise.id);
+        dispatch(
+          setExerciseInProgress({
+            currentExercise: { ...nextExercise, status: 'inProgress' },
+            exercises: updatedData,
+          }),
+        );
       } else {
-        setCurrentExerciseId(null);
+        dispatch(setExerciseInProgress(null));
       }
     } else {
-      // TODO: Completar toda la rutina
-      // dispatch complete routine
+      if (summaryRoutine) {
+        dispatch(
+          finishRoutine({
+            summaryRoutineId: summaryRoutine?.id,
+            routineExercises: summaryRoutine?.scheduleRoutine.routine.exercises,
+          }),
+        );
+      }
       navigation.navigate('RoutineResults', { time: formattedTime });
     }
   };
@@ -154,12 +158,12 @@ export const RoutineRunnerScreen: FC<Props> = ({ route, navigation }) => {
   return (
     <ScreenContainer>
       {formattedTime === '00:00:00' ? (
-        <StartBadge onPress={start}>
+        <StartBadge onPress={handleStart}>
           <Text color={theme.colors.background} fontSize="3xl">
-            Comenzar rutina
+            {t('screens:routineRunner.startRoutine')}
           </Text>
           <Text color={theme.colors.background} fontSize="3xl">
-            {routine}
+            {activeRoutine?.routine.name}
           </Text>
         </StartBadge>
       ) : (
@@ -187,15 +191,15 @@ export const RoutineRunnerScreen: FC<Props> = ({ route, navigation }) => {
 
       <ExercisesContainer>
         <FlatlistContainer
-          data={routineExercisesData}
+          data={activeRoutine?.routine.exercises}
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => {
-            const status = item.status;
+            const status = (item.status as ExerciseStatus) || 'pending';
             const { themeColor, icon } = statusMapping[status];
 
             return (
               <Button
-                content={item.exercise}
+                content={item.exercise.name}
                 themeColor={(themeColor as ButtonColorTheme) || 'neutral'}
                 trailingIcon={icon}
                 disabled={status !== 'inProgress'}
@@ -221,14 +225,11 @@ export const RoutineRunnerScreen: FC<Props> = ({ route, navigation }) => {
         enablePanDownToClose
         ref={bottomSheetRef}
       >
-        {currentExerciseId !== null &&
-          routineExercisesData[currentExerciseId] && (
-            <ExerciseBottomSheetContent
-              exercise={
-                routineExercisesData.find(ex => ex.id === currentExerciseId)!
-              }
-            />
-          )}
+        {currentExercise?.id !== null && (
+          <ExerciseBottomSheetContent
+            exercise={exercises.find(ex => ex.id === currentExercise?.id)!}
+          />
+        )}
       </StyledBottomSheet>
     </ScreenContainer>
   );
