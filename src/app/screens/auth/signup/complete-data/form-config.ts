@@ -6,6 +6,7 @@ export type FormData = {
   lastName: string;
   birthDate: Date;
   gender: string;
+  language: string;
 };
 
 const genderRegex = new RegExp(`^(MALE|FEMALE)$`, 'i');
@@ -58,4 +59,12 @@ export const validationSchema = yup.object().shape({
         female: t('common:gender.female').toLowerCase(),
       }),
     ),
+  language: yup
+    .string()
+    .required(
+      t('inputs:error.required', {
+        field: t('inputs:label.language').toLowerCase(),
+      }),
+    )
+    .oneOf(['es', 'en'], t('inputs:error.invalidLanguage')),
 });

@@ -40,14 +40,15 @@ export const CompleteDataScreen = ({
       firstName: '',
       lastName: '',
       birthDate: new Date(),
-      gender: undefined,
+      gender: 'MALE',
+      language: 'es',
     },
     resolver: yupResolver(validationSchema),
   });
 
   const onValidSubmit: SubmitHandler<FormData> = async data => {
     try {
-      const { firstName, lastName, birthDate, gender } = data;
+      const { firstName, lastName, birthDate, gender, language } = data;
 
       const userInfo = {
         firebaseUid: uid || '',
@@ -55,6 +56,7 @@ export const CompleteDataScreen = ({
         lastName,
         birthDate,
         gender,
+        language,
         pushNotification: false,
       };
       await dispatch(createUserInfo(userInfo));

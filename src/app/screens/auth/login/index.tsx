@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
@@ -18,6 +18,7 @@ import {
   googleSignIn,
   loginWithEmailPassword,
 } from 'src/store/auth/auth.thunks';
+import { getMyInformation } from 'src/store/profile/profile.thunks';
 
 import { Container } from './styles';
 import { LoginForm, LoginProps } from './types';
@@ -36,11 +37,26 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
   });
 
   const onValidSubmit: SubmitHandler<LoginForm> = async data => {
-    try {
-      const { email, password } = data;
-      await dispatch(loginWithEmailPassword({ email, password }));
-    } catch (error: any) {
-      Alert.alert(t('screens:login:error'), error.message);
+    const { email, password } = data;
+    const loginResponse = await dispatch(
+      loginWithEmailPassword({ email, password }),
+    );
+
+    if (loginResponse.payload) {
+      const profileResponse = await dispatch(getMyInformation());
+      console.log({ profileResponse });
+
+      if (
+        // @ts-ignore for now
+        profileResponse.payload?.data?.type === 'ONBOARDING_PROCESS_MISSING'
+      ) {
+        navigation.navigate('CompleteData');
+      } else {
+        navigation.navigate('Main', {
+          screen: 'Home',
+          params: { screen: 'HomeScreen' },
+        });
+      }
     }
   };
 
@@ -54,12 +70,6 @@ export const LoginScreen = ({ navigation }: LoginProps) => {
       );
     }
   };
-
-  useEffect(() => {
-    if (status === 'succeeded') {
-      navigation.navigate('Main', { screen: 'Home' });
-    }
-  }, [navigation, status]);
 
   return (
     <ScreenContainer>

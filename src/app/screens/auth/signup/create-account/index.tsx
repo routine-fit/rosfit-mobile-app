@@ -55,18 +55,24 @@ export const CreateAccountScreen = ({
         />
         <GapContainer>
           <ControlledTextInput
+            autoCapitalize="none"
+            autoComplete="email"
             controller={{
               control,
               name: 'email',
             }}
           />
           <PasswordInput
+            autoCapitalize="none"
+            autoComplete="password"
             controller={{
               control,
               name: 'password',
             }}
           />
           <PasswordInput
+            autoCapitalize="none"
+            autoComplete="password"
             controller={{
               control,
               name: 'repeatPassword',

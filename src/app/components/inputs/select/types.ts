@@ -4,6 +4,11 @@ import { TextInput } from 'react-native';
 
 import { TextInputProps } from '../text-input/types';
 
+export interface Option {
+  label: string;
+  value: string;
+}
+
 export type SelectInputProps<Form extends FieldValues> = Omit<
   TextInputProps,
   'ref' | 'value' | 'onChangeText'

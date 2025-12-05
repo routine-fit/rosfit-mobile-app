@@ -16,9 +16,14 @@ export const getMyInformation = createAsyncThunk(
       const response = await rosFitApi.get<ProfileInfoResponse>('/me');
       return response.data.data;
     } catch (error: any) {
-      return rejectWithValue(
-        error.message || 'An error occurred during operation',
-      );
+      const errorData = error.response?.data || error.response || error;
+
+      return rejectWithValue({
+        message: errorData.message || 'An error occurred during operation',
+        data: errorData.data || {},
+        error: errorData.error || true,
+        status: error.response?.status,
+      });
     }
   },
 );

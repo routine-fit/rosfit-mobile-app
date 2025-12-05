@@ -4351,6 +4351,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-plugin-react-native-config@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "babel-plugin-react-native-config@npm:0.0.3"
+  dependencies:
+    dotenv: ^2.0.0
+  checksum: d786df75f9093ff9627b2dfec75f3ab98ca1a561122db949705e72749f272ec5ba32773121f436bc12d499c38c01261930eebb9fd447ae679524614fea1cdbd9
+  languageName: node
+  linkType: hard
+
 "babel-plugin-transform-flow-enums@npm:^0.0.2":
   version: 0.0.2
   resolution: "babel-plugin-transform-flow-enums@npm:0.0.2"
@@ -5287,6 +5296,13 @@ __metadata:
     domelementtype: ^2.3.0
     domhandler: ^5.0.3
   checksum: e5757456ddd173caa411cfc02c2bb64133c65546d2c4081381a3bafc8a57411a41eed70494551aa58030be9e58574fcc489828bebd673863d39924fb4878f416
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "dotenv@npm:2.0.0"
+  checksum: ccbb672b661fcf07fa826c632d4554fa387db77f2885bb94c71357970255f844ea34f76a202b328405144beb4d7140948e6205b321bbe3268368511b11733876
   languageName: node
   linkType: hard
 
@@ -10172,6 +10188,7 @@ __metadata:
     axios: ^1.7.7
     babel-jest: ^29.6.3
     babel-plugin-module-resolver: ^5.0.2
+    babel-plugin-react-native-config: ^0.0.3
     date-fns: ^4.1.0
     eslint: ^8.19.0
     eslint-plugin-jest: ^28.8.3

@@ -8,6 +8,15 @@ import { ApiCodes } from 'src/constants/api-codes';
 import { ApiError } from 'src/interfaces/errors';
 
 const baseURL = Config.API_BASE_URL;
+
+// Validate baseURL
+if (!baseURL || typeof baseURL !== 'string') {
+  console.error('Invalid API_BASE_URL:', baseURL);
+  throw new Error(
+    'API_BASE_URL environment variable is not properly configured',
+  );
+}
+
 const rosFitApi = axios.create({ baseURL });
 
 rosFitApi.interceptors.request.use(async config => {

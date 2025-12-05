@@ -13,5 +13,6 @@ module.exports = {
       },
     ],
     'react-native-reanimated/plugin',
+    'babel-plugin-react-native-config',
   ],
 };
