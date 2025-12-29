@@ -2,7 +2,7 @@ import { EyeIcon, EyeOffIcon } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
 import React, { useState } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { TextInput as RNTextInput } from 'react-native/types';
+import { TextInput as RNTextInput } from 'react-native';
 
 import ControlledTextInput from '../controlled';
 import { FormTextFieldProps } from '../controlled/types';

@@ -10,19 +10,16 @@
         "tests/*"
       ]
     },
-    "skipLibCheck": true,
-    // "typeRoots": [
-    //   "node_modules/@types",
-    //   "src/types"
-    // ],
+    "skipLibCheck": true
   },
   "include": [
     "./src/**/*",
     "./tests/**/*"
   ],
   "exclude": [
-    "**/node_modules",
-    "**/Pods",
-    "node_modules/reactotron-core-client"
+    "**/node_modules/**",
+    "**/Pods/**",
+    // "node_modules/**",
+    // "**/reactotron-core-client/**"
   ]
 }

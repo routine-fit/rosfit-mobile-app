@@ -1,4 +1,4 @@
-import styled, { useTheme } from 'styled-components/native';
+import styled from 'styled-components/native';
 import React from 'react';
 
 import { getFontByWeight } from './font';
@@ -21,12 +21,10 @@ const Text: React.FC<TextProps> = ({
   stringStyles,
   ...others
 }) => {
-  const theme = useTheme();
-
   return (
     <InnerText
       {...others}
-      fontFamily={theme.font || fontFamily}
+      fontFamily={fontFamily}
       fontWeight={fontWeight}
       stringStyles={stringStyles}
       fontSize={fontSize}

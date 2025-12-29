@@ -4251,6 +4251,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/ws@npm:^8.18.1":
+  version: 8.18.1
+  resolution: "@types/ws@npm:8.18.1"
+  dependencies:
+    "@types/node": "*"
+  checksum: 0331b14cde388e2805af66cad3e3f51857db8e68ed91e5b99750915e96fe7572e58296dc99999331bbcf08f0ff00a227a0bb214e991f53c2a5aca7b0e71173fa
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 21.0.3
   resolution: "@types/yargs-parser@npm:21.0.3"
@@ -10462,28 +10471,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reactotron-core-client@npm:2.9.9":
+"reactotron-core-client@npm:2.9.9, reactotron-core-client@npm:^2.9.9":
   version: 2.9.9
   resolution: "reactotron-core-client@npm:2.9.9"
   dependencies:
     reactotron-core-contract: 0.3.2
   checksum: 28b03ffefaa516f9c95cc7edc68a46cf6699232c1cfaec7920834a86cecc4d16b0a64774cf1240e1961f792cefb3bd346f8974691662c154c5ff90ccd89cea9c
-  languageName: node
-  linkType: hard
-
-"reactotron-core-client@npm:^2.9.4":
-  version: 2.9.4
-  resolution: "reactotron-core-client@npm:2.9.4"
-  dependencies:
-    reactotron-core-contract: 0.2.4
-  checksum: d55cfb71d2b0ea7ff131242b94f0cf7b6f7d1815de911dea72f03c919359a761b8d260f8a4d999d49beff4bde3f32df33c81cc6d338057b924fdbcb1beef31f3
-  languageName: node
-  linkType: hard
-
-"reactotron-core-contract@npm:0.2.4":
-  version: 0.2.4
-  resolution: "reactotron-core-contract@npm:0.2.4"
-  checksum: b3c3e21f3137202d3089b00eda409ec1fb72b8ec296d710883dca07dfb98fa8c48564347854b40b031adcbeb17842730adebac53890f516a5304d03d90d1c1c7
   languageName: node
   linkType: hard
 
@@ -10890,6 +10883,7 @@ __metadata:
     "@types/jest": ^29.5.13
     "@types/react": ^19.1.0
     "@types/react-test-renderer": ^19.1.0
+    "@types/ws": ^8.18.1
     axios: ^1.7.7
     babel-jest: ^29.6.3
     babel-plugin-module-resolver: ^5.0.2
@@ -10923,7 +10917,7 @@ __metadata:
     react-native-worklets: ^0.7.1
     react-redux: ^9.1.2
     react-test-renderer: 19.1.0
-    reactotron-core-client: ^2.9.4
+    reactotron-core-client: ^2.9.9
     reactotron-react-native: ^5.1.18
     reactotron-redux: ^3.2.1
     styled-components: ^6.1.19
