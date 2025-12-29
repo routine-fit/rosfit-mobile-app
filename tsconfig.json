@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json",
+  "extends": "@react-native/typescript-config",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -21,7 +21,8 @@
     "./tests/**/*"
   ],
   "exclude": [
-    "node_modules",
+    "**/node_modules",
+    "**/Pods",
     "node_modules/reactotron-core-client"
   ]
 }
