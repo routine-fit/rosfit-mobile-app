@@ -32,7 +32,8 @@ export const ScheduleRoutineScreen: FC<ScheduleRoutineScreenProps> = ({
       routineId: '',
       day: '',
     },
-    resolver: yupResolver(validationSchema),
+    // TODO: Fix this type error
+    resolver: yupResolver(validationSchema as any),
   });
 
   const daysOptions = useTranslatedOptions(weekDays, 'common:weekDay');

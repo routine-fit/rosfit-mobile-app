@@ -34,6 +34,7 @@ export const RoutineStack: FC<Props> = ({ navigation }) => {
 
   const routineHeaderOptions = useMemo(
     () => ({
+      // eslint-disable-next-line react/no-unstable-nested-components
       header: () => (
         <Header
           headerTitle={t('navigation:headers.routines')}

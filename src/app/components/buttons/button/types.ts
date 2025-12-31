@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 export type ButtonColorTheme = 'secondary' | 'neutral' | 'primary' | 'error';
 export type ButtonVariant = 'filled' | 'ghost' | 'outlined';
 export type ButtonSize = 'sm' | 'm' | 'lg' | 'xl';

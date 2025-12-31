@@ -1,11 +1,7 @@
 import { AlertTriangleIcon } from 'lucide-react-native';
 import { DefaultTheme, useTheme } from 'styled-components';
 import React, { useState } from 'react';
-import {
-  NativeSyntheticEvent,
-  TextInput as RNTextInput,
-  TextInputFocusEventData,
-} from 'react-native';
+import { BlurEvent, TextInput as RNTextInput } from 'react-native';
 
 import Text from '../../text';
 import {
@@ -48,7 +44,7 @@ const TextInput = ({
   const [isFocused, setIsFocused] = useState(false);
   const theme = useTheme();
 
-  const handleOnBlur = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+  const handleOnBlur = (e: BlurEvent) => {
     if (restProps.onBlur) restProps.onBlur(e);
     setIsFocused(false);
   };
@@ -86,9 +82,9 @@ const TextInput = ({
           placeholderTextColor={theme.colors.content.pale}
           blurOnSubmit={false}
           onFocus={() => setIsFocused(true)}
-          {...restProps}
           onBlur={handleOnBlur}
           placeholder={restProps.placeholder || label}
+          {...restProps}
         />
         {trailingIcon && (
           <RightIconContainer

@@ -45,10 +45,10 @@ const SelectExerciseList: FC<SelectExerciseListProps> = ({
       if (exerciseIndex === -1) {
         appendExercise({
           exerciseId: exercise.id,
-          repetitions: '0',
+          repetitions: 0,
           order: fields.length + 1,
-          restTimeSecs: '0',
-          series: [{ order: 1, weight: '0', weightMeasure: 'kg' }],
+          restTimeSecs: 0,
+          series: [{ order: 1, weight: 0, weightMeasure: 'kg' }],
         });
       }
     } else {

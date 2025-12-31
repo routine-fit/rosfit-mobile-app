@@ -140,6 +140,7 @@ export const createFormConfig = (): UseFormProps<RoutineFormData> => {
       type: '',
       exercises: [],
     },
-    resolver: yupResolver(validationSchema),
+    // TODO: Fix this type error
+    resolver: yupResolver(validationSchema as any),
   };
 };

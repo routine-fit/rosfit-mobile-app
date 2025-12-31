@@ -16,7 +16,11 @@ export const store = configureStore({
     routine: routineSlice.reducer,
   },
   enhancers: getDefaultEnhancers =>
-    getDefaultEnhancers().concat(reactotron.createEnhancer()),
+    getDefaultEnhancers().concat(
+      __DEV__ && (reactotron as any).createEnhancer
+        ? (reactotron as any).createEnhancer()
+        : (f: any) => f,
+    ),
 });
 
 export type AppDispatch = typeof store.dispatch;

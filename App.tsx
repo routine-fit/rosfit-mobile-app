@@ -1,7 +1,7 @@
-import 'react-native-gesture-handler';
 import { ThemeProvider } from 'styled-components/native';
 import React from 'react';
 import { useColorScheme } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 
@@ -22,13 +22,15 @@ const App = (): React.JSX.Element => {
   const isDarkMode = scheme === 'dark';
 
   return (
-    <ThemeProvider theme={isDarkMode ? DarkTheme : LightTheme}>
-      <Provider store={store}>
-        <LocalizationProvider>
-          <NavigationWrapper />
-        </LocalizationProvider>
-      </Provider>
-    </ThemeProvider>
+    <GestureHandlerRootView>
+      <ThemeProvider theme={isDarkMode ? DarkTheme : LightTheme}>
+        <Provider store={store}>
+          <LocalizationProvider>
+            <NavigationWrapper />
+          </LocalizationProvider>
+        </Provider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 };
 
