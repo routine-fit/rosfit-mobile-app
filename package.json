@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "android": "yarn android:start.dev",
-    "android:start.dev": "react-native run-android --mode=devDebug --appId=com.routinefit.dev",
-    "android:start.prod": "react-native run-android --mode=prodDebug",
+    "android:start.dev": "npx react-native run-android --mode=devDebug --appId=com.routinefit.dev",
+    "android:start.prod": "npx react-native run-android --mode=prodDebug",
     "android:build.prod": "cd android/ && ./gradlew clean bundleProductionRelease",
     "ios": "yarn ios:start.dev",
-    "ios:start.dev": "react-native run-ios --scheme RoutineFit-Dev --simulator=\"iPhone SE (3rd generation)\"",
-    "ios:start.prod": "react-native run-ios --scheme routinefit-prod --simulator=\"iPhone SE (3rd generation)\"",
+    "ios:start.dev": "npx react-native run-ios --scheme RoutineFit-Dev",
+    "ios:start.prod": "npx react-native run-ios --scheme routinefit-prod",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "type-check": "tsc --noEmit",
@@ -45,7 +45,7 @@
     "react-native": "0.81.5",
     "react-native-config": "^1.5.3",
     "react-native-countdown-circle-timer": "^3.2.1",
-    "react-native-date-picker": "^5.0.7",
+    "react-native-date-picker": "patch:react-native-date-picker@npm%3A5.0.13#~/.yarn/patches/react-native-date-picker-npm-5.0.13-e35e950566.patch",
     "react-native-gesture-handler": "^2.30.0",
     "react-native-localize": "^3.2.1",
     "react-native-reanimated": "^4.2.1",
@@ -97,5 +97,6 @@
   },
   "hooks": {
     "pre-commit": "npm test && npm run foo"
-  }
+  },
+  "packageManager": "yarn@4.12.0"
 }

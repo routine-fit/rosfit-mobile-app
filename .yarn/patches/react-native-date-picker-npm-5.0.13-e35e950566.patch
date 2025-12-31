@@ -1,0 +1,173 @@
+diff --git a/android/src/main/java/com/henninghall/date_picker/DatePickerModuleImpl.java b/android/src/main/java/com/henninghall/date_picker/DatePickerModuleImpl.java
+index b8a2a800da92e0b67996eb6f2fea68ae6b57f0aa..736a20ce73b441fa2231a2481936b5f942442092 100644
+--- a/android/src/main/java/com/henninghall/date_picker/DatePickerModuleImpl.java
++++ b/android/src/main/java/com/henninghall/date_picker/DatePickerModuleImpl.java
+@@ -30,23 +30,29 @@ public class DatePickerModuleImpl {
+         ApplicationStarter.initialize(context, false); // false = no need to prefetch on time data background tread
+     }
+ 
+-    public void openPicker(ReadableMap props){
++    public void openPicker(ReadableMap props, Callback onConfirm, Callback onCancel){
+         final PickerView picker = createPicker(props);
+-        Callback onConfirm = new Callback() {
++        Callback onConfirmCallback = new Callback() {
+             @Override
+             public void invoke(Object... objects) {
+                 Emitter.onConfirm(picker.getDate(), picker.getPickerId());
++                if (onConfirm != null) {
++                    onConfirm.invoke(picker.getDate());
++                }
+             }
+         };
+ 
+-        Callback onCancel = new Callback() {
++        Callback onCancelCallback = new Callback() {
+             @Override
+             public void invoke(Object... objects) {
+                 Emitter.onCancel(picker.getPickerId());
++                if (onCancel != null) {
++                    onCancel.invoke();
++                }
+             }
+         };
+ 
+-        dialog = createDialog(props, picker, onConfirm, onCancel);
++        dialog = createDialog(props, picker, onConfirmCallback, onCancelCallback);
+         dialog.show();
+     }
+ 
+diff --git a/android/src/newarch/java/com/henninghall/date_picker/DatePickerModule.java b/android/src/newarch/java/com/henninghall/date_picker/DatePickerModule.java
+index 0fce9a785a6d14a26386fca508541239867288c3..d56b2031e8721e75317d4b748c7d1169cbecc577 100644
+--- a/android/src/newarch/java/com/henninghall/date_picker/DatePickerModule.java
++++ b/android/src/newarch/java/com/henninghall/date_picker/DatePickerModule.java
+@@ -2,6 +2,7 @@ package com.henninghall.date_picker;
+ 
+ import androidx.annotation.NonNull;
+ 
++import com.facebook.react.bridge.Callback;
+ import com.facebook.react.bridge.ReactApplicationContext;
+ import com.facebook.react.bridge.ReadableMap;
+ 
+@@ -28,8 +29,8 @@ public class DatePickerModule extends NativeRNDatePickerSpec {
+     }
+ 
+     @Override
+-    public void openPicker(ReadableMap props){
+-        module.openPicker(props);
++    public void openPicker(ReadableMap props, Callback onConfirm, Callback onCancel){
++        module.openPicker(props, onConfirm, onCancel);
+     }
+ 
+     @Override
+diff --git a/ios/RNDatePickerManager.h b/ios/RNDatePickerManager.h
+index 6a4f206ee31075919fc19999f5601e13efdfb9ce..145c2be266ebb0a5e418705ba380feb6cf393106 100644
+--- a/ios/RNDatePickerManager.h
++++ b/ios/RNDatePickerManager.h
+@@ -8,8 +8,16 @@
+ #import <React/RCTConvert.h>
+ #import <React/RCTViewManager.h>
+ 
++#ifdef RCT_NEW_ARCH_ENABLED
++#import <RNDatePickerSpecs/RNDatePickerSpecs.h>
++#endif
++
+ @interface RNDatePickerManager : RCTViewManager
+ 
++#ifdef RCT_NEW_ARCH_ENABLED
++<NativeRNDatePickerSpec>
++#endif
++
+ @property (strong, nonatomic) UIViewController *topViewController;
+ 
+ @end
+diff --git a/ios/RNDatePickerManager.mm b/ios/RNDatePickerManager.mm
+index da42873cad53e841becb743de6e0d733ab982ce1..77700f7df4bf994ee140423884f145d12cd2beaa 100644
+--- a/ios/RNDatePickerManager.mm
++++ b/ios/RNDatePickerManager.mm
+@@ -234,6 +234,22 @@ - (double) getPickerHeight :(UIView *) alertView
+     return 216;
+ }
+ 
++// New Architecture support - provide module instance to TurboModule system
+++ (BOOL)requiresMainQueueSetup {
++    return NO;
++}
++
++#ifdef RCT_NEW_ARCH_ENABLED
++// Implement the Spec protocol methods required by TurboModule
++- (void)getConstants:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
++    resolve(@{});
++}
++
++- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:(const facebook::react::ObjCTurboModule::InitParams &)params {
++    return std::make_shared<facebook::react::NativeRNDatePickerSpecJSI>(params);
++}
++#endif
++
+ @end
+ 
+ 
+diff --git a/src/DatePickerAndroid.js b/src/DatePickerAndroid.js
+index a8a1e71cbafffad8fc0042233ebf1451df4ca531..114326aa5d64d2c6d517762597f7d9b6b8e8f413 100644
+--- a/src/DatePickerAndroid.js
++++ b/src/DatePickerAndroid.js
+@@ -69,7 +69,10 @@ export const DatePickerAndroid = React.memo((props) => {
+ 
+   useModal({ props: modifiedProps, id: thisId })
+ 
+-  if (props.modal) return null
++  if (props.modal) {
++    useModal({ props: modifiedProps, id: thisId })
++    return null
++  }
+ 
+   return <NativeComponent {...modifiedProps} />
+ })
+diff --git a/src/DatePickerIOS.js b/src/DatePickerIOS.js
+index 987cbcac091975f771219fd4427b9be331362351..1c47c35b96f5927562a1cc6c84b67265f0cfface 100644
+--- a/src/DatePickerIOS.js
++++ b/src/DatePickerIOS.js
+@@ -30,7 +30,10 @@ export const DatePickerIOS = (props) => {
+ 
+   useModal({ props: modifiedProps, id: undefined })
+ 
+-  if (props.modal) return null
++  if (props.modal) {
++    useModal({ props: modifiedProps, id: undefined })
++    return null
++  }
+ 
+   return (
+     <NativeComponent
+diff --git a/src/fabric/NativeRNDatePicker.ts b/src/fabric/NativeRNDatePicker.ts
+index 1633d7a190b6278e5a9dace8a3680eef11fef795..742c255e21ff1ed3e3d0b3e8192472c6389f9f42 100644
+--- a/src/fabric/NativeRNDatePicker.ts
++++ b/src/fabric/NativeRNDatePicker.ts
+@@ -5,7 +5,7 @@ import { Double, UnsafeObject } from 'react-native/Libraries/Types/CodegenTypes'
+ export interface Spec extends TurboModule {
+   readonly getConstants: () => {}
+   closePicker(): void
+-  openPicker(props: UnsafeObject): void
++  openPicker(props: UnsafeObject, onConfirm: (result: UnsafeObject) => void, onCancel: () => void): void
+   removeListeners(type: Double): void
+   addListener(eventName: string): void
+ }
+diff --git a/src/modal.js b/src/modal.js
+index fe02e33e7e9788b1e60e2e0cf79c5ea0a05fde24..996690080bb0bf9992ce2b82cce17ef2e1b0ef29 100644
+--- a/src/modal.js
++++ b/src/modal.js
+@@ -75,13 +75,7 @@ export const useModal = ({ props, id }) => {
+   // open
+   useEffect(() => {
+     if (shouldOpenModal(props, previousProps)) {
+-      closing.current = false
+-      const params = Platform.select({
+-        android: [props],
+-        ios: [props, onConfirm, onCancel],
+-      })
+-      if (!params) throw Error('Unsupported platform')
+-      NativeModule.openPicker(...params)
++      NativeModule.openPicker(props, onConfirm, onCancel)
+     }
+   }, [onCancel, onConfirm, previousProps, props])
+ 
