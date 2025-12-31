@@ -19,7 +19,5 @@
   "exclude": [
     "**/node_modules/**",
     "**/Pods/**",
-    // "node_modules/**",
-    // "**/reactotron-core-client/**"
   ]
 }
