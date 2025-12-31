@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { Timer } from 'lucide-react-native';
 import { useTheme } from 'styled-components';
-import React, { useMemo } from 'react';
+import React, { JSX, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   BottomTabNavigationOptions,

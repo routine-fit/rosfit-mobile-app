@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { TouchableOpacityProps } from 'react-native';
 
 export type IconButtonSizes = 'sm' | 'm';
